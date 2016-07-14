@@ -1,0 +1,24 @@
+<ion-view view-title="Consultar">
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="padding images-fundo ">
+
+    <form>
+      <div class="list">
+          <br><br><br>
+        <label class="item item input">
+          <input type="text" autofocus="true" placeholder="Código" ng-model="dados.codigo">
+        </label>
+
+      <button class="button button-block button-dark" ng-click="consultarProduto(dados)">Consultar</button>
+    </form>
+
+
+  </ion-content>
+</ion-view>

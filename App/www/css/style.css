@@ -1,0 +1,9 @@
+/* Empty. Add your own CSS if you like */
+.images-fundo{
+  background: url("../img/logo-nimal-leve.png") no-repeat center;
+}
+
+
+  /*.cadastrarVeiculoForm input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+  }*/

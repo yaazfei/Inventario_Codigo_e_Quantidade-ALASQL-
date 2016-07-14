@@ -1,0 +1,113 @@
+<ion-view view-title="Validação">
+  <ion-content class="padding">
+
+    <div class="card">
+      <!-- <div ng-controller="EditCtrl"> -->
+      <div class="item item-divider">
+        Dados do veículo
+      </div>
+      <div class="item item-divider">
+        <div class="row">
+          <!-- <button class="button button-block button-balanced" ng-csv="getArray" csv-header="getHeader()" filename="{{filename}}" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}" lazy-load="true">Veículo ok</button> -->
+          <button class="button button-block button-balanced" ng-click="escreverProdutoValido()">Veículo OK</button>
+
+        </div>
+        <div class="row">
+          <!-- Precisa redirecionar para a tela de Editar Veículo com os dados encontrados aqui -->
+          <button class="button button-block button-assertive" ng-click="ProdutoInvalido()">Veículo Não OK</button>
+          <!-- <a href="#/app/editarProduto" class="button button-block button-assertive">Veículo não ok</a> -->
+
+
+        </div>
+      </div>
+
+      <div class="item item-text-wrap">
+
+        <div class="row">
+          <div class="col">Placa: </div>
+          <div class="col">{{veiculo.PLACA}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Marca/Modelo: </div>
+          <div class="col">{{veiculo.MODELO}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Cor: </div>
+          <div class="col">{{veiculo.COR}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Processo: </div>
+          <div class="col">{{veiculo.PROCESSO}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Chassi: </div>
+          <div class="col">{{veiculo.CHASSI}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Pátio: </div>
+          <div class="col">{{veiculo.PATIO}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Localização: </div>
+          <div class="col">{{veiculo.LOCALIZACAO}}</div>
+        </div>
+        <div class="row">
+          <div class="col">Estado Veículo: </div>
+          <div class="col">{{veiculo.ESTADO}}</div>
+        </div>
+
+        <!-- {{veiculo}} -->
+        <!-- Placa: {{veiculo.PLACA}}
+        <br>
+        Marca/Modelo: {{veiculo.MODELO}}
+        <br>
+        Cor: {{veiculo.COR}}
+        <br>
+        Processo: {{veiculo.PROCESSO}}
+        <br>
+        Chassi: {{veiculo.CHASSI}}
+        <br>
+        Pátio: {{veiculo.PATIO}}
+        <br>
+
+ -->
+      </div>
+
+
+      <div class="item item-divider">
+
+
+      </div>
+      <span> Esses inputs devem ser liberados para edição somente quando os resultados vierem vazios? V </span>
+
+      <label class="item item-input">
+        <span class="input-label" style="width:130px">Localização:</span>
+        <input class="form-control text-right" type="text" lang="css" ng-model="veiculo.LOCALIZACAO" name="localizacao" placeholder="ex.: Rio de Janeiro"></input>
+      </label>
+
+      <!--
+    <label class="item item input">
+        <input type="text" placeholder="Localização" ng-model="veiculo.LOCALIZACAO">
+      </label> -->
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Estado veículo:
+        </div>
+        <select class="form-control text-left" type="text" ng-model="veiculo.ESTADO" name="estado" align="left" placeholder="Selecione o estado">
+          <option>EXCELENTE</option>
+          <option>BOM</option>
+          <option selected>REGULAR</option>
+          <option>RUIM</option>
+          <option>PÉSSIMO</option>
+          <!-- <option ng-repeat=" veiculo in veiculos" value="{{veiculo.nome}}">{{veiculo.nome}}</option> -->
+        </select>
+      </label>
+
+    </div>
+    <!-- </div> -->
+
+
+
+  </ion-content>
+</ion-view>

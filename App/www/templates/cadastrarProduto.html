@@ -1,0 +1,103 @@
+<ion-view view-title="Cadastrar Veículo">
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+      <!-- Esse botão não está enviando o form por estar no header V -->
+      <!-- <button class="button button-icon icon ion-android-done" type="submit" id="novoProdutoBtn" form="cadastrarVeiculoForm" ng-click="escreverNovoVeiculo(veiculoNOK)"></button> -->
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="padding">
+
+
+
+    <form name="cadastrarVeiculoForm" novalidate>
+      <div class="right-inner-addon">
+
+        </br>
+
+        <!-- inline input -->
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Placa:</span>
+          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PLACA" name="placa" placeholder="ex.: 7854-6985" ng-minlength="6" ng-maxlength="7" mask="aaa-9999" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.placa.$touched">
+          <div ng-show="cadastrarVeiculoForm.placa.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+          <div ng-show="cadastrarVeiculoForm.placa.$error.minlength || cadastrarVeiculoForm.placa.$error.maxlength" class="button button-outline button-small button-full button-assertive">Caracteres incorretos!</div>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Marca/Modelo:</span>
+          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.MODELO" name="modelo" placeholder="ex.: Fiat" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.modelo.$touched">
+          <div ng-show="cadastrarVeiculoForm.modelo.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Cor:</span>
+          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.COR" name="cor" placeholder="ex.: Prata" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.cor.$touched">
+          <div ng-show="cadastrarVeiculoForm.cor.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Processo:</span>
+          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PROCESSO" name="processo" placeholder="ex.: 5686547599" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.processo.$touched">
+          <div ng-show="cadastrarVeiculoForm.processo.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label text-left" style="width:130px">Chassi:</span>
+          <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.CHASSI" name="chassi" placeholder="ex.: 6656245" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.chassi.$touched">
+          <div ng-show="cadastrarVeiculoForm.chassi.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label text-left" style="width:130px">Pátio:</span>
+          <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PATIO" name="patio" placeholder="ex.: Leste B" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.patio.$touched">
+          <div ng-show="cadastrarVeiculoForm.patio.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+        </div>
+
+        <!-- </br> -->
+
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Localização:</span>
+          <input class="form-control text-left" style="text-transform: uppercase" type="text" ng-model="veiculoNOK.LOCALIZACAO" name="localizacao" placeholder="ex.: Rio de Janeiro" required></input>
+        </label>
+        <div ng-show="cadastrarVeiculoForm.$submitted || cadastrarVeiculoForm.localizacao.$touched">
+          <div ng-show="cadastrarVeiculoForm.localizacao.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div>
+        </div>
+
+
+        <label class="item item-input item-select" ng-model="selectedEstado">
+        <span class="input-label" style="width:130px">Estado veículo:</span>
+        <!-- <span contenteditable readonly="true" value="checkboxModel">{{veiculo.ESTADO}}</span> -->
+        <span class="form-control text-left" type="text" name="estado" >{{veiculoNOK.ESTADO}}</span>
+          <select  ng-model="veiculoNOK.ESTADO" style="width: 30px" required>
+               <!-- <option hidden>{{veiculo.ESTADO}}</option> -->
+               <option>EXCELENTE</option>
+               <option>BOM</option>
+               <option>REGULAR</option>
+               <option>RUIM</option>
+               <option>PÉSSIMO</option>
+           <!-- </input> -->
+          </select>
+          </label>
+
+
+      </div>
+    </form>
+    <button class="button button-block button-dark" ng-click="escreverNovoProduto(veiculoNOK)" ng-disabled="!cadastrarVeiculoForm.$valid">Salvar</button>
+
+
+  </ion-content>
+</ion-view>
