@@ -1,0 +1,18 @@
+<ion-view view-title="Lista de Locais">
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="padding images-fundo has-header">
+
+    <body ng-controller="listaLocaisCtrl">
+            <div class="gridStyle" ng-grid="gridOptions"></div>
+            <div class="selectedItems">{{mySelections}}</div>
+        </body>
+
+  </ion-content>
+</ion-view>

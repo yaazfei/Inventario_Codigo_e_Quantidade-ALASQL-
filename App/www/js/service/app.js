@@ -86,6 +86,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
   })
 
 
+  .state('app.listaLocais', {
+    url: '/listaLocais',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/listaLocais.html',
+        controller: 'listaLocaisCtrl'
+      }
+    }
+  })
+
+
   .state('app.infoProduto', {
     url: '/infoProduto',
     views: {
