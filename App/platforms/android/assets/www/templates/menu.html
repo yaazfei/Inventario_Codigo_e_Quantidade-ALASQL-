@@ -16,11 +16,15 @@
     <ion-header-bar class="bar-assetive">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content ng-Controller="loginCtrl">
 
       <ion-item menu-close ng-click="login()">
         Login
       </ion-item>
+
+      <!-- <ion-item menu-close href="#/app/login">
+        Login TESTE
+      </ion-item> -->
 
       <ion-item menu-close href="#/app/consultarProduto">
         Consulta
@@ -34,16 +38,10 @@
         Cadastrar Produto -teste
       </ion-item>
 
-<!--
-        <ion-item menu-close href="#/app/browse">
-          Home
-        </ion-item>
-        <ion-item menu-close href="#/app/login">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/app/produto">
-          Cards
-        </ion-item> -->
+      <ion-item menu-close href="#/app/listaLocais">
+        Lista Locais -teste
+      </ion-item>
+
       </ion-list>
 
     </ion-content>

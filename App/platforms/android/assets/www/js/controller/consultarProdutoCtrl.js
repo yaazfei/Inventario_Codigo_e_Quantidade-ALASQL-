@@ -103,33 +103,15 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
         //MOCK
         response.data = [];
-        //  var veiculo = new Object();
-        //  veiculo.PLACA = '123';
-        //  veiculo.MODELO= '123';
-        //    veiculo.COR= '123';
-        //    veiculo.PROCESSO= '123';
-        //    veiculo.CHASSI= '123';
-        //    veiculo.PATIO= '123';
-        //    veiculo.PLACA= '123';
-
-        // var veiculo = {
-        //    PLACA : '123',
-        //    MODELO : '123',
-        //    COR : '123',
-        //    PROCESSO : '123',
-        //    CHASSI : '123',
-        //    PATIO : '123',
-        //    PLACA : '123'
-        //  };
 
         response.data.push({
 
-          PLACA: '1234567',
-          MODELO: 'ZEPPELIN',
-          COR: 'VERMELHO',
+          PLACA: 'ABC-4567',
+          MODELO: 'PUMA GTS 1.6',
+          COR: 'PRATA',
           PROCESSO: '123456789',
           CHASSI: '987654321',
-          PATIO: 'ALYSTRAZOR B',
+          PATIO: 'COND. GIRASSÓIS',
           LOCALIZACAO: 'RIO DE JANEIRO',
           ESTADO: 'BOM',
           DATAENTRADA: '06/06/2016 18:16',

@@ -1,0 +1,23 @@
+<ion-view view-title="Lista de Locais">
+  <html ng-app="myApp">
+    <head lang="en">
+      <!--  Plugin ng-Grid -->
+      <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css">
+        </head></html>
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="padding images-fundo has-header">
+
+    <body ng-controller="listaLocaisCtrl">
+        <div ui-grid="{ data: myData }" class="myGrid"></div>
+        </body>
+
+
+  </ion-content>
+</ion-view>

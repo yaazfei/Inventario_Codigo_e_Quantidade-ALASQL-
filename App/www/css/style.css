@@ -3,6 +3,11 @@
   background: url("../img/logo-nimal-leve.png") no-repeat center;
 }
 
+.myGrid {
+    width: 500px;
+    height: 250px;
+  }
+
 
   /*.cadastrarVeiculoForm input.ng-invalid.ng-touched {
     background-color: #FA787E;

@@ -5,7 +5,7 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   //// POPUPS
   this.produtoSalvo = function() {
     var alertPopup = $ionicPopup.alert({
-      title: 'Salvo',
+      title: 'Sucesso',
       template: 'Veículo salvo com sucesso!'
     });
     // alertPopup.then(function(res) {
@@ -32,7 +32,7 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   this.erroBranco = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Código em branco',
-      template: 'Insira o código!'
+      template: 'Insira o código.'
     });
   };
 

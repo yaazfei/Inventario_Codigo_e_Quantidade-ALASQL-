@@ -2,6 +2,7 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 // // Links úteis
+//https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
 // http://angular-ui.github.io/ui-grid/
 // http://plnkr.co/edit/50vJrs?p=preview
 // http://www.igniteui.com/javascript-excel-library/excel-import-data
@@ -13,36 +14,67 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 // http://codetheory.in/parse-read-excel-files-xls-xlsx-javascript/
 
 
-    $scope.mySelections = [];
-    $scope.myData = [{name: "Moroni", age: 50},
-                     {name: "Tiancum", age: 43},
-                     {name: "Jacob", age: 27},
-                     {name: "Nephi", age: 29},
-                     {name: "Enos", age: 34}];
 
-    $scope.gridOptions = {
-      data: 'myData',
-      selectedItems: $scope.mySelections,
-      multiSelect: false
-    };
+// USANDO UI-GRID
+// http://ui-grid.info/docs/#/tutorial/101_intro
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// $scope.myData = [
+//     {
+//         "firstName": "Cox",
+//         "lastName": "Carney",
+//         "company": "Enormo",
+//         "employed": true
+//     },
+//     {
+//         "firstName": "Lorraine",
+//         "lastName": "Wise",
+//         "company": "Comveyer",
+//         "employed": false
+//     },
+//     {
+//         "firstName": "Nancy",
+//         "lastName": "Waters",
+//         "company": "Fuelton",
+//         "employed": false
+//     }
+// ];
 
 
 
+// function loadJSON(callback) {
+//
+//     var xobj = new XMLHttpRequest();
+//         xobj.overrideMimeType("application/json");
+//     xobj.open('GET', 'js/locais.json', true); // Replace 'locais' with the path to your file
+//     xobj.onreadystatechange = function () {
+//           if (xobj.readyState == 4 && xobj.status == "200") {
+//             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+//             callback(xobj.responseText);
+//           }
+//     };
+//     xobj.send(null);
+//  }
+//
+//
+// function init() {
+//  loadJSON(function(response) {
+//   // Parse JSON string into object
+//     var actual_JSON = JSON.parse (response);
+//     $scope.myData = actual_JSON;
+//  });
+// }
+//
+// init();
+
+
+
+
+
+
+
+
+// Fazendo este aqui >>>>>>>>>>>>>>>>>  http://ui-grid.info/docs/#/tutorial/201_editable
 
 
 
@@ -56,72 +88,26 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
-  //
-  // $scope.filterOptions = {
-  //         filterText: "",
-  //         useExternalFilter: true
-  //     };
-  //     $scope.totalServerItems = 0;
-  //     $scope.pagingOptions = {
-  //         pageSizes: [5, 10, 20],
-  //         pageSize: 5,
-  //         currentPage: 1
-  //     };
-  //     $scope.setPagingData = function(data, page, pageSize){
-  //         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-  //         $scope.myData = pagedData;
-  //         $scope.totalServerItems = data.length;
-  //         if (!$scope.$$phase) {
-  //             $scope.$apply();
-  //         }
-  //     };
-  //     $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-  //         setTimeout(function () {
-  //             var data;
-  //             if (searchText) {
-  //                 var ft = searchText.toLowerCase();
-  //                 $http.get('App/www/js/locais.json').success(function (locais) {
-  //                     data = locais.filter(function(item) {
-  //                         return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
-  //                     });
-  //                     $scope.setPagingData(data,page,pageSize);
-  //                 });
-  //             } else {
-  //                 $http.get('App/www/js/locais.json').success(function (locais) {
-  //                     $scope.setPagingData(locais,page,pageSize);
-  //                 });
-  //             }
-  //         }, 100);
-  //     };
-  //
-  //     $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-  //
-  //     $scope.$watch('pagingOptions', function (newVal, oldVal) {
-  //         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
-  //           $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-  //         }
-  //     }, true);
-  //     $scope.$watch('filterOptions', function (newVal, oldVal) {
-  //         if (newVal !== oldVal) {
-  //           $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-  //         }
-  //     }, true);
-  //
-  //     $scope.gridOptions = {
-  //         data: 'myData',
-  //         enablePaging: true,
-  //         showFooter: true,
-  //         totalServerItems:'totalServerItems',
-  //         pagingOptions: $scope.pagingOptions,
-  //         filterOptions: $scope.filterOptions
-  //     };
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });

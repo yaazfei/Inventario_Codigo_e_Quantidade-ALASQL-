@@ -17,7 +17,9 @@ angular.module('starter').controller('loginCtrl', function($scope, $ionicModal, 
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
+    scope: $scope,
+    animation: 'slide-in-up'
+    
   }).then(function(modal) {
     $scope.modal = modal;
   });

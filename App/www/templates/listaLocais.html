@@ -1,4 +1,9 @@
 <ion-view view-title="Lista de Locais">
+  <html ng-app="myApp">
+    <head lang="en">
+      <!--  Plugin ng-Grid -->
+      <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css">
+        </head></html>
 
   <ion-nav-buttons side="right">
     <div class="buttons">
@@ -10,9 +15,23 @@
   <ion-content class="padding images-fundo has-header">
 
     <body ng-controller="listaLocaisCtrl">
-            <div class="gridStyle" ng-grid="gridOptions"></div>
-            <div class="selectedItems">{{mySelections}}</div>
+        <!-- <div ui-grid="{ data: myData }" class="myGrid"></div> -->
+
+        <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+              <br>
+              <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+              <br>
+              <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+              <br>
+              <div><strong>Last file uploaded:</strong></div>
+              <div>{{lastFile}}</div>
+
+
+
+
+
         </body>
+
 
   </ion-content>
 </ion-view>

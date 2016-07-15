@@ -67,10 +67,10 @@ angular.module('starter').controller('validarProdutoCtrl', function($scope, $sta
             PopUps.erroEscrever();
           });
 
-        console.log('Arquivo criado');
-
       }, 500);
     }
+
+    console.log('Saiu do WriteFile - Arquivo criado:' + results.value);
   };
 
 

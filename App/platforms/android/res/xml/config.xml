@@ -49,12 +49,12 @@
     <splash density="port-xhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/logo-nimal.png" />
-    <name>L2R</name>
+    <name>Consulta Produto Yapp</name>
     <description>
-      Aplicativo desenvolvido por Bruno Tinelli
+      Aplicativo desenvolvido por Yasmin Feitosa
     </description>
-    <author email="brunortinelli@gmail.com" href="starter.pe.hu">
-      Bruno Tinelli
+    <author email="feitosa.y@gmail.com" href="starter.pe.hu">
+      Yasmin Feitosa
     </author>
     <content src="index.html" />
     <access origin="*" />

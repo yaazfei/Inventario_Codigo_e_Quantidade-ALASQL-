@@ -128,7 +128,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         $cordovaFile.writeExistingFile(cordova.file.externalRootDirectory + "L2R", "veiculos.csv", (results.value + resultsNOK.value + '\n'))
           .then(function(success) {
             // $timeout(function() {
-            
+
             alert("Salvou o produto");
             PopUps.produtoSalvo();
             $state.go('app.consultarProduto');
@@ -141,9 +141,10 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
             PopUps.erroEscrever();
           });
 
-        console.log('Arquivo criado');
+
       }, 500);
     }
+    console.log('Saiu do WriteFile - Arquivo criado:' + results.value + resultsNOK.value);
   };
 
 

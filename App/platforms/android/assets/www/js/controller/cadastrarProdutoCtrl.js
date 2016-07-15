@@ -114,7 +114,7 @@ angular.module('starter').controller('cadastrarProdutoCtrl', function($scope, $s
 
     }
 
-    console.log('Saiu do escreverNovoProduto');
+    console.log('Saiu do WriteFile - Arquivo criado:' + resultsNOK.blankValue + resultsNOK.value);
 
   };
 
