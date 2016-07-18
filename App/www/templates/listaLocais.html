@@ -14,23 +14,53 @@
 
   <ion-content class="padding images-fundo has-header">
 
-    <body ng-controller="listaLocaisCtrl">
-        <!-- <div ui-grid="{ data: myData }" class="myGrid"></div> -->
-
-        <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
-              <br>
-              <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
-              <br>
-              <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
-              <br>
-              <div><strong>Last file uploaded:</strong></div>
-              <div>{{lastFile}}</div>
+    <div ng-controller="listaLocaisCtrl">
 
 
+      <!-- <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+      <br>
+      <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+      <br>
+      <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+      <br>
+      <div><strong>Last file uploaded:</strong></div>
+      <div>{{lastFile}}</div> -->
 
 
 
-        </body>
+      <button ng-click="exportData()">Export</button>
+         <br/>
+         <div id="exportable">
+         <table width="100%">
+             <thead>
+                 <tr>
+                     <th>CÓDIGO DO LOCAL</th>
+                     <th>DESCRIÇÃO DO LOCAL</th>
+                     <!-- <th>DoB</th> -->
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr ng-repeat="item in items">
+                     <td>{{item.COD_LOCAL}}</td>
+                     <td>{{item.DESC_LOCAL}}</td>
+                     <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
+                 </tr>
+             </tbody>
+         </table>
+         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
 
 
   </ion-content>
