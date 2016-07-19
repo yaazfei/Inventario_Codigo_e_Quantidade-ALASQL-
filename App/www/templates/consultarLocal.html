@@ -1,0 +1,32 @@
+<ion-view view-title="Local">
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
+    </div>
+  </ion-nav-buttons>
+
+  <ion-content class="padding has-header">
+
+    <form name="Form" novalidate>
+      <div class="list" tabindex="0" id="DivForm">
+
+      </br></br></br>
+        <label class="item item input">
+          <input type="text" autofocus="true" placeholder="Código do local" style="text-transform: uppercase" ng-model="dados.codigoLocal" required>
+        </label>
+
+      </br>
+      <div class="button-bar">
+        <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
+        <input class="button button-positive" type="reset" value="Limpar"/>
+        <!-- <a class="button button-positive" ng-click="resetForm()">Limpar</a> -->
+        <input class="button button-balanced" ng-click="buscaLocal(dados)" type="reset" value="Salvar"/>
+      </div>
+
+</form>
+
+
+  </ion-content>
+</ion-view>

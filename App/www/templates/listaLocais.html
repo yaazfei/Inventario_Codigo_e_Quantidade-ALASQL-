@@ -12,7 +12,7 @@
     </div>
   </ion-nav-buttons>
 
-  <ion-content class="padding images-fundo has-header">
+  <ion-content class="padding has-header">
 
     <div ng-controller="listaLocaisCtrl">
 
@@ -39,13 +39,13 @@
                      <!-- <th>DoB</th> -->
                  </tr>
              </thead>
-             <tbody>
-                 <tr ng-repeat="item in items">
-                     <td>{{item.COD_LOCAL}}</td>
-                     <td>{{item.DESC_LOCAL}}</td>
+             <body>
+                 <tr ng-repeat="(key, value) in locais">
+                     <td>{{key}}</td>
+                     <td>{{value}}</td>
                      <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
                  </tr>
-             </tbody>
+             </body>
          </table>
          </div>
 

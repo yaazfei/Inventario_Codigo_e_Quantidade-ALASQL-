@@ -87,6 +87,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     }
   })
 
+  .state('app.consultarLocal', {
+    url: '/consultarLocal',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/consultarLocal.html',
+        controller: 'consultarLocalCtrl'
+      }
+    }
+  })
 
   .state('app.consultarProduto', {
     url: '/consultarProduto',
@@ -124,5 +133,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/consultarProduto');
+  $urlRouterProvider.otherwise('/app/consultarLocal');
 });

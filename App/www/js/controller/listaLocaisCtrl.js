@@ -227,9 +227,71 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
+
+//// ESSE AQUI FUNCIONA >>>>>>>>>>>> ELE LISTA O JSON NA TELA (MAS NÃO USA ALASQL)
+// $scope.locais= [];
+// $http.get('js/Lista_de_Locais.xlsx').then(function(response) {
+//     $scope.locais =response.data;
+//     locais = $scope.locais;
+//     console.log($scope.locais);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TESTES PARA VER O QUE PEGA
+
+
+var dirname = "js";
+
+
+
+
+
+
+
+    // alasql('select * from json("js/locais.json",{headers:true, range:"B1:E10"})',
+    //        [],function(locais){
+    //        console.log(locais);
+    //
+    //        $scope.locais = locais;
+    //    });
+
+
+
+
+
+       	// 	var res = alasql('select * from json("js/locais.json",{headers:true, range:"B1:E10"})',[],function(res){
+          //   console.log(res);
+          //
+          //   $scope.locais = res;
+          //
+       	// 	});
+
+
+//alasql('select * from json("js/locais.json")');
+          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})',
+              [],function(data){
+              console.log(data);
+              $scope.locais = data;
+          });
+
+
 $scope.exportData = function () {
-        alasql('SELECT * INTO XLSX("john.xlsx",{headers:true}) FROM ?',[$scope.items]);
+        alasql('SELECT * INTO XLSX("locais.xlsx",{headers:true}) FROM ?',[$scope.locais]);
     };
+
 
 
 // $scope.items = [{
@@ -261,14 +323,6 @@ $scope.exportData = function () {
 
 
 
-
-
-// ???
-    alasql('select COD_LOCAL, DESC_LOCAL from xlsx(Lista de Locais.xlsx,{headers:true, range:"B1:E10"})',
-           [],function(items){
-           console.log(items);
-           $scope.items = items;
-       });
 
 
 

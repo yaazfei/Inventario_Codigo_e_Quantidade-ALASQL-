@@ -1,23 +1,72 @@
-<ion-view view-title="Consultar">
+<ion-view view-title="Consultar Bem">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
     <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
-      <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
+      <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
     </div>
   </ion-nav-buttons>
 
-  <ion-content class="padding images-fundo has-header">
 
-    <form>
-      <div class="list">
-          <br><br><br>
-        <label class="item item input">
-          <input type="text" autofocus="true" placeholder="Código" ng-model="dados.codigo">
-        </label>
+  <ion-header-bar class="bar-subheader bar-stable">
+    <div class="row">
+      <!-- <div class="col col-25 text-center" style="font-size: 20px">Placa: </div> -->
+      <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL: {{local.codigoLocal}}</div>
+    </div>
+  </ion-header-bar>
 
-      <button class="button button-block button-dark" ng-click="consultarProduto(dados)">Consultar</button>
-    </form>
+  <ion-content class="padding has-header">
+
+    <form name="Form" novalidate>
+      <div class="list" tabindex="0" id="DivForm">
+
+      </br></br>
+
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" autofocus="true" placeholder="Código do Bem" style="text-transform: uppercase" ng-model="dados.codigoBem" required>
+          </label>
+        </div>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="Nome do Bem" style="text-transform: uppercase" ng-model="dados.nomeBem" required>
+          </label>
+        </div>
+
+
+      </br>
+      <div class="button-bar">
+        <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
+        <input class="button button-positive" type="reset" value="Limpar"/>
+        <!-- <a class="button button-positive" ng-click="resetForm()">Limpar</a> -->
+        <input class="button button-balanced" ng-click="buscaBem(dados)" value="Buscar"/>
+      </div>
+
+</form>
+
+</br></br></br>
+
+<table width="100%">
+    <thead>
+        <tr>
+            <th>CÓDIGO DO LOCAL</th>
+            <th>DESCRIÇÃO DO LOCAL</th>
+            <!-- <th>DoB</th> -->
+        </tr>
+    </thead>
+    <body>
+        <tr ng-repeat="(key, value) in locais">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+            <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
+        </tr>
+    </body>
+</table>
+</div>
+
+
 
 
   </ion-content>
