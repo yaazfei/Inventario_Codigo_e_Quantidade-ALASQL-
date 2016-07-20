@@ -12,11 +12,61 @@
     </div>
   </ion-nav-buttons>
 
-  <ion-content class="padding images-fundo has-header">
+  <ion-content class="padding has-header">
 
-    <body ng-controller="listaLocaisCtrl">
-        <div ui-grid="{ data: myData }" class="myGrid"></div>
-        </body>
+    <div ng-controller="listaLocaisCtrl">
+
+
+      <!-- <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+      <br>
+      <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
+      <br>
+      <div ui-grid="gridOptions" ui-grid-edit class="grid"></div>
+      <br>
+      <div><strong>Last file uploaded:</strong></div>
+      <div>{{lastFile}}</div> -->
+
+
+
+      <button ng-click="exportData()">Export</button>
+         <br/>
+         <div id="exportable">
+         <table width="100%">
+             <thead>
+                 <tr>
+                     <th>CÓDIGO DO LOCAL</th>
+                     <th>DESCRIÇÃO DO LOCAL</th>
+                     <!-- <th>DoB</th> -->
+                 </tr>
+             </thead>
+             <body>
+                 <tr ng-repeat="local in locais">
+                     <td>{{local.COD_LOCAL}}</td>
+                     <td>{{local.DESC_LOCAL}}</td>
+                     <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
+
+                   </tr>
+                 </br>
+                     <!-- <tr ng-repeat="(key, value) in locais">
+                         <td>{{key}}</td>
+                         <td>{{value}}</td>
+                 </tr> -->
+             </body>
+         </table>
+         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
 
 
   </ion-content>

@@ -26,6 +26,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
+////PARA SER USADO NO EXEMPLO DE https://github.com/ccoenraets/force-contacts-angular-ionic/blob/master/force-contacts-angular-ionic/www/templates/contact-index.html
+
+//     .run(function(OAuthService) {
+//
+//         // Not using Ionic "Platform" to listen to device ready because this application is using the Mobile SDK
+//         // which is built on top of Cordova 2.3
+//         document.addEventListener("deviceready", function() {
+//             OAuthService.initialize().then(
+//                 function() {
+//                     window.location.hash = "contacts";
+//                 },
+//                 function() {
+//                     alert('Authentication error');
+//                 });
+//         });
+// })
+
+
+
+
+
+
+
+
+
 
 
 

@@ -40,11 +40,17 @@
                  </tr>
              </thead>
              <body>
-                 <tr ng-repeat="(key, value) in locais">
-                     <td>{{key}}</td>
-                     <td>{{value}}</td>
+                 <tr ng-repeat="local in locais">
+                     <td>{{local.COD_LOCAL}}</td>
+                     <td>{{local.DESC_LOCAL}}</td>
                      <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
-                 </tr>
+
+                   </tr>
+                 </br>
+                     <!-- <tr ng-repeat="(key, value) in locais">
+                         <td>{{key}}</td>
+                         <td>{{value}}</td>
+                 </tr> -->
              </body>
          </table>
          </div>

@@ -3,10 +3,10 @@
   background: url("../img/logo-nimal-leve.png") no-repeat center;
 }
 
-.myGrid {
-    width: 500px;
-    height: 250px;
-  }
+.grid {
+  width: 600px;
+  height: 450px;
+}
 
 
   /*.cadastrarVeiculoForm input.ng-invalid.ng-touched {

@@ -1,23 +1,130 @@
-<ion-view view-title="Consultar">
+<ion-view view-title="Consultar Bem">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
     <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
-      <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
+      <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
     </div>
   </ion-nav-buttons>
 
-  <ion-content class="padding images-fundo has-header">
 
-    <form>
-      <div class="list">
-          <br><br><br>
-        <label class="item item input">
-          <input type="text" autofocus="true" placeholder="Código" ng-model="dados.codigo">
-        </label>
+  <ion-header-bar class="bar-subheader bar-stable">
+    <div class="row">
+      <!-- <div class="col col-25 text-center" style="font-size: 20px">Placa: </div> -->
+      <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL: {{local.codigoLocal}}</div>
+    </div>
+  </ion-header-bar>
 
-      <button class="button button-block button-dark" ng-click="consultarProduto(dados)">Consultar</button>
-    </form>
+
+
+
+
+
+
+
+    <ion-content class="padding has-header">
+
+
+      <ion-pane>
+          <!-- <ion-header-bar class="bar-stable"> -->
+            <!-- <h1 class="title">Local Notification Example</h1> -->
+          </ion-header-bar>
+          <ion-content ng-controller="consultarProdutoCtrl">
+
+          </ion-content>
+       </ion-pane>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+     </br></br>
+     <ion-header-bar class="bar-light bar-subheader">
+     <input type="search"
+            placeholder="Filter contacts..."
+            ng-model="search"
+            ng-focus="searchFocused = true"
+            ng-blur="searchFocused = false"
+            ng-change="scrollTop()"
+            class="full-width">
+     <button ng-if="search.length"
+             class="button button-icon ion-android-close input-button"
+             ng-click="clearSearch()">
+     </button>
+   </ion-header-bar>
+
+
+
+
+
+      <form name="Form" novalidate>
+        <div class="list" tabindex="0" id="DivForm">
+
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" autofocus="true" placeholder="Código do Bem" style="text-transform: uppercase" ng-model="dados.codigoBem" required>
+          </label>
+        </div>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="Nome do Bem" style="text-transform: uppercase" ng-model="dados.nomeBem" required>
+          </label>
+        </div>
+
+
+      </br>
+      <div class="button-bar">
+        <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
+        <input class="button button-positive" type="reset" value="Limpar"/>
+
+
+        <input class="button button-balanced" ng-click="buscaLocal(dados)" type="reset" value="Salvar"/>
+      </div>
+</form>
+</br></br></br>
+
+
+
+            <ion-list>
+              <ion-item class="buscaBem"
+                 ng-repeat="bem in bens"
+                 item-height="getItemHeight(item)"
+                 id="{{ item.isLetter ? (item.letter + '_divider') : ''}}"
+                 ng-style="{'line-height': getItemHeight(item) + 'px'}"
+                 ng-class="{'item-divider': item.isLetter}">
+                 {{bem.letter || (bem.CHAPA+' '+bem.DESC_BEM)}}
+              </ion-item>
+            </ion-list> -->
+
+
+
+
+
+
+
 
 
   </ion-content>

@@ -2,7 +2,7 @@
 
   <ion-nav-buttons side="right">
     <div class="buttons">
-    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
       <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
     </div>
   </ion-nav-buttons>
@@ -10,61 +10,47 @@
 
   <ion-header-bar class="bar-subheader bar-stable">
     <div class="row">
-      <!-- <div class="col col-25 text-center" style="font-size: 20px">Placa: </div> -->
+
+
+      <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
       <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL: {{local.codigoLocal}}</div>
     </div>
   </ion-header-bar>
 
-  <ion-content class="padding has-header">
-
-    <form name="Form" novalidate>
-      <div class="list" tabindex="0" id="DivForm">
-
-      </br></br>
-
-        <div class="list list-inset">
-          <label class="item item-input">
-            <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" autofocus="true" placeholder="Código do Bem" style="text-transform: uppercase" ng-model="dados.codigoBem" required>
-          </label>
-        </div>
-        <div class="list list-inset">
-          <label class="item item-input">
-            <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder="Nome do Bem" style="text-transform: uppercase" ng-model="dados.nomeBem" required>
-          </label>
-        </div>
 
 
-      </br>
-      <div class="button-bar">
-        <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
-        <input class="button button-positive" type="reset" value="Limpar"/>
-        <!-- <a class="button button-positive" ng-click="resetForm()">Limpar</a> -->
-        <input class="button button-balanced" ng-click="buscaBem(dados)" value="Buscar"/>
-      </div>
+  <ion-content class="padding has-header has-subheader">
 
-</form>
 
-</br></br></br>
+    <div class="bar item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios7-search placeholder-icon"></i>
+        <input id="searchKey" type="search" placeholder="Nome do Bem" ng-model="searchKey" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
+        <button class="button button-clear" ng-click="clearSearch()">X</button>
+      </label>
+      <button class="button button-clear" ng-click="search()">Search</button>
+    </div>
 
-<table width="100%">
-    <thead>
-        <tr>
-            <th>CÓDIGO DO LOCAL</th>
-            <th>DESCRIÇÃO DO LOCAL</th>
-            <!-- <th>DoB</th> -->
-        </tr>
-    </thead>
-    <body>
-        <tr ng-repeat="(key, value) in locais">
-            <td>{{key}}</td>
-            <td>{{value}}</td>
-            <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
-        </tr>
-    </body>
-</table>
-</div>
+
+
+
+</br>
+<ion-list>
+
+  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
+  <ion-item ng-repeat="bem in bens" type="item-text-wrap">
+    <h4>{{bem.CHAPA}}</h3>
+    <p>{{bem.DESC_BEM}}</p>
+
+                      <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
+    <p>LOCAL: {{bem.COD_LOCAL}}</p>
+    <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
+      Em outro local
+    </span>
+
+  </ion-item>
+</ion-list>
+
 
 
 

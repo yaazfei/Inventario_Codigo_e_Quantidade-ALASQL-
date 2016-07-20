@@ -8,13 +8,14 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+
     <!--  Plugin ng-Grid -->
-    <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css"> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
     <script src="/release/ui-grid.min.js"></script> -->
 
 
-    
+
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -33,13 +34,31 @@
     <script type="text/javascript" src="plugins/ui-mask-master/dist/mask.js"></script> -->
 
 
-    <!--  Plugin ui-mask -->
-    <script src='plugins/ngMask-master/dist/ngMask.min.js'></script>
-
     <!--  Plugin ng-Grid -->
     <script src="lib/angular-ui-grid/ui-grid.min.js"></script>
 
+    <!--  Plugin ng-Touch -->
+    <script src="lib/angular-touch/angular-touch.js"></script>
 
+
+    <!--  Plugin alaSQL -->
+    <!-- <script src="plugins/alasql/dist/alasql.js"></script> -->
+    <!-- <script src="plugins/alasql/dist/alasql.min.js"></script> -->
+    <script src="//cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script>
+
+
+    <!--  Plugin JSZIP -->
+    <script src="plugins/jszip/dist/jszip.js"></script>
+    <script src="plugins/jszip/dist/jszip.min.js"></script>
+
+
+    <!-- Plugin xlxs -->
+    <!-- <script src="plugins/xlsx/jszip.js"></script> -->
+    <script src="plugins/xlsx/dist/xlsx.js"></script>
+    <script src="plugins/xlsjs/dist/xls.js"></script>
+    <script lang="javascript" src="plugins/xlsx/dist/xlsx.core.min.js"></script>
+    <script src="plugins/xlsx/dist/xlsx.core.min.js"></script>
+    <script src='http://alasql.org/console/xlsx.core.min.js'></script>
 
 
     <!--your app's js -->
@@ -57,13 +76,14 @@
     <script src="js/controller/cadastrarProdutoCtrl.js"></script>
     <script src="js/controller/validarProdutoCtrl.js"></script>
     <script src="js/controller/consultarProdutoCtrl.js"></script>
+    <script src="js/controller/consultarLocalCtrl.js"></script>
     <script src="js/controller/listaLocaisCtrl.js"></script>
 
 
 
   </head>
 
-  <body ng-app="starter" class="platform-android platform-cordova platform-webview">
+  <body ng-app="starter">
     <ion-nav-view>
 
     </ion-nav-view>
