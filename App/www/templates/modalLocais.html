@@ -1,0 +1,51 @@
+
+<div class="modal" ng-controller="editarProdutoCtrl">
+
+<ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+          <h1 class="title">Locais</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+
+
+          <ion-list>
+
+            <ion-radio ng-model="choice" ng-repeat="local in locais" type="item-text-wrap" name="local" class="item item-button-right">
+              <h4>{{local.COD_LOCAL}}</h3>
+              <p>{{local.DESC_LOCAL}}</p>
+              </button>
+              <!-- <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
+                Em outro local
+              </span> -->
+            </ion-radio>
+
+          </ion-list>
+            <button class="button button-full button-positive" ng-click="novoLocal(local)">Create</button>
+          </div>
+        </ion-content>
+      </ion-modal-view>
+
+
+<!--
+              <header class="bar bar-header bar-assertive">
+                <button class="button button-clear" ng-click="hideModal()">Cancel</button>
+                <h1 class="title">Test Modal</h1>
+              </header>
+               <ion-content class="padding has-header">
+                  <h1>Color : {{chosenColor}}</h1>
+              <label class="item item-radio"
+                     ng-repeat="item in resultData">
+                  <input type="radio" name="colorGroup"
+                         ng-value="item.id"
+                         ng-model="chosenColor">
+                  <div class="item-content">{{item.displayName}}</div>
+                  <i class="radio-icon ion-checkmark-round balanced"></i>
+              </label>
+          </ion-content> -->
+
+
+
+
+          
+            </div>

@@ -1,66 +1,128 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, $timeout, Scopes, FormatarCsv, PopUps, CriarDiretorio) {
 
-
-
-  // // Plugin xeditable
-  // editableOptions.theme = 'bs3';
-  // app.controller('Ctrl', function($scope) {
-  //   $scope.user = {
-  //     name: 'awesome user'
-  //   };
-  // });
-
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio) {
 
 
   console.log('Entrou no controller de Editar Produto');
 
-  // console.log('Scopes: ' + Scopes);
+  // manterDados();
 
-  manterDados();
+  $scope.local = Scopes.getLocal();
+  var local = Scopes.getLocal();
+  console.log('Local: ' + local);
 
-
-  // console.log('veiculo: ' + $scope.veiculo);
-  // console.log('veiculo: ' + veiculo);
-  // console.log('veiculoNOK: ' + $scope.veiculoNOK);
-
+  console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
 
-  //Definir Placeholder de Estado
-  $scope.estadoEscolhido = $scope.veiculo.ESTADO;
-  $scope.checkEstado = function(estado) {
-    $scope.estadoEscolhido = estado;
-  };
+  // Lista em Json
+  $scope.locais = [];
+  $http.get('js/locais.json').then(function(response) {
+    $scope.locais = response.data;
+    var locais = $scope.locais;
+    console.log($scope.locais);
 
-
-
+  });
 
 
 
+/*****************************************************************************/
+/*/ MODAL DE LOCAL /*/
 
-  // console.log('Veiculo NOK MODELO: ' + veiculoNOK.MODELO + '\n' + 'Veiculo NOK: ' + veiculoNOK.COR);
-
-
-
-  // $scope.estadoEscolhido = {
-  //      isPresent : true,
-  //      selectedEstado : veiculo.ESTADO // <-- this is the default item
-  //    };
+        //
+        // $scope.openModal = function() {
+        //   $scope.modalCtrl.show();
+        // };
 
 
-  // estadoEscolhido = veiculo.ESTADO;
-  // $scope.countAll = function (){
-  //   estadoEscolhido = veiculoNOK.ESTADO;
-  //   console.log('Estado Escolhido: ' + estadoEscolhido);
-  // };
+        $scope.onIncludeLoad = function() {
+            console.log("onIncludeLoad");
+            // Modal 1
+            $ionicModal.fromTemplateUrl('modalLocais.html', {
+              //id: '1', // We need to use and ID to identify the modal that is firing the event!
+              scope: $scope,
+              backdropClickToClose: false,
+              animation: 'slide-in-up'
+            }).then(function(modal) {
+              $scope.oModal1 = modal;
+            });
+          };
 
 
-  // $scope.estadoVeiculo = [
-  //   {nome :"EXCELENTE"},
-  //   {nome :"BOM"},
-  //   {nome :"REGULAR"},
-  //   {nome :"RUIM"},
-  //   {nome :"PÉSSIMO"},
-  // ];
+            $scope.openModal = function() {
+              $scope.oModal1.show();
+            };
+
+
+        // $ionicModal.fromTemplateUrl('modalLocais.html', function(modal) {
+        //   $scope.modalCtrl = modal;
+        // }, {
+        //   scope: $scope,
+        //   animation: 'slide-in-up',//'slide-left-right', 'slide-in-left', 'slide-right-left'
+        //   focusFirstInput: true
+        // });
+        //
+        //  console.log('modal', $scope);
+
+
+
+    // $scope.ModalCtrl = function() {
+    //       //app.controller('ModalCtrl', function($scope) {
+    //   $scope.hideModal = function() {
+    //       $scope.modalCtrl.hide();
+    //     };
+    //
+    //     $scope.applyModal = function() {
+    //       console.log('modal', $scope);
+    //       $scope.modalCtrl.remove();
+    //     };
+    //
+    //    var data = {1:"Green",2:"Red",4:"Yellow",8:"Purple"};
+    //    var resultArray = [];
+    //         for (var i in data) {
+    //             if (data.hasOwnProperty(i)) {
+    //                 resultArray.push({
+    //                   id: i,
+    //                   name: data[i],
+    //                   displayName: data[i]+" Color"
+    //                 });
+    //             }
+    //         }
+    //    $scope.resultData = resultArray;
+
+
+
+
+/*****************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /*****************************************************************************/
   /*/ ESCREVER PRODUTO INVÁLIDO - EDITAR /*/
@@ -152,20 +214,20 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   //// Copiar logo os dados de Produto para ProdutoNOK
 
   // $scope.manterDados = function (veiculo, veiculoNOK){
-  function manterDados() {
-
-    // $scope.veiculo = Scopes.getItem();
-
-    //$scope.veiculoNOK = null;
-    //$scope.veiculoNOK = Scopes.getItem();
-    veiculoNOK = Scopes.getItem();
-    $scope.veiculo = Scopes.getItem();
-    $scope.veiculoNOK = '';
-    // $scope.veiculoNOK.ESTADO = veiculoNOK;
-    console.log('veiculo NOK estado: ' + $scope.veiculoNOK.ESTADO);
-
-
-  }
+  // function manterDados() {
+  //
+  //   // $scope.veiculo = Scopes.getItem();
+  //
+  //   //$scope.veiculoNOK = null;
+  //   //$scope.veiculoNOK = Scopes.getItem();
+  //   veiculoNOK = Scopes.getItem();
+  //   $scope.veiculo = Scopes.getItem();
+  //   $scope.veiculoNOK = '';
+  //   // $scope.veiculoNOK.ESTADO = veiculoNOK;
+  //   console.log('veiculo NOK estado: ' + $scope.veiculoNOK.ESTADO);
+  //
+  //
+  // }
 
   //*****************************************************************************//
 

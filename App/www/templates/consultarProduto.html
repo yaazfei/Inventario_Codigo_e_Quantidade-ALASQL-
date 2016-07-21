@@ -13,7 +13,7 @@
 
 
       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-      <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL: {{local.codigoLocal}}</div>
+        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{local.codigoLocal}}</div>
     </div>
   </ion-header-bar>
 
@@ -25,7 +25,7 @@
     <div class="bar item-input-inset">
       <label class="item-input-wrapper">
         <i class="icon ion-ios7-search placeholder-icon"></i>
-        <input id="searchKey" type="search" placeholder="Nome do Bem" ng-model="searchKey" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
+        <input id="searchKey" type="search" placeholder="Código do Bem" ng-model="searchKey" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
         <button class="button button-clear" ng-click="clearSearch()">X</button>
       </label>
       <button class="button button-clear" ng-click="search()">Search</button>
@@ -38,15 +38,21 @@
 <ion-list>
 
   <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
-  <ion-item ng-repeat="bem in bens" type="item-text-wrap">
+
+  <ion-item ng-repeat="bem in bens" type="item-text-wrap" class="item item-button-right">
     <h4>{{bem.CHAPA}}</h3>
     <p>{{bem.DESC_BEM}}</p>
 
                       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-    <p>LOCAL: {{bem.COD_LOCAL}}</p>
-    <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
+    <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
+
+    <button class="button button-assertive button-outline" ng-click="editarBem (bem)" ng-show="bem.COD_LOCAL != local.codigoLocal">
+
+      <i class="ion-alert"></i>
+    </button>
+    <!-- <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
       Em outro local
-    </span>
+    </span> -->
 
   </ion-item>
 </ion-list>

@@ -1,24 +1,33 @@
 angular.module("starter").service('Scopes', function() {
 
-  var ItemSelecionado;
+  var localSelecionado;
+  var bemSelecionado;
+
 
   return {
-    getItem: function() {
-      return ItemSelecionado;
+    getLocal: function() {
+      return localSelecionado;
     },
-    setItem: function(value) {
-      ItemSelecionado = value;
+    setLocal: function(value) {
+      localSelecionado = value;
+    },
+      getBem: function() {
+        return bemSelecionado;
+    },
+      setBem: function(value) {
+        bemSelecionado = value;
+
     },
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
 
-      $scope.veiculoNOK = null;
-      $scope.veiculo = null;
+      $scope.local = null;
+      $scope.bem = null;
 
-      veiculoNOK = null;
-      veiculo = null;
-      veiculoEdit = null;
-      ItemSelecionado = null;
+      local = null;
+      bem = null;
+      localSelecionado = null;
+      bemSelecionado = null;
       alert("Zerou as variáveis");
     }
   };

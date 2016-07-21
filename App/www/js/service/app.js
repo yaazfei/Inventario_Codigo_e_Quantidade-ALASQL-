@@ -143,6 +143,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     }
   })
 
+  .state('app.modalLocais', {
+    url: '/modalLocais',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/modalLocais.html',
+        controller: 'editarProdutoCtrl'
+      }
+    }
+  })
+
 
   .state('app.infoProduto', {
     url: '/infoProduto',
