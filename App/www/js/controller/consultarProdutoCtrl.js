@@ -17,9 +17,12 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   });
 
 
-  $scope.editarBem = function (bem) {
+  $scope.editarBem = function(bem) {
+    //alert('Bem: ' + bem.DESC_BEM);
+    Scopes.setBem(bem);
+    // console.log('Local: ' + local);
     console.log('Bem: ' + bem);
-    console.log('Local: ' + local);
+
 
     $state.go('app.editarProduto');
   };
@@ -188,10 +191,10 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-  console.log($scope.bens);
+  console.log("$scope.locais: " + $scope.locais);
   //console.log(bens);
   //console.log(blau = $scope.getBem());
-  console.log($scope.bens);
+  console.log("$scope.bem: " + $scope.bens);
   //console.log(listaBem);
 
 

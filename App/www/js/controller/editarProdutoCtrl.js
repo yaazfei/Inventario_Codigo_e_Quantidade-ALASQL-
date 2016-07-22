@@ -3,14 +3,23 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
   console.log('Entrou no controller de Editar Produto');
+  console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
   // manterDados();
 
+// $scope.preencherVariaveis = function(){
   $scope.local = Scopes.getLocal();
   var local = Scopes.getLocal();
-  console.log('Local: ' + local);
+  //console.log('Local: ' + local);
 
-  console.log('Códigos de locais válidos: 000053, 000039, 000005');
+  $scope.bem = Scopes.getBem();
+  var bem = Scopes.getBem();
+  //console.log('Bem: ' + Bem);
+
+
+// };
+//
+//   $scope.preencherVariaveis();
 
 
   // Lista em Json

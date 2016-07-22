@@ -36,19 +36,17 @@
 
 </br>
 <ion-list>
-
   <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
-
-  <ion-item ng-repeat="bem in bens" type="item-text-wrap" class="item item-button-right">
+  <ion-list ng-controller="consultarProdutoCtrl">
+  <ion-item ng-repeat="bem in bens" type="item-text-wrap" class="item item-button-right" item="bem">
     <h4>{{bem.CHAPA}}</h3>
     <p>{{bem.DESC_BEM}}</p>
 
                       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
     <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
 
-    <button class="button button-assertive button-outline" ng-click="editarBem (bem)" ng-show="bem.COD_LOCAL != local.codigoLocal">
-
-      <i class="ion-alert"></i>
+    <button class="button button-assertive button-outline" ng-click="editarBem(bem)" ng-show="bem.COD_LOCAL != local.codigoLocal">
+    <i class="ion-alert"></i>
     </button>
     <!-- <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
       Em outro local
