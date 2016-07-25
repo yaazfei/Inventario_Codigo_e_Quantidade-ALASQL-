@@ -9,6 +9,13 @@
 }
 
 
+.modal{
+
+    height: 80%;
+    overflow: auto;
+
+}
+
   /*.cadastrarVeiculoForm input.ng-invalid.ng-touched {
     background-color: #FA787E;
   }*/

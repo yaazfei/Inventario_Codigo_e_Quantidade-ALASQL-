@@ -16,93 +16,213 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   var bem = Scopes.getBem();
   //console.log('Bem: ' + Bem);
 
+  $scope.teste1 = function(i){
+    console.log('teste1 : ' + i);
 
-// };
-//
-//   $scope.preencherVariaveis();
+  };
+
+  $scope.localSelecionado = function(local){
+    console.log('teste1 : ' + local.DESC_LOCAL + local.COD_LOCAL);
+    $scope.local = local;
+    $scope.hideModal();
+
+  };
 
 
-  // Lista em Json
+
+
+
+
+
+
+
+
+  $scope.clearSearch = function(search) {  // NÃO FUNCIONA
+  console.log('Entrou no clearSearch');
+  $scope.search  = '';
+  console.log('$scope.search =' + $scope.search);
+  search = '';
+ };
+
+
+  /*****************************************************************************/
+  /*/ LISTA EM JSON /*/
+
   $scope.locais = [];
+
+
   $http.get('js/locais.json').then(function(response) {
     $scope.locais = response.data;
     var locais = $scope.locais;
-    console.log($scope.locais);
+    console.log('$scope.locais: ' + $scope.locais);
 
   });
+  /*****************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 /*****************************************************************************/
-/*/ MODAL DE LOCAL /*/
-
-        //
-        // $scope.openModal = function() {
-        //   $scope.modalCtrl.show();
-        // };
+/*/ MODAL DE LOCAL /*/ //Funcionando
 
 
-        $scope.onIncludeLoad = function() {
-            console.log("onIncludeLoad");
-            // Modal 1
-            $ionicModal.fromTemplateUrl('modalLocais.html', {
-              //id: '1', // We need to use and ID to identify the modal that is firing the event!
-              scope: $scope,
-              backdropClickToClose: false,
-              animation: 'slide-in-up'
-            }).then(function(modal) {
-              $scope.oModal1 = modal;
-            });
-          };
+$scope.openModal = function() {
+  $scope.modalCtrl.show();
+};
 
 
-            $scope.openModal = function() {
-              $scope.oModal1.show();
-            };
+$ionicModal.fromTemplateUrl('templates/modalLocais.html', function(modal) {
+  $scope.modalCtrl = modal;
+}, {
+  scope: $scope,
+  animation: 'slide-in-up', //'slide-left-right', 'slide-in-up', 'slide-right-left'
+  backdropClickToClose: false,
+  focusFirstInput: true
+});
 
+console.log('modal', $scope);
 
-        // $ionicModal.fromTemplateUrl('modalLocais.html', function(modal) {
-        //   $scope.modalCtrl = modal;
-        // }, {
-        //   scope: $scope,
-        //   animation: 'slide-in-up',//'slide-left-right', 'slide-in-left', 'slide-right-left'
-        //   focusFirstInput: true
-        // });
-        //
-        //  console.log('modal', $scope);
+$scope.hideModal = function() {
 
+  $scope.modalCtrl.hide();
+};
 
-
-    // $scope.ModalCtrl = function() {
-    //       //app.controller('ModalCtrl', function($scope) {
-    //   $scope.hideModal = function() {
-    //       $scope.modalCtrl.hide();
-    //     };
-    //
-    //     $scope.applyModal = function() {
-    //       console.log('modal', $scope);
-    //       $scope.modalCtrl.remove();
-    //     };
-    //
-    //    var data = {1:"Green",2:"Red",4:"Yellow",8:"Purple"};
-    //    var resultArray = [];
-    //         for (var i in data) {
-    //             if (data.hasOwnProperty(i)) {
-    //                 resultArray.push({
-    //                   id: i,
-    //                   name: data[i],
-    //                   displayName: data[i]+" Color"
-    //                 });
-    //             }
-    //         }
-    //    $scope.resultData = resultArray;
-
+$scope.applyModal = function() {
+  console.log('modal', $scope);
+  $scope.modalCtrl.remove();
+};
 
 
 
 /*****************************************************************************/
 
 
+
+
+
+$scope.getItems = function() {
+    var dividerHasMatch = {};
+    return data.filter(function(item) {
+      var doesMatch = !$scope.search || item.isDivider || item.name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1;
+
+      if (!item.isDivider && doesMatch) {
+        dividerHasMatch[item.type] = true;
+      }
+
+      return doesMatch;
+    }).filter(function(item) {
+      if (item.isDivider && !dividerHasMatch[item.type]) {
+        return false;
+      }
+      return true;
+    });
+  };
+
+  $scope.getItemHeight = function(item) {
+    return item.isDivider ? 30 : 60;
+  };
+  $scope.getItemWidth = function(item) {
+    return '100%';
+  };
+
+  $scope.clearSearch = function() {
+    $scope.search="";
+  };
+
+
+
+
+
+
+
+
+//
+//
+//
+//
+//
+// $scope.oModal1 = '';
+//
+// $scope.onIncludeLoad = function() {
+//    console.log("Entrou no onIncludeLoad");
+//    // Modal 1
+//    $ionicModal.fromTemplateUrl('modalLocais.html', {
+//      id: '1', // We need to use and ID to identify the modal that is firing the event!
+//      scope: $scope,
+//      backdropClickToClose: false,
+//      animation: 'slide-in-up'
+//    }).then(function(modal) {
+//      $scope.oModal1 = modal;
+//    });
+//  };
+//
+//
+//
+//
+// $scope.openModal = function(index) {
+//      if (index == 1)
+//     {  //$scope.oModal1.show();
+//       $timeout(function(){
+//         $scope.oModal1.show();
+//       },0);
+//     }
+//      else
+//       $scope.oModal2.show();
+//    };
+//
+// $scope.closeModal = function(index) {
+//      if (index == 1)
+//       $scope.oModal1.hide();
+//      else
+//       $scope.oModal2.hide();
+//    };
+//
+//    /* Listen for broadcasted messages */
+//
+//    $scope.$on('modal.shown', function(event, modal) {
+//      console.log('Modal ' + modal.id + ' is shown!');
+//    });
+//
+//    $scope.$on('modal.hidden', function(event, modal) {
+//      console.log('Modal ' + modal.id + ' is hidden!');
+//    });
+//
+//    // Cleanup the modals when we're done with them (i.e: state change)
+//    // Angular will broadcast a $destroy event just before tearing down a scope
+//    // and removing the scope from its parent.
+//    $scope.$on('$destroy', function() {
+//      console.log('Destroying modals...');
+//      $scope.oModal1.remove();
+//      $scope.oModal2.remove();
+//    });
+//
+//
+//
+//  function onIncludeLoad() {
+//    console.log("onIncludeLoad");
+//  }
+//
+//
+//
+//
+
+
+
+/*****************************************************************************/
 
 
 
@@ -136,107 +256,13 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   /*****************************************************************************/
   /*/ ESCREVER PRODUTO INVÁLIDO - EDITAR /*/
 
-  $scope.escreverProdutoInvalido = function(veiculoEdit) {
-
-    console.log('Entrou no escrever veiculo inválido');
-    console.log('Veiculo: ' + veiculo);
-    console.log('Veiculo: ' + $scope.veiculo);
 
 
 
-    // manterDados(veiculo, veiculoNOK);
-    //console.log('Veiculo NOK MODELO: ' + veiculoNOK.MODELO);
-
-    removeNull(veiculoEdit);
-    veiculoNOK = angular.merge({}, veiculoNOK, veiculoEdit); // O MERGE/EXTENDS está mudando quase todos os objetos (como veiculo, $scope.veiculo e ItemSelecionado no service Scopes) WHY, GODS?
-    // console.log(angular.merge(veiculoNOK, veiculoNOK, veiculoEdit));
-    console.log(veiculoNOK);
-    console.log($scope.veiculoNOK);
-    console.log($scope.veiculo);
-
-
-    // angular.merge(veiculoNOK, veiculoEdit);
-    // angular.extend(veiculoNOK, veiculoEdit);
-
-    //veiculo.STATUS = '0';
-
-    var data = new Date();
-    var dataFormatada = ("0" + data.getDate()).substr(-2) + "/" + ("0" + (data.getMonth() + 1)).substr(-2) + "/" + data.getFullYear() + " " + data.getHours() + ":" + data.getMinutes();
-    // now.format("dd/MM/yyyy HH:mm:ss");
-
-    // veiculoNOK.DATAENTRADA = '';
-    // veiculoNOK.STATUSLEILAO = '';
-    // veiculoNOK.LEILAO = '';
-    // veiculoNOK.RESTRICAO = '';
-    // veiculoNOK.DATALIBERACAO = '';
-    veiculoNOK.DATACOLETA = dataFormatada;
-    veiculoNOK.USUARIOCOLETA = 'Admin';
-    veiculoNOK.STATUS = '0';
 
 
 
-    console.log('Data: ' + veiculoNOK.DATACOLETA);
 
-
-    var resultsNOK = FormatarCsv.iterateObject(veiculoNOK, 0);
-    var results = FormatarCsv.iterateObject(veiculo, 1);
-    // PopUps.testeJson(resultsNOK);
-    console.log('Veiculo: ' + veiculo);
-
-
-    if (window.cordova) {
-      // running on device/emulator
-
-      // Checando se o arquivo existe
-      CriarDiretorio.checarDiretorio($cordovaFile, veiculo);
-      alert("Saiu do ChecarDiretorio");
-
-
-
-      $timeout(function() {
-        //Escrevendo
-        alert("Vai escrever agora");
-        $cordovaFile.writeExistingFile(cordova.file.externalRootDirectory + "L2R", "veiculos.csv", (results.value + resultsNOK.value + '\n'))
-          .then(function(success) {
-            // $timeout(function() {
-
-            alert("Salvou o produto");
-            PopUps.produtoSalvo();
-            $state.go('app.consultarProduto');
-            Scopes.blankItem();
-
-            // }, 1000);
-
-          }, function(error) {
-
-            PopUps.erroEscrever();
-          });
-
-
-      }, 500);
-    }
-    console.log('Saiu do WriteFile - Arquivo criado:' + results.value + resultsNOK.value);
-  };
-
-
-  //*****************************************************************************//
-  //// Copiar logo os dados de Produto para ProdutoNOK
-
-  // $scope.manterDados = function (veiculo, veiculoNOK){
-  // function manterDados() {
-  //
-  //   // $scope.veiculo = Scopes.getItem();
-  //
-  //   //$scope.veiculoNOK = null;
-  //   //$scope.veiculoNOK = Scopes.getItem();
-  //   veiculoNOK = Scopes.getItem();
-  //   $scope.veiculo = Scopes.getItem();
-  //   $scope.veiculoNOK = '';
-  //   // $scope.veiculoNOK.ESTADO = veiculoNOK;
-  //   console.log('veiculo NOK estado: ' + $scope.veiculoNOK.ESTADO);
-  //
-  //
-  // }
 
   //*****************************************************************************//
 
@@ -244,18 +270,18 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   // (baseado em: http://stackoverflow.com/questions/28473889/angularjs-merge-two-objects-ignoring-null-and-missing-values)
 
 
-  function removeNullIn(prop, obj) {
-    var pr = obj[prop];
-    if (pr === null || pr === undefined) delete obj[prop];
-    else if (typeof pr === 'object')
-      for (var i in pr) removeNullIn(i, pr);
-  }
-
-  function removeNull(obj) {
-    for (var i in obj) {
-      removeNullIn(i, obj);
-    }
-  }
+  // function removeNullIn(prop, obj) {
+  //   var pr = obj[prop];
+  //   if (pr === null || pr === undefined) delete obj[prop];
+  //   else if (typeof pr === 'object')
+  //     for (var i in pr) removeNullIn(i, pr);
+  // }
+  //
+  // function removeNull(obj) {
+  //   for (var i in obj) {
+  //     removeNullIn(i, obj);
+  //   }
+  // }
 
 
 

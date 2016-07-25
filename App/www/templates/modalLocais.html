@@ -1,30 +1,76 @@
 
-<div class="modal" ng-controller="editarProdutoCtrl">
+<div class="modal">
 
-<ion-modal-view>
-        <ion-header-bar class="bar bar-header bar-positive">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
           <h1 class="title">Locais</h1>
-          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+          <button class="button button-clear button-primary" ng-click="hideModal()">Cancelar</button>
         </ion-header-bar>
         <ion-content class="padding">
 
+          <div class="bar item-input-inset">
+            <div class="item-input-wrapper" id="serch">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="search" placeholder="Código do Local" ng-model="search" style="text-transform: uppercase" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" autocorrect="off" autofocus="true" required>
+              <button ng-if="search.length" class="button button-clear" ng-click="clearSearch(search)">X</button>
 
-          <ion-list>
+            </div>
+            <button class="button button-clear" ng-click="search()">Buscar</button>
+          </div>
+        </br>
 
-            <ion-radio ng-model="choice" ng-repeat="local in locais" type="item-text-wrap" name="local" class="item item-button-right">
+
+          <ion-list ng-style="{'line-height': '250px'}" ion-scroll>
+
+            <ion-radio ng-model="choice" ng-repeat="local in locais" type="item-text-wrap" name="local" class="item item-button-right" ng-click="localSelecionado(local)">
               <h4>{{local.COD_LOCAL}}</h3>
               <p>{{local.DESC_LOCAL}}</p>
-              </button>
-              <!-- <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
-                Em outro local
-              </span> -->
+
+
             </ion-radio>
 
           </ion-list>
             <button class="button button-full button-positive" ng-click="novoLocal(local)">Create</button>
-          </div>
+
+
+
+
+
+
+
+
+
+
         </ion-content>
       </ion-modal-view>
+</div>
+
+
+
+<!--
+<div class="item collection-item {{local.DESC_LOCAL}}"
+            collection-repeat="local in locais()"
+            collection-item-width="'100%'"
+            collection-item-height="getItemHeight(item)"
+            ng-style="{'line-height': getItemHeight(item) +'px'}"
+            ng-class="{'item-divider': item.isDivider}">
+            <a class="item-content padding-left item-icon-right" ng-if="!item.isDivider" ng-href="#/tab/mytab/nowhere">
+              <div class="category-marker {{item.type}}"></div>
+              {{item.name}}
+              <i class="icon ion-ios7-arrow-right"></i>
+            </a>
+            <span class="padding-left" ng-if="item.isDivider">
+              {{item.name}}
+            </span>
+          </div> -->
+
+
+
+
+
+
+
+
 
 
 <!--
@@ -43,9 +89,3 @@
                   <i class="radio-icon ion-checkmark-round balanced"></i>
               </label>
           </ion-content> -->
-
-
-
-
-          
-            </div>

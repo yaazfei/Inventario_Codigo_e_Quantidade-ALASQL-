@@ -2,6 +2,7 @@
 
   <ion-nav-buttons side="right">
     <div class="buttons">
+  <!-- <button class="button" ng-click="modal.show()">Modal</button> -->
     </div>
   </ion-nav-buttons>
 
@@ -13,36 +14,44 @@
 
 
 
-    <ion-content class="padding has-header">
+<ion-content class="padding has-header">
 
-      <form name="editarProdutoForm" padding>
+  <form name="editarProdutoForm" padding>
 
-        <div class="item item-text-wrap">
+    <div class="item item-text-wrap">
 
-          <div class="row">
-            <div class="col">Código: </div>
-            <div class="col">{{bem.COD_BEM}}</div>
-          </div>
-          <div class="row">
-            <div class="col">Descrição: </div>
-            <div class="col">{{bem.DESC_BEM}}</div>
-          </div>
-          <div class="row">
-            <div class="col">Chapa: </div>
-            <div class="col">{{bem.CHAPA}}</div>
-          </div>
-        </div>
-        <div class="item item-text-wrap">
-          <div class="row">
-            <div class="col">Local registrado: </div>
-            <div class="col">{{bem.COD_LOCAL}}</div>
-          </div>
-        </div>
+      <div class="row">
+        <div class="col">Código: </div>
+        <div class="col">{{bem.COD_BEM}}</div>
+      </div>
+
+      <div class="row">
+        <div class="col">Descrição: </div>
+        <div class="col">{{bem.DESC_BEM}}</div>
+      </div>
+      <div class="row">
+        <div class="col">Chapa: </div>
+        <div class="col">{{bem.CHAPA}}</div>
+      </div>
+    </div>
+
+    <div class="item item-text-wrap">
+      <div class="row">
+        <div class="col">Local registrado: </div>
+        <div class="col">{{bem.COD_LOCAL}}</div>
+      </div>
+
+    <div class="row">
+      <div class="col"></div>
+      <div class="col">TESTE</div>
+    </div>
+  </div>
 
 
-        <div class="item item-text-wrap">
 
-          <!-- <div class="row">
+
+
+    <!-- <div class="row">
             <div class="col">Código do Local: </div>
             <div class="col">{{bem.COD_LOCAL}}</div>
           </div>
@@ -51,21 +60,21 @@
             <div class="col">{{local.DESC_LOCAL}}</div>
           </div> -->
 
-          <div class="row">
-            <div class="col">Local: </div>
-              <input class="form-control text-center" onfocus="openModal()" type="text" style="text-transform: uppercase" ng-model="local.COD_LOCAL" name="cod_local" placeholder="{{local.COD_LOCAL}}"></input>
-              <div ng-show="editarProdutoForm.$submitted || editarProdutoForm.cod_local.$touched">
-              </div>
-            </label>
-          </div>
-          <div class="row">
-            <div class="col">
-              <p>{{local.DESC_LOCAL}}</p>
-              </div>
-          </div>
 
-
+    <form name="editarProdutoForm" padding>
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col">Novo Local: </div>
+          <input class="form-control text-center" ng-focus="openModal()" type="text" style="text-transform: uppercase; text-align:center;" ng-model="local.COD_LOCAL" name="cod_local" placeholder="{{local.COD_LOCAL}}"></input>
+          <!-- <div ng-show="editarProdutoForm.$submitted || editarProdutoForm.cod_local.$touched"></div> -->
         </div>
+
+        <div class="row">
+          <div class="col"> </div>
+          <div class="col">{{local.DESC_LOCAL}}</div>
+        </div>
+      </div>
+
 
 
         <!-- <div class="right-inner-addon">
@@ -137,9 +146,9 @@
 
 
           <button class="button button-block button-dark" ng-click="">Salvar</button>
+
+          <!-- <button class="button button-block button-assertive" ng-click="openModal()">Modal</button> -->
       </form>
-
-
 
 
 
