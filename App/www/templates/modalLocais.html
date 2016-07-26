@@ -22,7 +22,7 @@
 
           <ion-list ng-style="{'line-height': '250px'}" ion-scroll>
 
-            <ion-radio ng-model="choice" ng-repeat="local in locais" type="item-text-wrap" name="local" class="item item-button-right" ng-click="localSelecionado(local)">
+            <ion-radio ng-repeat="local in locais | filter:search" type="item-text-wrap" class="item item-button-right" ng-click="localSelecionado(local)">
               <h4>{{local.COD_LOCAL}}</h3>
               <p>{{local.DESC_LOCAL}}</p>
 
@@ -30,7 +30,7 @@
             </ion-radio>
 
           </ion-list>
-            <button class="button button-full button-positive" ng-click="novoLocal(local)">Create</button>
+
 
 
 
@@ -44,48 +44,3 @@
         </ion-content>
       </ion-modal-view>
 </div>
-
-
-
-<!--
-<div class="item collection-item {{local.DESC_LOCAL}}"
-            collection-repeat="local in locais()"
-            collection-item-width="'100%'"
-            collection-item-height="getItemHeight(item)"
-            ng-style="{'line-height': getItemHeight(item) +'px'}"
-            ng-class="{'item-divider': item.isDivider}">
-            <a class="item-content padding-left item-icon-right" ng-if="!item.isDivider" ng-href="#/tab/mytab/nowhere">
-              <div class="category-marker {{item.type}}"></div>
-              {{item.name}}
-              <i class="icon ion-ios7-arrow-right"></i>
-            </a>
-            <span class="padding-left" ng-if="item.isDivider">
-              {{item.name}}
-            </span>
-          </div> -->
-
-
-
-
-
-
-
-
-
-
-<!--
-              <header class="bar bar-header bar-assertive">
-                <button class="button button-clear" ng-click="hideModal()">Cancel</button>
-                <h1 class="title">Test Modal</h1>
-              </header>
-               <ion-content class="padding has-header">
-                  <h1>Color : {{chosenColor}}</h1>
-              <label class="item item-radio"
-                     ng-repeat="item in resultData">
-                  <input type="radio" name="colorGroup"
-                         ng-value="item.id"
-                         ng-model="chosenColor">
-                  <div class="item-content">{{item.displayName}}</div>
-                  <i class="radio-icon ion-checkmark-round balanced"></i>
-              </label>
-          </ion-content> -->

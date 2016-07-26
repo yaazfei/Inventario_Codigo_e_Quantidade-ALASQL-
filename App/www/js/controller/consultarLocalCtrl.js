@@ -1,7 +1,7 @@
 angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio) {
 
-
-  console.log('Códigos de locais válidos: 000053, 000039, 000005');
+console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
+console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
   $scope.fecharApp = function() {
     console.log('Apertou o fechar');
@@ -14,30 +14,20 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
   $scope.buscaLocal = function(dados) {
     //$scope.message = "Produto " + dados.codigo + " foi salvo com sucesso!";
 
-    if (dados.codigoLocal === undefined || dados.codigoLocal === "") {
+    if (dados.COD_LOCAL === undefined || dados.COD_LOCAL === "") {
 
       PopUps.erroBranco();
 
     } else {
 
+
       console.log('Dados: ' + dados);
       Scopes.setLocal(dados);
-      //var local = Scopes.getLocal();
-
-
-      // var data = new Date();
-      // var dataFormatada = ("0" + data.getDate()).substr(-2) + "/" + ("0" + (data.getMonth() + 1)).substr(-2) + "/" + data.getFullYear();
-      // var folder = "Inventario" + "_" + dataFormatada + ".csv";
-
-      // $scope.message = Scopes.getItem();
 
       if (window.cordova) {
 
-
-        CriarDiretorio.processar($cordovaFile, dados);
+        //CriarDiretorio.processar($cordovaFile, dados);
         //alert("Passou do CriarDiretorio.processar");
-
-
       }
 
       $state.go('app.consultarProduto');

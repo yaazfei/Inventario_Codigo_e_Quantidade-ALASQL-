@@ -21,14 +21,14 @@ angular.module("starter").service('Scopes', function() {
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
 
-      $scope.local = null;
-      $scope.bem = null;
-
-      local = null;
-      bem = null;
-      localSelecionado = null;
-      bemSelecionado = null;
-      alert("Zerou as variáveis");
+      // $scope.local = null;
+      // $scope.bem = null;
+      //
+      // local = null;
+      // bem = null;
+      // localSelecionado = null;
+      // bemSelecionado = null;
+      // alert("Zerou as variáveis");
     }
   };
 });
