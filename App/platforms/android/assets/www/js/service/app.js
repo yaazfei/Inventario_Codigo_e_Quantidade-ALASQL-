@@ -36,6 +36,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
+
+
+
+
+
+
+
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -114,6 +122,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
       'menuContent': {
         templateUrl: 'templates/listaLocais.html',
         controller: 'listaLocaisCtrl'
+      }
+    }
+  })
+
+  .state('app.modalLocais', {
+    url: '/modalLocais',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/modalLocais.html',
+        controller: 'editarProdutoCtrl'
       }
     }
   })

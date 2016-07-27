@@ -41,108 +41,25 @@
         <div class="col">{{bem.COD_LOCAL}}</div>
       </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col"></div>
       <div class="col">TESTE</div>
-    </div>
+    </div> -->
   </div>
+<br/>
 
 
-
-
-
-    <!-- <div class="row">
-            <div class="col">Código do Local: </div>
-            <div class="col">{{bem.COD_LOCAL}}</div>
-          </div>
-          <div class="row">
-            <div class="col">Local: </div>
-            <div class="col">{{local.DESC_LOCAL}}</div>
-          </div> -->
-
-
-    <form name="editarProdutoForm" padding>
-      <div class="item item-text-wrap">
-        <div class="row">
-          <div class="col">Novo Local: </div>
-          <input class="form-control text-left" ng-focus="openModal()" type="text" style="text-transform: uppercase; text-align:center;" ng-model="local.COD_LOCAL"></input>
-          <!-- <div ng-show="editarProdutoForm.$submitted || editarProdutoForm.cod_local.$touched"></div> -->
-        </div>
-
-        <div class="row">
-          <div class="col"> </div>
-          <div class="col">{{local.DESC_LOCAL}}</div>
+<div class="item item-text-wrap">
+  <div class="row">
+    <div class="col">Novo Local:</div>
+  </div>
+      <div class="list" padding>
+        <div class="item item-input item-floating-label">
+          <input ng-focus="openModal()" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
+          <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
         </div>
       </div>
-
-
-
-        <!-- <div class="right-inner-addon">
-
-
-          <label class="item item-input">
-            <span class="input-label" style="width:130px">Novo local:</span>
-            <input class="form-control text-center" type="text" style="text-transform: uppercase" ng-model="local.COD_LOCAL" name="cod_local" placeholder="{{local.COD_LOCAL}}"></input>
-          </label>
-          <div ng-show="editarProdutoForm.$submitted || editarProdutoForm.cod_local.$touched">
-          </div> -->
-<!--
-
-          <label class="item item-input">
-            <span class="input-label" style="width:130px">Cor:</span>
-            <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.COR" name="cor" placeholder="{{veiculo.COR}}"></input>
-          </label>
-          <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.cor.$touched">
-          </div>
-
-
-          <label class="item item-input">
-            <span class="input-label" style="width:130px">Processo:</span>
-            <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PROCESSO" name="processo" placeholder="{{veiculo.PROCESSO}}"></input>
-          </label>
-          <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.processo.$touched">
-          </div>
-
-
-          <label class="item item-input">
-            <span class="input-label text-left" style="width:130px">Chassi:</span>
-            <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.CHASSI" name="chassi" placeholder="{{veiculo.CHASSI}}"></input>
-          </label>
-          <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.chassi.$touched">
-          </div>
-
-
-          <label class="item item-input">
-            <span class="input-label text-left" style="width:130px">Pátio:</span>
-            <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PATIO" name="patio" placeholder="{{veiculo.PATIO}}"></input>
-          </label>
-          <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.patio.$touched">
-          </div>
-
-
-          <label class="item item-input">
-            <span class="input-label" style="width:130px">Localização:</span>
-            <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.LOCALIZACAO" name="localizacao" placeholder="{{veiculo.LOCALIZACAO}}"></input>
-          </label>
-          <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.localizacao.$touched">
-          </div>
-
-
-          <label class="item item-input item-select">
-            <span class="input-label" style="width:130px">Estado veículo:</span>
-
-            <span class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.ESTADO" name="estado" id="selectedEstado">{{estadoEscolhido}}</span>
-            <select ng-model="veiculoNOK.ESTADO" style="width: 30px" ng-change="checkEstado(veiculoNOK.ESTADO)" required>
-              <option>EXCELENTE</option>
-              <option>BOM</option>
-              <option>REGULAR</option>
-              <option>RUIM</option>
-              <option>PÉSSIMO</option>
-
-
-            </select>
-          </label> -->
-
+</div>
 
 
           <button class="button button-block button-dark" ng-click="">Salvar</button>
@@ -154,5 +71,7 @@
 
 
 
+
     </ion-content>
+
 </ion-view>

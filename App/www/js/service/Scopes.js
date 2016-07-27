@@ -20,15 +20,24 @@ angular.module("starter").service('Scopes', function() {
     },
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
+      var local = "";
+      var bem = "";
 
-      // $scope.local = null;
-      // $scope.bem = null;
-      //
-      // local = null;
-      // bem = null;
-      // localSelecionado = null;
-      // bemSelecionado = null;
-      // alert("Zerou as variáveis");
+      if (local !== undefined || local !== ""){
+          local = null;
+      }
+      if ($scope.local !== undefined || $scope.local !== "" ){
+          $scope.local = null;
+      }
+      if (bem !== undefined || bem !== ""){
+          bem = null;
+      }
+      if ($scope.bem !== undefined || $scope.bem !== "" ){
+          $scope.bem = null;
+      }
+
+      //alert("Zerou as variáveis");
+      console.log("Zerou as variáveis");
     }
   };
 });

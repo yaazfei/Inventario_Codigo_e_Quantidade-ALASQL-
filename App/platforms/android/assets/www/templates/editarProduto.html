@@ -1,247 +1,77 @@
-<ion-view view-title="Editar Veículo">
-  <!-- <ion-nav-buttons side="primary">
-    <button class="button button-icon icon ion-ios-minus-outline"
-      ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
-       </ion-nav-buttons> -->
+<ion-view view-title="Editar Bem">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
-      <!-- <button class="button button-icon icon ion-android-done" ng-click="escreverCarroInvalido()"></button> -->
+  <!-- <button class="button" ng-click="modal.show()">Modal</button> -->
     </div>
   </ion-nav-buttons>
 
-  <ion-header-bar class="bar-subheader bar-stable">
+  <!-- <ion-header-bar class="bar-subheader bar-stable">
     <div class="row">
-      <!-- <div class="col col-25 text-center" style="font-size: 20px">Placa: </div> -->
       <div class="col col text-center" style="font-size: 15px; font-weight:bold">PLACA: {{veiculo.PLACA}}</div>
     </div>
-  </ion-header-bar>
-
-  <ion-content class="padding">
+  </ion-header-bar> -->
 
 
-    <!-- <div class="item item-divider">
-        <div class="row"> -->
 
-    <!-- <button class="button button-block button-balanced" ng-csv="getArray" csv-header="getHeader()" filename="{{filename}}" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}" lazy-load="true">Veículo ok</button> -->
+<ion-content class="padding has-header">
 
+  <form name="editarProdutoForm" padding>
 
-    <!-- <button class="button button-block button-balanced" ng-click="">Veículo OK</button>
-        </div>
+    <div class="item item-text-wrap">
 
       <div class="row">
-        <button class="button button-block button-assertive" ng-click="escreverCarroInvalido()">Veículo não OK</button>
-      </div> -->
+        <div class="col">Código: </div>
+        <div class="col">{{bem.COD_BEM}}</div>
+      </div>
 
-    <!-- </div> -->
-    <!-- <div class="item item-text-wrap"> -->
+      <div class="row">
+        <div class="col">Descrição: </div>
+        <div class="col">{{bem.DESC_BEM}}</div>
+      </div>
+      <div class="row">
+        <div class="col">Chapa: </div>
+        <div class="col">{{bem.CHAPA}}</div>
+      </div>
+    </div>
 
-    <!-- Fazer com que seja selecionado um campo e ele abra para ser editável. -->
+    <div class="item item-text-wrap">
+      <div class="row">
+        <div class="col">Local registrado: </div>
+        <div class="col">{{bem.COD_LOCAL}}</div>
+      </div>
 
-
-
-<!--  Plugin xeditable -->
-    <!-- <div ng-app="app" ng-controller="editarProdutoCtrl">
-      <a href="#" editable-text="veiculoNOK.placa">{{ veiculo.placa || 'empty' }}</a>
+    <!-- <div class="row">
+      <div class="col"></div>
+      <div class="col">TESTE</div>
     </div> -->
+  </div>
+<br/>
 
 
-
-
-
-
-
-    <form name="editarVeiculoForm" padding>
-    <!-- <form name="editarVeiculoForm" ng-submit="modificarInput('modelo', 'veiculo.MODELO');" padding> -->
-
-      <div class="right-inner-addon">
-
-
-
-
-        <!-- <section class="flexbox">
-                <div class="stretch">
-                  <label class="item item-input" padding-left>
-                  <span class="input-label" style="width:130px">Placa:</span>
-
-                  <input class="form-control text-left" type="text" ng-model="veiculo.PLACA" name="placa" placeholder="TESTE" style="margin-right: 10px">
-                  <i class="icon ion-close-round" ng-show="checked"></i>
-                </label>
-                </div>
-        </section>
-        <section class="flexbox">
-                    <div class="stretch">
-                      <label class="item item-input">
-                      <span class="input-label" style="width:130px">Marca/Modelo:</span>
-
-                      <input class="form-control text-left" type="text" ng-model="veiculo.PLACA" name="placa" placeholder="TESTE" style="margin-right: 10px">
-                      <i class="icon ion-close-round" ng-show="checked"></i>
-                    </label>
-                    </div>
-            </section> -->
-
-
-
-
-        </label>
-
-        <!-- inline input -->
-
-        <!-- <label class="item item-input">
-        <!--
-
-        <span class="input-label" style="width:130px">Placa:</span>
-        <input class="form-control text-left" type="text" ng-model="veiculo.PLACA" name="placa" readonly="readonly"></input>
-
-      </label>-->
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.marca.$pristine"></i> -->
-          <!-- Ao invés de ter PRISTINE, deveria aparecer sempre que o campo imput estivesse vazio (aparecendo somente o placeholder) -->
-
-          <span class="input-label" style="width:130px">Marca/Modelo:</span>
-<!-- ng-focus="form.name.isValid = people.name ? true : false" -->
-<!-- <INPUT type="text" size="25" value="Username" onFocus="if(editarVeiculoForm.modelo.$touched && "null" ) {this.value = '';}" onBlur="if (this.value == '') {this.value = '{{veiculo.MODELO}}'}" /> -->
-
-          <!-- <input class="form-control text-left" type="text" ng-model="veiculoNOK.MODELO" name="modelo" placeholder="{{veiculo.MODELO}}" ng-focus="editarVeiculoForm.modelo.$touched && "null" = {{veiculo.MODELO}} ? true : false"></input> -->
-            <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.MODELO" name="modelo" placeholder="{{veiculo.MODELO}}"   ></input>
-  <!-- <input class="form-control text-left" type="text" ng-model="veiculoNOK.MODELO" name="modelo" placeholder="{{veiculo.MODELO}}" ngvalue="{{veiculo.MODELO}}"></input> -->
-          <!-- <input class="form-control text-left" type="text" ng-model="veiculoNOK.MODELO" name="modelo" placeholder="{{veiculo.MODELO}}" ngsubmit="if(this.value == null) { this.value = {{veiculo.MODELO}}; }" value=""></input> -->
-          <!-- O ng-model veiculo.placa foi renomeado para veiculoPlaca pois o placeholder não funciona se for o mesmo nome que o dele.
-
-          <!-- <span class="item-note padding" align="left"><i class="ion-android-done" ng-show="checked"></i></span> -->
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.modelo.$touched">
-          <!-- <div ng-show="editarVeiculoForm.modelo.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
+<div class="item item-text-wrap">
+  <div class="row">
+    <div class="col">Novo Local:</div>
+  </div>
+      <div class="list" padding>
+        <div class="item item-input item-floating-label">
+          <input ng-focus="openModal()" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
+          <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
         </div>
-
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.cor.$pristine"></i> -->
-          <span class="input-label" style="width:130px">Cor:</span>
-          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.COR" name="cor" placeholder="{{veiculo.COR}}"  ></input>
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.cor.$touched">
-          <!-- <div ng-show="editarVeiculoForm.cor.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
-        </div>
-
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.processo.$pristine"></i> -->
-          <span class="input-label" style="width:130px">Processo:</span>
-          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PROCESSO" name="processo" placeholder="{{veiculo.PROCESSO}}" ></input>
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.processo.$touched">
-          <!-- <div ng-show="editarVeiculoForm.processo.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
-        </div>
-
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.chassi.$pristine"></i> -->
-          <span class="input-label text-left" style="width:130px">Chassi:</span>
-          <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.CHASSI" name="chassi" placeholder="{{veiculo.CHASSI}}" ></input>
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.chassi.$touched">
-          <!-- <div ng-show="editarVeiculoForm.chassi.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
-        </div>
-
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.patio.$pristine"></i> -->
-          <span class="input-label text-left" style="width:130px">Pátio:</span>
-          <input class="form-control" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.PATIO" name="patio" placeholder="{{veiculo.PATIO}}" ></input>
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.patio.$touched">
-          <!-- <div ng-show="editarVeiculoForm.patio.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
-        </div>
-
-
-        <label class="item item-input">
-          <!-- <i class="ion-android-done padding-right balanced" align="left" ng-show="editarVeiculoForm.localizacao.$pristine"></i> -->
-          <span class="input-label" style="width:130px">Localização:</span>
-          <input class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.LOCALIZACAO" name="localizacao" placeholder="{{veiculo.LOCALIZACAO}}" ></input>
-        </label>
-        <div ng-show="editarVeiculoForm.$submitted || editarVeiculoForm.localizacao.$touched">
-          <!-- <div ng-show="editarVeiculoForm.localizacao.$error.required" class="button button-outline button-small button-full button-assertive">Este campo é requerido!</div> -->
-        </div>
-
-        <!-- <label class="item item-input item-select">
-
-          <span class="input-label" style="width:130px">Estado veículo:</span>
-          <select class="form-control text-left" type="text" ng-model="veiculoNOK.ESTADO" name="estado" align="left">
-            <option>EXCELENTE</option>
-            <option>BOM</option>
-            <option selected>REGULAR</option>
-            <option>RUIM</option>
-            <option>PÉSSIMO</option>
-
-
-                      </select>
-                    </label> -->
-
-            <!-- <option ng-repeat=" veiculo in veiculos" value="{{veiculo.nome}}">{{veiculo.nome}}</option> -->
-
-                    <label class="item item-input item-select">
-                    <span class="input-label" style="width:130px">Estado veículo:</span>
-
-                    <span class="form-control text-left" type="text" style="text-transform: uppercase" ng-model="veiculoNOK.ESTADO" name="estado" id="selectedEstado">{{estadoEscolhido}}</span>
-                      <select  ng-model="veiculoNOK.ESTADO" style="width: 30px" ng-change="checkEstado(veiculoNOK.ESTADO)" required>
-                           <option>EXCELENTE</option>
-                           <option>BOM</option>
-                           <option>REGULAR</option>
-                           <option>RUIM</option>
-                           <option>PÉSSIMO</option>
-
-
-                      </select>
-                      </label>
-
-
-
-        <button class="button button-block button-dark" ng-click="escreverProdutoInvalido(veiculoNOK)">Salvar</button>
-        <!-- stacked input -->
-        <!-- </br>
-      </br>
-      <div class="list">
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label ">Placa:</span> <span class="item-note padding" align="left"><i class="ion-android-done"></i> Modificado  </span>
-          <input class="form-control align-left" type="text" ng-model="veiculo.PLACA" name="placa" placeholder="TESTE">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Placa:</span> <span class="item-note padding" align="left"><i class="ion-android-done"></i> Modificado  </span>
-          <input class="form-control" type="text" ng-model="veiculo.PLACA" name="placa" placeholder="TESTE">
-        </label>
-
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">Placa:</span> <span class="item-note padding" align="left"><i class="ion-android-done"></i> Modificado  </span>
-          <input class="form-control" type="text" ng-model="veiculo.PLACA" name="placa" placeholder="TESTE">
-        </label> -->
-
-
-
-
-
-
-
-        <!-- Lista de Estados-->
-        <!-- <label class="item item-input item-select">
-      <div class="input-label">
-        Estado veículo:
       </div>
-      <select ng-model="veiculo.ESTADO">
-        <option ng-repeat=" veiculo in veiculos" value="{{veiculo.nome}}">{{veiculo.nome}}</option>
-      </select>
-    </label>-->
-
-      </div>
-    </form>
+</div>
 
 
+          <button class="button button-block button-dark" ng-click="">Salvar</button>
+
+          <!-- <button class="button button-block button-assertive" ng-click="openModal()">Modal</button> -->
+      </form>
 
 
 
 
-  </ion-content>
+
+
+    </ion-content>
+
 </ion-view>

@@ -4,11 +4,14 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
-  // $scope.preencherVariaveis = function(){
-
-  $scope.local = Scopes.getLocal();
-  var local = Scopes.getLocal();
+  //$scope.local = Scopes.getLocal();
+  //var local = Scopes.getLocal();
   //console.log('Local: ' + local);
+
+  var local;
+
+  $scope.dados = Scopes.getLocal();
+  var dados = Scopes.getLocal();
 
   $scope.bem = Scopes.getBem();
   var bem = Scopes.getBem();
@@ -30,7 +33,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   };
 
   $scope.localSelecionado = function(local) {
-    console.log('teste1 : ' + local.DESC_LOCAL + local.COD_LOCAL);
+    console.log('Selecionou o local : ' + local.DESC_LOCAL + ' ' + local.COD_LOCAL);
     $scope.local = local;
     $scope.hideModal();
 

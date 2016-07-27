@@ -1,0 +1,46 @@
+
+<div class="modal">
+
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Locais</h1>
+          <button class="button button-clear button-primary" ng-click="hideModal()">Cancelar</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+
+          <div class="bar item-input-inset">
+            <div class="item-input-wrapper" id="serch">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="search" placeholder="Código do Local" ng-model="search" style="text-transform: uppercase" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" autocorrect="off" autofocus="true" required>
+              <button ng-if="search.length" class="button button-clear" ng-click="clearSearch(search)">X</button>
+
+            </div>
+            <button class="button button-clear" ng-click="search()">Buscar</button>
+          </div>
+        </br>
+
+
+          <ion-list ng-style="{'line-height': '250px'}" ion-scroll>
+
+            <ion-radio ng-repeat="local in locais | filter:search" type="item-text-wrap" class="item item-button-right" ng-click="localSelecionado(local)">
+              <h4>{{local.COD_LOCAL}}</h3>
+              <p>{{local.DESC_LOCAL}}</p>
+
+
+            </ion-radio>
+
+          </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+        </ion-content>
+      </ion-modal-view>
+</div>

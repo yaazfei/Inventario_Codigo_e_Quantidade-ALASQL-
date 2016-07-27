@@ -1,25 +1,43 @@
 angular.module("starter").service('Scopes', function() {
 
-  var ItemSelecionado;
+  var localSelecionado;
+  var bemSelecionado;
+
 
   return {
-    getItem: function() {
-      return ItemSelecionado;
+    getLocal: function() {
+      return localSelecionado;
     },
-    setItem: function(value) {
-      ItemSelecionado = value;
+    setLocal: function(value) {
+      localSelecionado = value;
+    },
+      getBem: function() {
+        return bemSelecionado;
+    },
+      setBem: function(value) {
+        bemSelecionado = value;
+
     },
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
+      var local = "";
+      var bem = "";
 
-      $scope.veiculoNOK = null;
-      $scope.veiculo = null;
+      if (local !== undefined || local !== ""){
+          local = null;
+      }
+      if ($scope.local !== undefined || $scope.local !== "" ){
+          $scope.local = null;
+      }
+      if (bem !== undefined || bem !== ""){
+          bem = null;
+      }
+      if ($scope.bem !== undefined || $scope.bem !== "" ){
+          $scope.bem = null;
+      }
 
-      veiculoNOK = null;
-      veiculo = null;
-      veiculoEdit = null;
-      ItemSelecionado = null;
-      alert("Zerou as variáveis");
+      //alert("Zerou as variáveis");
+      console.log("Zerou as variáveis");
     }
   };
 });

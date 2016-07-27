@@ -3,21 +3,20 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
 console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
-  $scope.fecharApp = function() {
-    console.log('Apertou o fechar');
-    PopUps.showConfirm();
+Scopes.blankItem($scope);
 
-  };
+$scope.fecharApp = function() {
+  console.log('Apertou o fechar');
+  PopUps.showConfirm();
+
+};
 
 
 
   $scope.buscaLocal = function(dados) {
-    //$scope.message = "Produto " + dados.codigo + " foi salvo com sucesso!";
 
     if (dados.COD_LOCAL === undefined || dados.COD_LOCAL === "") {
-
       PopUps.erroBranco();
-
     } else {
 
 

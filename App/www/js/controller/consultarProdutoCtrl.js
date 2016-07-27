@@ -6,21 +6,32 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
   //local = Scopes.getbem();
   $scope.local = Scopes.getLocal();
-  local = Scopes.getLocal();
-  console.log('Local: ' + local);
+  dados = Scopes.getLocal();
+  //console.log('$scope.dados: ' + dados.COD_LOCAL);
+  //local = Scopes.getLocal();
+  //console.log('Local: ' + local);
 
   listarBens();
 
 
 
 
+  $scope.teste1 = function(i) {
+    console.log('teste1 : ' + i);
+
+  };
+
   /*****************************************************************************/
   /*/ Escolher um Bem /*/
 
-  $scope.editarBem = function(bem) {
+  $scope.editarBem = function(bem, $index, $event) {
+
     Scopes.setBem(bem);
     //alert('Bem: ' + bem.DESC_BEM);
     // console.log('Local: ' + local);
+
+
+
 
 
 
@@ -38,9 +49,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
     // });
     };
     $scope.checkLocal(bem);
-
-
-
 
 
     $state.go('app.editarProduto');

@@ -1,8 +1,9 @@
-
 angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio) {
 
+console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
+console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
-
+Scopes.blankItem($scope);
 
   $scope.fecharApp = function() {
     console.log('Apertou o fechar');
@@ -14,43 +15,25 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   $scope.buscaLocal = function(dados) {
 
-
-  //$scope.message = "Produto " + dados.codigo + " foi salvo com sucesso!";
-
-    if (dados.codigoLocal === "" || dados.codigoLocal === undefined) {
-
+    if (dados.COD_LOCAL === undefined || dados.COD_LOCAL === "") {
       PopUps.erroBranco();
-
     } else {
 
+
       console.log('Dados: ' + dados);
-      Scopes.setItem(dados);
-      local = Scopes.getItem();
+      Scopes.setLocal(dados);
 
+      if (window.cordova) {
 
-
-      // var data = new Date();
-      // var dataFormatada = ("0" + data.getDate()).substr(-2) + "/" + ("0" + (data.getMonth() + 1)).substr(-2) + "/" + data.getFullYear();
-      // var folder = "Inventario" + "_" + dataFormatada + ".csv";
-
-
-
-      // $scope.message = Scopes.getItem();
-
-        if (window.cordova) {
-
-
-          CriarDiretorio.processar($cordovaFile, dados);
-          //alert("Passou do CriarDiretorio.processar");
-
-
-        }
-
-        $state.go('app.consultarProduto');
-
-
+        //CriarDiretorio.processar($cordovaFile, dados);
+        //alert("Passou do CriarDiretorio.processar");
       }
-    };
+
+      $state.go('app.consultarProduto');
+
+
+    }
+  };
 
 
 
@@ -60,28 +43,8 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//*******************************************************************************************************//
-// Consultar pelo web service
+  //*******************************************************************************************************//
+  // Consultar pelo web service
 
   //
   // $scope.consultarProduto = function(dados) {
