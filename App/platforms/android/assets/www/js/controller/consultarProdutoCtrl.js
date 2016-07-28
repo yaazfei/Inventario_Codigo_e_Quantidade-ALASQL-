@@ -5,8 +5,11 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
   //local = Scopes.getbem();
-  $scope.local = Scopes.getLocal();
+  //$scope.local = Scopes.getLocal();
+
+  $scope.dados = Scopes.getLocal();
   dados = Scopes.getLocal();
+
   //console.log('$scope.dados: ' + dados.COD_LOCAL);
   //local = Scopes.getLocal();
   //console.log('Local: ' + local);
@@ -24,7 +27,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /*****************************************************************************/
   /*/ Escolher um Bem /*/
 
-  $scope.editarBem = function(bem, $index, $event) {
+  $scope.editarBem = function(bem) {
 
     Scopes.setBem(bem);
     //alert('Bem: ' + bem.DESC_BEM);
@@ -73,6 +76,22 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /*/ LISTA EM JSON /*/
 
 
+  ///////////////////////////////////// Funcionando, MELHOR MODO?
+  function listarBens() {
+    var promisse;
+    $scope.bens = [];
+    promisse = $http.get('js/bens.json');
+      promisse.then(function (response){
+        $scope.bens = response.data;
+        var bens = $scope.bens;
+        console.log('$scope.bens: ' + $scope.bens);
+        //getBens();
+      });
+  }
+
+
+
+
   ///////////////////////////////////// Modo antigo. Dá várias voltas
   // $scope.bens = [];
   // $http.get('js/bens.json').then(function(response) {
@@ -83,7 +102,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-  ///////////////////////////////////// Funcionando, mas ainda dá duas voltas
+  ///////////////////////////////////// Funcionando, mas ainda dá voltas
   // function listarLocais() {
   //   $scope.locais = [];
   //   $http.get('js/locais.json').then(function(response) {
@@ -111,23 +130,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   //     });
   //   }, 1000);
   // }
-
-
-
-
-  ///////////////////////////////////// Funcionando, MELHOR MODO?
-  function listarBens() {
-    var promisse;
-    $scope.bens = [];
-    promisse = $http.get('js/bens.json');
-      promisse.then(function (response){
-        $scope.bens = response.data;
-        var bens = $scope.bens;
-        console.log('$scope.bens: ' + $scope.bens);
-        //getBens();
-      });
-  }
-
 
 
 

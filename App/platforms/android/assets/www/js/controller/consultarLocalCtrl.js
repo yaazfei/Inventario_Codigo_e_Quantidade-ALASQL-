@@ -5,11 +5,11 @@ console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
 Scopes.blankItem($scope);
 
-  $scope.fecharApp = function() {
-    console.log('Apertou o fechar');
-    PopUps.showConfirm();
+$scope.fecharApp = function() {
+  console.log('Apertou o fechar');
+  PopUps.showConfirm();
 
-  };
+};
 
 
 

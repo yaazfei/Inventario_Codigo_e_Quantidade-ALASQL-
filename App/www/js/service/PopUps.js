@@ -64,7 +64,20 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
 
 
 
-
+  this.showConfirm = function() {
+       var confirmPopup = $ionicPopup.confirm({
+         title: 'Finalizar',
+         template: 'Tem certeza que deseja finalizar a aplicação?'
+       });
+       confirmPopup.then(function(res) {
+         if(res) {
+           console.log('Sim');
+           ionic.Platform.exitApp();
+         } else {
+           console.log('Não');
+         }
+       });
+     };
 
 
 

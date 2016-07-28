@@ -32,6 +32,16 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   };
 
+
+
+  // $scope.localAtual = function() {
+  //   console.log('localAtual : ' + dados.COD_LOCAL);
+  //   $scope.search = dados.COD_LOCAL;
+  //   $scope.local = $scope.search;
+  //   $scope.hideModal();
+  // };
+
+
   $scope.localSelecionado = function(local) {
     console.log('Selecionou o local : ' + local.DESC_LOCAL + ' ' + local.COD_LOCAL);
     $scope.local = local;
@@ -40,16 +50,37 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   };
 
 
-  $scope.clearSearch = function(search) { // NÃO FUNCIONA
+  $scope.clearInput = function(input, form) { // NÃO FUNCIONA
     console.log('Entrou no clearSearch');
-    $scope.search = '';
-    console.log('$scope.search =' + $scope.search);
-    search = '';
+
+      // console.log (buscaLocalForm + $scope.buscaLocalForm);
+      // console.log (search + $scope.search);
+      // $scope.form.$setPristine();
+      $scope.input = "";
+      input = "";
+
+
   };
 
 
   /*****************************************************************************/
   /*/ LISTA EM JSON /*/
+
+
+
+  ///////////////////////////////////// Funcionando, modo melhor?
+  function listarLocais() {
+    var promisse;
+    $scope.locais = [];
+    promisse = $http.get('js/locais.json');
+      promisse.then(function (response){
+        $scope.locais = response.data;
+        var locais = $scope.locais;
+        console.log('$scope.locais: ' + $scope.locais);
+      });
+  }
+
+
 
 
   ///////////////////////////////////// Funcionando, mas ainda dá duas voltas
@@ -80,35 +111,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   //     });
   //   }, 1000);
   // }
-
-
-
-
-
-
-  ///////////////////////////////////// Funcionando, modo melhor?
-  function listarLocais() {
-    var promisse;
-    $scope.locais = [];
-    promisse = $http.get('js/locais.json');
-      promisse.then(function (response){
-        $scope.locais = response.data;
-        var locais = $scope.locais;
-        console.log('$scope.locais: ' + $scope.locais);
-      });
-  }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -147,7 +149,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   console.log('modal', $scope);
 
   $scope.hideModal = function() {
-
     $scope.modalCtrl.hide();
   };
 

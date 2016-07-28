@@ -33,38 +33,61 @@
         <div class="col">Chapa: </div>
         <div class="col">{{bem.CHAPA}}</div>
       </div>
-    </div>
 
-    <div class="item item-text-wrap">
       <div class="row">
         <div class="col">Local registrado: </div>
         <div class="col">{{bem.COD_LOCAL}}</div>
       </div>
 
-    <!-- <div class="row">
-      <div class="col"></div>
-      <div class="col">TESTE</div>
-    </div> -->
-  </div>
-<br/>
+      <div class="row">
+        <div class="col"> </div>
+                              <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+        <div class="col">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
+      </div>
+
+
+</br>
 
 
 <div class="item item-text-wrap">
   <div class="row">
-    <div class="col">Novo Local:</div>
+    <div class="col">Seu local:</div>
+    <div class="col">{{dados.COD_LOCAL}}</div>
   </div>
+
+  <div class="row">
+    <div class="col"> </div>
+                                  <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+    <div class="col"> GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
+  </div>
+
+  </br>
+
+  <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
+    <div class="col">Novo Local:</div>
+    <div class="col button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click=""><i class="ion-close"></i></div>
+  </div>
+
       <div class="list" padding>
         <div class="item item-input item-floating-label">
-          <input ng-focus="openModal()" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
+          <input ng-focus="openModal()" name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
           <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
         </div>
+
+
+        <!-- <div ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
+              <div class="button-bar">
+                  <div class="button button-outline button-small button-full button-assertive" ng-click="" type="reset">Limpar</div>
+                  <div class="button button-outline button-small button-full button-assertive" ng-click="">Novo Local</div>
+              </div> -->
+        </div>
       </div>
-</div>
+
 
 
           <button class="button button-block button-dark" ng-click="">Salvar</button>
 
-          <!-- <button class="button button-block button-assertive" ng-click="openModal()">Modal</button> -->
+          <!-- <button class="button button-block button-dark" ng-click="" ng-disabled="!editarProdutoForm.$valid">Salvar</button> -->
       </form>
 
 

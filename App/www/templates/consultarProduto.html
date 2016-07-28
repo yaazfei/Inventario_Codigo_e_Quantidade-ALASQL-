@@ -13,7 +13,7 @@
 
 
       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{local.COD_LOCAL}}</div>
+        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{dados.COD_LOCAL}}</div>
     </div>
   </ion-header-bar>
 
@@ -25,7 +25,7 @@
     <div class="bar item-input-inset">
       <label class="item-input-wrapper">
         <!-- <i class="icon ion-ios7-search placeholder-icon"></i> -->
-        <input id="searchKey" type="search" placeholder="Código do Bem" ng-model="search" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
+        <input id="searchKey" type="search" placeholder="Informe o Bem" ng-model="search" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
         <!-- <button class="button button-clear" ng-click="clearSearch()">X</button> -->
 
       </label>
@@ -39,15 +39,15 @@
 <ion-list>
   <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
   <ion-list>
-  <ion-item ng-repeat="bem in bens | filter:search" type="item-text-wrap" class="item item-button-right" item="bem" disabled>
+  <ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item item-button-right" item="bem" on-tap="editarBem(bem)">
     <h4>{{bem.CHAPA}}</h3>
     <p>{{bem.DESC_BEM}}</p>
 
-                      <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
+                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO local -->
     <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
 
 
-    <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != local.COD_LOCAL" ng-click="editarBem(bem)">
+    <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != dados.COD_LOCAL" >
     <i class="ion-alert"></i>
     </button>
 

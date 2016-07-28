@@ -13,7 +13,7 @@
 
 
       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{local.COD_LOCAL}}</div>
+        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{dados.COD_LOCAL}}</div>
     </div>
   </ion-header-bar>
 
@@ -36,22 +36,28 @@
 </br>
 
 
+<ion-list>
   <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
   <ion-list>
-  <ion-item ng-repeat="bem in bens | filter:search" type="item-text-wrap" class="item item-button-right" item="bem" ng-click="editarBem(bem)" >
+  <ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item item-button-right" item="bem" on-tap="editarBem(bem)">
     <h4>{{bem.CHAPA}}</h3>
     <p>{{bem.DESC_BEM}}</p>
 
-                      <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
+                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO local -->
     <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
 
 
-    <!-- <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != local.COD_LOCAL">
+    <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != dados.COD_LOCAL" >
     <i class="ion-alert"></i>
-  </button> -->
-    <h5 style="text-transform: uppercase; text-align:right; color:red;" ng-show="bem.COD_LOCAL != local.codigoLocal" type="item-text-wrap">
+    </button>
+
+    <!-- <span class="item-note" style="color:red" ng-show="bem.COD_LOCAL != local.codigoLocal">
       Em outro local
-    </h5>
+    </span> -->
+
+    <!-- <h5 style="text-transform: uppercase; text-align:right; color:red;" ng-show="bem.COD_LOCAL != local.codigoLocal" type="item-text-wrap">
+      Em outro local
+    </h5> -->
 
   </ion-item>
 </ion-list>
