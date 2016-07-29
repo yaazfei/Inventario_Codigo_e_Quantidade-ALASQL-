@@ -1,4 +1,4 @@
-<ion-view view-title="Editar Bem">
+<ion-view view-title="Bem">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
@@ -18,53 +18,113 @@
 
   <form name="editarProdutoForm" padding>
 
-    <div class="item item-text-wrap">
+
+    <div class="list list-inset item-text-wrap">
+
+        <div class="item"><b>Código: </b>
+          <a style="float:right"> {{bem.COD_BEM}}</a>
+          <br/><br/>
+          <!-- <a><b>Descrição: </b></a>  -->
+          <p style="text-align:;">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p>
+        </div>
+
+      <div class="item"><b>Chapa: </b>
+        <a style="float:right"> {{bem.CHAPA}}</a>
+      </div>
+
+      <div class="item"><b>Local: </b>
+        <a style="float:right"> {{bem.COD_LOCAL}}</a>
+        <br/><br/>
+        <!-- <a><b>Descrição do Local: </b></a> -->
+        <p style="text-align:;">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p>
+      </div>
+
+    </div>
+  <div class="list list-inset item-text-wrap">
+
+    <div class="item"><b>Local atual: </b>
+      <a style="float:right">{{dados.COD_LOCAL}}</a>
+      <br/><br/>
+      <!-- <a><b>Descrição do Local atual: </b></a> -->
+
+                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+      <p style="text-align:;">CONTROLE DE BRHUE (TESTE)</p>
+    </div>
+
+
+    </div>
+
+      <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
+        <p><b>Novo Local:</b></p>
+        <div class="col button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click=""><i class="ion-close"></i></div>
+      </div>
+
+          <div class="list" padding>
+            <div class="item item-input item-floating-label">
+              <input ng-focus="openModal()" name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
+              <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
+            </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+    <!-- <div class="item item-text-wrap">
 
       <div class="row">
-        <div class="col">Código: </div>
+        <div class="col"><b>Código: </b></div>
         <div class="col">{{bem.COD_BEM}}</div>
       </div>
 
+    <hr/>
+
       <div class="row">
-        <div class="col">Descrição: </div>
+        <div class="col"><b>Descrição: </b></div>
+      </div>
+      <div class="row">
         <div class="col">{{bem.DESC_BEM}}</div>
       </div>
+    <hr/>
+
       <div class="row">
-        <div class="col">Chapa: </div>
+        <div class="col"><b>Chapa: </b></div>
         <div class="col">{{bem.CHAPA}}</div>
       </div>
+    <hr/>
 
       <div class="row">
-        <div class="col">Local registrado: </div>
+        <div class="col"><b>Local registrado:</b> </div>
         <div class="col">{{bem.COD_LOCAL}}</div>
       </div>
-
       <div class="row">
-        <div class="col"> </div>
-                              <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+
+
         <div class="col">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
       </div>
-
-
+    <hr/>
 </br>
-
-
 <div class="item item-text-wrap">
   <div class="row">
-    <div class="col">Seu local:</div>
+    <div class="col"><b>Seu local:</b></div>
     <div class="col">{{dados.COD_LOCAL}}</div>
   </div>
 
   <div class="row">
     <div class="col"> </div>
-                                  <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
     <div class="col"> GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
   </div>
 
   </br>
 
+
+
+
   <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
-    <div class="col">Novo Local:</div>
+    <div class="col"><b>Novo Local:</b></div>
     <div class="col button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click=""><i class="ion-close"></i></div>
   </div>
 
@@ -74,14 +134,13 @@
           <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
         </div>
 
-
-        <!-- <div ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
-              <div class="button-bar">
-                  <div class="button button-outline button-small button-full button-assertive" ng-click="" type="reset">Limpar</div>
-                  <div class="button button-outline button-small button-full button-assertive" ng-click="">Novo Local</div>
-              </div> -->
         </div>
       </div>
+ -->
+
+
+
+
 
 
 

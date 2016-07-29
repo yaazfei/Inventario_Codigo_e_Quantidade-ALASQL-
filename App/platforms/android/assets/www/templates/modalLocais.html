@@ -8,15 +8,21 @@
     <ion-content class="padding">
 
       <div class="bar item-input-inset">
+        <!-- <form name="buscaLocalForm"> -->
+
         <div class="item-input-wrapper" id="search">
           <i class="icon ion-ios7-search placeholder-icon"></i>
-          <input type="search" placeholder="Código do Local" ng-model="search" style="text-transform: uppercase" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" autocorrect="off" autofocus="true" required>
-          <!-- <button ng-if="search.length" class="button button-clear" ng-click="clearSearch(search)">X</button> -->
 
+          <input type="search" name="searchLocal" placeholder="Informe o Local" ng-model="search.data" style="text-transform: uppercase" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" autocorrect="off" autofocus="true" required>
+            <button ng-if="search.data.length" class="button button-clear" ng-click="clearInput(search.data)">X</button>
+          </input>
         </div>
-        <input class="button button-clear" type="reset" value="X"/>
+        <!-- <input class="button button-clear" type="reset" value="X"  ng-click="clearInput(search.data); $scope.search.data.$setPristine()"/> -->
         <!-- <button class="button button-clear" ng-click="localAtual()">Local Atual</button> -->
+
       </div>
+
+    <!-- </form> -->
       </br>
 
 

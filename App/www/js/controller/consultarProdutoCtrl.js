@@ -28,8 +28,12 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /*/ Escolher um Bem /*/
 
   $scope.editarBem = function(bem) {
+    if (bem.COD_LOCAL === dados.COD_LOCAL){
 
-    Scopes.setBem(bem);
+      } else{
+      Scopes.setBem(bem);
+
+
     //alert('Bem: ' + bem.DESC_BEM);
     // console.log('Local: ' + local);
 
@@ -55,6 +59,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
     $state.go('app.editarProduto');
+  }
   };
 
 

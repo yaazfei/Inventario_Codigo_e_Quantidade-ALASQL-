@@ -50,11 +50,16 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   };
 
 
-  $scope.clearSearch = function(search) { // NÃO FUNCIONA
+  $scope.clearInput = function(input, form) { // NÃO FUNCIONA
     console.log('Entrou no clearSearch');
-    $scope.search = '';
-    console.log('$scope.search =' + $scope.search);
-    search = '';
+
+      // console.log (buscaLocalForm + $scope.buscaLocalForm);
+      // console.log (search + $scope.search);
+      // $scope.form.$setPristine();
+      $scope.input = "";
+      input = "";
+
+
   };
 
 
