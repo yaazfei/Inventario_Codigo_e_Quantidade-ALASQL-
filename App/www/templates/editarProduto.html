@@ -19,36 +19,43 @@
   <form name="editarProdutoForm" padding>
 
 
+
+
+
+
+
+
     <div class="list list-inset item-text-wrap">
 
         <div class="item"><b>Código: </b>
-          <a style="float:right"> {{bem.COD_BEM}}</a>
-          <br/><br/>
-          <!-- <a><b>Descrição: </b></a>  -->
-          <p style="text-align:;">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p>
+          <a style="float:right; text-align:left;">{{bem.COD_BEM}}</a>
+          <br/>
+          </div><div class="item">
+          <b>Descrição: </b>
+
+          <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{bem.DESC_BEM}}</p>
         </div>
 
       <div class="item"><b>Chapa: </b>
-        <a style="float:right"> {{bem.CHAPA}}</a>
+        <a style="float:right; text-align:left;"> {{bem.CHAPA}}</a>
       </div>
 
       <div class="item"><b>Local: </b>
-        <a style="float:right"> {{bem.COD_LOCAL}}</a>
-        <br/><br/>
-        <!-- <a><b>Descrição do Local: </b></a> -->
-        <p style="text-align:;">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p>
+        <a style="float:right; text-align:left;">{{bem.COD_LOCAL}}</a>
+
+                    <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+        <br/><br/><p style="text-align:right; align:justify; margin-left:30%">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p>
       </div>
 
     </div>
   <div class="list list-inset item-text-wrap">
 
     <div class="item"><b>Local atual: </b>
-      <a style="float:right">{{dados.COD_LOCAL}}</a>
-      <br/><br/>
-      <!-- <a><b>Descrição do Local atual: </b></a> -->
+      <a style="float:right; text-align:left;">{{dados.COD_LOCAL}}</a>
 
-                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
-      <p style="text-align:;">CONTROLE DE BRHUE (TESTE)</p>
+
+                    <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+      <br/><br/><p style="text-align:right; align:justify; margin-left:30%">CONTROLE DE BRHUE (TESTE)</p>
     </div>
 
 
@@ -72,27 +79,30 @@
 
 
 
+<!--
+    <div class="item item-text-wrap">
 
-    <!-- <div class="item item-text-wrap">
-
+    <div class="item">
       <div class="row">
         <div class="col"><b>Código: </b></div>
-        <div class="col">{{bem.COD_BEM}}</div>
+        <div class="col">0000000000000055</div>
       </div>
 
-    <hr/>
 
       <div class="row">
         <div class="col"><b>Descrição: </b></div>
       </div>
       <div class="row">
-        <div class="col">{{bem.DESC_BEM}}</div>
+        <div class="col">GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
       </div>
-    <hr/>
+
+
+
+
 
       <div class="row">
         <div class="col"><b>Chapa: </b></div>
-        <div class="col">{{bem.CHAPA}}</div>
+        <a style="float:middle; text-align:right; margin-right: auto;">{{bem.CHAPA}}</a>
       </div>
     <hr/>
 
@@ -115,6 +125,8 @@
 
   <div class="row">
     <div class="col"> </div>
+
+
     <div class="col"> GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</div>
   </div>
 
@@ -135,8 +147,8 @@
         </div>
 
         </div>
-      </div>
- -->
+      </div> -->
+
 
 
 

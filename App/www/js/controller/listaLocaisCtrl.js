@@ -245,8 +245,9 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 var dirname = "js";
 
-alasql('select COD_LOCAL, DESC_LOCAL from json("js/locais.json")');
-          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})',
+// alasql('select COD_LOCAL, DESC_LOCAL from json("js/locais.json")');
+
+          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == "000053"',
               [],function(data){
               console.log(data);
               $scope.locais = data;

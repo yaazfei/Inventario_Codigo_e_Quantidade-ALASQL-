@@ -18,7 +18,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-
   $scope.teste1 = function(i) {
     console.log('teste1 : ' + i);
 
@@ -28,6 +27,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /*/ Escolher um Bem /*/
 
   $scope.editarBem = function(bem) {
+    // alert('Entrou no editarBem');
     if (bem.COD_LOCAL === dados.COD_LOCAL){
 
       } else{
@@ -44,18 +44,14 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
     console.log('Bem: ' + bem);
-    $scope.checkLocal = function(bem) {
-      bemLocalCod = bem.COD_LOCAL;
-      //var res = alasql('SEARCH DESC_LOCAL WHERE(bem.COD_LOCAL = COD_LOCAL)',["js/Lista_de_Locais.xlsx"]);
-      // alasql('select DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx") where COD_LOCAL = bemLocalCod',
-      //  [],function(res){
-
-      res = alasql('select DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx") where COD_LOCAL = bemLocalCod');   //NÃO FUNCIONA
-
-      console.log('Busca: ' + res);
-    // });
-    };
-    $scope.checkLocal(bem);
+    // $scope.checkLocal = function(bem) {
+    //   bemLocalCod = bem.COD_LOCAL;
+    //
+    //   res = alasql('select DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx") where COD_LOCAL = bemLocalCod');   //NÃO FUNCIONA
+    //
+    //   console.log('Busca: ' + res);
+    // };
+    // $scope.checkLocal(bem);
 
 
     $state.go('app.editarProduto');
@@ -92,7 +88,12 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         console.log('$scope.bens: ' + $scope.bens);
         //getBens();
       });
+
   }
+      
+
+
+
 
 
 

@@ -13,7 +13,7 @@
 
 
       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{dados.COD_LOCAL}}</div>
+        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL: {{dados.DESC_LOCAL}}    |    CÓDIGO: {{dados.COD_LOCAL}}</div>
     </div>
   </ion-header-bar>
 
@@ -37,7 +37,7 @@
 
 
 
-<!-- LISTA COM UL E IL (SEM ION-LIST) -->
+<!-- LISTA COM UL E IL (SEM ION-LIST)  Também Não funciona em mobile -->
 
   <ul class="list">
   <a ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
@@ -61,9 +61,9 @@
 
 
 
-  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
+  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> Também Não funciona em mobile -->
   <ion-list>
-  <ion-radio ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+  <button ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
     <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
     <p>{{bem.DESC_BEM}}</p>
 
@@ -86,7 +86,7 @@
       Em outro local
     </h5> -->
 
-  </ion-radio>
+  </button>
 </ion-list>
 
 

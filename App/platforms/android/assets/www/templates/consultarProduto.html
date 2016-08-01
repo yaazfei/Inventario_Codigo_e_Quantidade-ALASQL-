@@ -37,15 +37,34 @@
 
 
 
+<!-- LISTA COM UL E IL (SEM ION-LIST)  Também Não funciona em mobile -->
 
-
-
-
-
-  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
   <ul class="list">
-  <li ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
-    <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h3>
+  <a ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+    <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
+    <p>{{bem.DESC_BEM}}</p>
+
+
+    <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
+
+
+    <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+
+      <h4 style="color:red; padding: 0px 15px 1px 0px">
+      O local informado diverge do cadastro.
+    </h4>
+    </div>
+
+  </a>
+</ul>
+
+
+
+
+  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> Também Não funciona em mobile -->
+  <ion-list>
+  <button ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+    <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
     <p>{{bem.DESC_BEM}}</p>
 
                       <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO local -->
@@ -67,57 +86,7 @@
       Em outro local
     </h5> -->
 
-  </li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> -->
-  <ion-list>
-  <ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item item-button-right" item="bem" ng-click="editarBem(bem)">
-    <h4>{{bem.CHAPA}}</h3>
-    <p>{{bem.DESC_BEM}}</p>
-
-                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO local -->
-    <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
-
-
-    <!-- <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != dados.COD_LOCAL" on-tap="editarBem(bem)>
-    <i class="ion-alert"></i>
-    </button> -->
-
-    <div class="item-note" style="color:red" ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
-      <h4>
-      O local informado diverge do cadastro.
-    </h4>
-    </div>
-
-    <!-- <h5 style="text-transform: uppercase; text-align:right; color:red;" ng-show="bem.COD_LOCAL != local.codigoLocal" type="item-text-wrap">
-      Em outro local
-    </h5> -->
-
-  </ion-item>
+  </button>
 </ion-list>
 
 
