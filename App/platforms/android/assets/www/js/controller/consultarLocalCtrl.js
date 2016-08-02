@@ -1,35 +1,68 @@
 angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio) {
 
-console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
-console.log('Códigos de locais válidos: 000053, 000039, 000005');
+  console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
+  console.log('Códigos de locais válidos: 000053, 000039, 000005');
 
-Scopes.blankItem($scope);
+  Scopes.blankItem($scope);
 
-$scope.fecharApp = function() {
-  console.log('Apertou o fechar');
-  PopUps.showConfirm();
+  $scope.fecharApp = function() {
+    console.log('Apertou o fechar');
+    PopUps.showConfirm();
 
-};
+  };
 
 
+
+
+
+
+
+/*/*************************************************************************************************************/
+////// Busca o código do local selecionado
 
   $scope.buscaLocal = function(dados) {
 
-    if (dados.COD_LOCAL === undefined || dados.COD_LOCAL === "") {
+    if (dados === undefined || dados === "") {
       PopUps.erroBranco();
+
     } else {
 
 
-      console.log('Dados: ' + dados);
+      // listarLocais(dados);
       Scopes.setLocal(dados);
 
-      if (window.cordova) {
+      alert('entrou no buscaLocal, vai fazer o alaSQL');
 
-        //CriarDiretorio.processar($cordovaFile, dados);
-        //alert("Passou do CriarDiretorio.processar");
-      }
 
-      $state.go('app.consultarProduto');
+
+      // 
+      // var alasql = require('alasql');
+      // alert('passou do require: ' + alasql);
+
+      // PROMISSE ASYNC?
+      localCod = dados.COD_LOCAL;
+      alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+        .then(function(res) {
+
+          // ACHOU O LOCAL E PEGOU O PRIMEIRO
+          alert('Encontrou o local com o alaSQL');
+          console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+          Scopes.setLocal(res[0]);
+
+
+          if (window.cordova) { //Só entra por device
+
+            //CriarDiretorio.processar($cordovaFile, dados);
+            //alert("Passou do CriarDiretorio.processar");
+          }
+          alert('saiu do alaSQL');
+          $state.go('app.consultarProduto');
+
+
+        }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+          PopUps.erroConsultar("Local");
+        });
 
 
     }
@@ -43,100 +76,68 @@ $scope.fecharApp = function() {
 
 
 
-  //*******************************************************************************************************//
-  // Consultar pelo web service
+  /*/*************************************************************************************************************/
+  //////// **************************************** LISTA PELO ALASQL (DANDO DUAS VOLTAS)
 
+
+  function listarLocais(dados) {
+
+
+    // ESTÁ DANDO DUAS VOLTAS NO CONTROLLER (MELHORAR)
+    localCod = dados.COD_LOCAL;
+     alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod],function(data){
+
+                  console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
+                  console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
+                  Scopes.setLocal(data[0]);
+
+              });
+
+    }
+
+
+  ////// TESTE PARA NÃO DAR DUAS VOLTAS (NÃO FUNCIONANDO)
+
+
+  // var promisse;
+  // localCod = dados.COD_LOCAL;
+  // // $scope.locais = [];
+  //  promisse = alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod]);
+  //  promisse.then(function(response) {
+  //    var data = response.data;
+  //   //  var locais = $scope.locais;
+  //   //console.log('$scope.locais: ' + $scope.locais);
   //
-  // $scope.consultarProduto = function(dados) {
-  //   //dados = 'LC000000012157';
-  //   if (dados === "" || dados === undefined) {
-  //     PopUps.erroBranco();
-  //   } else {
-  //     var req = {
-  //       method: 'POST',
-  //       url: 'http://patiodemo.dsin.com.br/coletorinventario/busca',
-  //       headers: {
-  //         'authorization': "Basic " + btoa('dsinColetor:dsinColetor')
-  //       },
-  //       params: {
-  //         lacre: dados.codigo
-  //       }
-  //     };
+  //   //console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
+  //   console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
+  //   Scopes.setLocal(data[0]);
   //
-  //     // LC000000012157
-  //     $http(req).then(function mySucces(response) {
-  //       //olhar isso. O response.data retorna mais de um veículo.
-  //       // response.data =
+  // });
   //
-  //       //MOCK
-  //       response.data = [];
-  //
-  //       response.data.push({
-  //
-  //         PLACA: 'ABC-4567',
-  //         MODELO: 'PUMA GTS 1.6',
-  //         COR: 'PRATA',
-  //         PROCESSO: '123456789',
-  //         CHASSI: '987654321',
-  //         PATIO: 'COND. GIRASSÓIS',
-  //         LOCALIZACAO: 'RIO DE JANEIRO',
-  //         ESTADO: 'BOM',
-  //         DATAENTRADA: '06/06/2016 18:16',
-  //         STATUSLEILAO: 'EM ESPERA',
-  //         LEILAO: '876804-2',
-  //         RESTRICAO: '',
-  //         DATALIBERACAO: '',
-  //         DATACOLETA: '"16/06/2016 17:17"',
-  //         USUARIOCOLETA: 'ADMIN',
-  //         STATUS: '1'
-  //       });
-  //
-  //
-  //
-  //       var obj = response.data.pop();
-  //       if (response.data !== null) {
-  //         for (i = 0; i < response.data.length; i++) {
-  //           console.log('Objeto retornado pelo serviço: ' + response.data[i]);
-  //         }
-  //       }
-  //
-  //       // var arr = Object.keys(obj).map(function(k) { return obj[k] });
-  //       // console.log('Objeto transformado em array: '+arr);
-  //       // $scope.getArray = [];
-  //       // $scope.getArray.push({a: Math.floor((Math.random()*10)+1), b: Math.floor((Math.random()*10)+1)});
-  //
-  //       // Scopes.ItemSelecionado = obj;
-  //       Scopes.setItem(obj);
-  //       veiculo = Scopes.getItem();
-  //
-  //       console.log('Scopes: ->' + Scopes);
-  //       console.log('Scope: ' + Scopes.getItem());
-  //
-  //
-  //
-  //       if (window.cordova) {
-  //         // running on device/emulator
-  //
-  //         CriarDiretorio.criarPasta($cordovaFile, veiculo); // x - x - x - x - x - x - x - x - x - x - DEVE SER COMENTADO PARA TESTE EM BROWSER -  x - x - x - x - x - x - x - x - x - x
-  //       }
-  //
-  //
-  //
-  //       $state.go('app.infoProduto');
-  //
-  //     }, function myError(response) {
-  //       $scope.mensagem = response.statusText;
-  //       PopUps.erroConsultar(response.statusText);
-  //
-  //     });
-  //     dados.codigo = "";
-  //   }
-  //
-  // };
+  // }
+
+
+
+
+
+
+
+  //////// ************************************************ LISTA EM JSON
+  // function listarLocais() {
+  //   var promisse;
+  //   $scope.locais = [];
+  //   promisse = $http.get('js/locais.json');
+  //   promisse.then(function(response) {
+  //     $scope.locais = response.data;
+  //     var locais = $scope.locais;
+  //     console.log('$scope.locais: ' + $scope.locais);
+  // });
+
+
+  // }
 
 
   /*/*************************************************************************************************************/
-
 
 
 

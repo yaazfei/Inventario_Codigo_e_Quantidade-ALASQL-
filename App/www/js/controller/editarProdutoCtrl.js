@@ -63,12 +63,41 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   };
 
 
+
+
+
+/*****************************************************************************/
+////// **********/ LISTA PELO ALASQL /*/ (Não funcionando)
+
+// function listarLocais() {
+//
+//
+//   alasql.promise('SELECT * FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true}')
+//   .then(function(res) {
+//
+//       // ACHOU
+//       alert('Encontrou com o alaSQL');
+//       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+//
+//       $scope.locais = res.data;
+//       var locais = $scope.locais;
+//       console.log('$scope.locais: ' + $scope.locais);
+//
+//
+//     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+//
+//       PopUps.erroConsultar("Locais não encontrados!");
+//     });
+//
+// }
+
+
+
   /*****************************************************************************/
   /*/ LISTA EM JSON /*/
 
 
-
-  ///////////////////////////////////// Funcionando, modo melhor?
+  /////////////////////////////////// Funcionando, modo melhor?
   function listarLocais() {
     var promisse;
     $scope.locais = [];
@@ -79,6 +108,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         console.log('$scope.locais: ' + $scope.locais);
       });
   }
+
 
 
 

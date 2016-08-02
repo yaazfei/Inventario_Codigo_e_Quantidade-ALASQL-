@@ -37,14 +37,6 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   };
 
 
-  this.erroConsultar = function(erro) {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Erro ao consultar.',
-      template: erro
-    });
-  };
-
-
   //POP UP DE TESTE
   this.testeJson = function(resultsNOK) {
     var alertPopup = $ionicPopup.alert({
@@ -65,20 +57,27 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
 
 
   this.showConfirm = function() {
-       var confirmPopup = $ionicPopup.confirm({
-         title: 'Finalizar',
-         template: 'Tem certeza que deseja finalizar a aplicação?'
-       });
-       confirmPopup.then(function(res) {
-         if(res) {
-           console.log('Sim');
-           ionic.Platform.exitApp();
-         } else {
-           console.log('Não');
-         }
-       });
-     };
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Finalizar',
+      template: 'Tem certeza que deseja finalizar a aplicação?'
+    });
+    confirmPopup.then(function(res) {
+      if (res) {
+        console.log('Sim');
+        ionic.Platform.exitApp();
+      } else {
+        console.log('Não');
+      }
+    });
+  };
 
+
+  this.erroConsultar = function(msg) {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Erro ao consultar',
+      template: msg
+    });
+  };
 
 
 

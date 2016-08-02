@@ -73,6 +73,40 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
+
+
+
+
+
+
+
+  /*****************************************************************************/
+  ////******************* LISTA PELO ALASQL  (Não está funcionando)
+
+  // function listarBens() {
+  //
+  //
+  //   alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true}')
+  //   .then(function(res) {
+  //
+  //       // ACHOU
+  //       alert('Encontrou com o alaSQL');
+  //       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+  //
+  //       $scope.bens = res.data;
+  //       var bens = $scope.bens;
+  //       console.log('$scope.bens: ' + $scope.bens);
+  //
+  //
+  //     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+  //
+  //       PopUps.erroConsultar("Bens não encontrados!");
+  //     });
+  //
+  // }
+
+
+
   /*****************************************************************************/
   /*/ LISTA EM JSON /*/
 
@@ -90,11 +124,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
       });
 
   }
-      
-
-
-
-
 
 
 

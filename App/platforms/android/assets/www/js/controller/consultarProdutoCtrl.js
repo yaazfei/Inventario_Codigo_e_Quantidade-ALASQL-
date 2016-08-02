@@ -18,7 +18,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-
   $scope.teste1 = function(i) {
     console.log('teste1 : ' + i);
 
@@ -89,7 +88,12 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         console.log('$scope.bens: ' + $scope.bens);
         //getBens();
       });
+
   }
+      
+
+
+
 
 
 

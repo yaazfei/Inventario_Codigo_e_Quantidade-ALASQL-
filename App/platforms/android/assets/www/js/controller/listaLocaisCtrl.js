@@ -226,9 +226,20 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 //// https://github.com/agershun/alasql
 
 
+// var $ = require('jquery');
+// console.log('passou do require');
+
+// $scope.locais = [
+//   { COD_LOCAL: '123562', DESC_LOCAL: 'DESCRIÇÃO TESTE' },
+//   { COD_LOCAL: '458569', DESC_LOCAL: 'DESCRIÇÃO TESTE'},
+//   { COD_LOCAL: '23452', DESC_LOCAL:'DESCRIÇÃO TESTE'},
+//   { COD_LOCAL: '52345', DESC_LOCAL: 'DESCRIÇÃO TESTE' }
+// ];
 
 
-//// ESSE AQUI FUNCIONA >>>>>>>>>>>> ELE LISTA O JSON NA TELA (MAS NÃO USA ALASQL)
+
+
+// // ESSE AQUI FUNCIONA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ELE LISTA O JSON NA TELA (MAS NÃO USA ALASQL)
 // $scope.locais= [];
 // $http.get('js/locais.json').then(function(response) {
 //     $scope.locais =response.data;
@@ -239,14 +250,14 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
-
-// TESTES PARA VER O QUE PEGA
-
+/////////ESSE AQUI FUNCIONA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ELE LISTA O XLSX NA TELA (USA ALASQL)
+alasql.options.errorlog = true; // Log or throw error
 
 var dirname = "js";
 
-alasql('select COD_LOCAL, DESC_LOCAL from json("js/locais.json")');
-          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})',
+alert('passou do require: ' + alasql);
+
+          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == "000053"',
               [],function(data){
               console.log(data);
               $scope.locais = data;
@@ -262,23 +273,37 @@ $scope.exportData = function () {
 
 
 
-    // alasql('select * from json("js/locais.json",{headers:true, range:"B1:E10"})',
-    //        [],function(locais){
-    //        console.log(locais);
-    //
-    //        $scope.locais = locais;
-    //    });
 
 
 
 
 
-        // 	var res = alasql('select * from json("js/locais.json",{headers:true, range:"B1:E10"})',[],function(res){
-          //   console.log(res);
-          //
-          //   $scope.locais = res;
-          //
-        // 	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

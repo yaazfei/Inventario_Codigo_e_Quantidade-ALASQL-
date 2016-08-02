@@ -1,101 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <!-- Para a lista de contatos -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; font-src data: *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *"> -->
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
-    <!--  Plugin ng-Grid -->
-    <!-- <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css"> -->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+  <!-- Para a lista de contatos -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; font-src data: *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *"> -->
+
+  <!--  Plugin ng-Grid -->
+  <!-- <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css"> -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
     <script src="/release/ui-grid.min.js"></script> -->
 
 
 
 
-    <!-- forcetk.mobilesdk.js has a dependency on gull blown jQuery -->
-     <script src="lib/jquery.js"></script>
-
-
-
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <!--ngCordova-->
-    <script src="js/ng-cordova.min.js"></script>
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <!--ngCordova-->
+  <script src="js/ng-cordova.min.js"></script>
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
 
-    <!--Plugins -->
-    <!--  Plugin ui-mask -->
-    <!-- <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <!--Plugins -->
+  <!--  Plugin ui-mask -->
+  <!-- <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="plugins/ui-mask-master/dist/mask.js"></script> -->
 
 
-    <!--  Plugin ng-Grid -->
-    <script src="lib/angular-ui-grid/ui-grid.min.js"></script>
+  <!--  Plugin ng-Grid -->
+  <script src="lib/angular-ui-grid/ui-grid.min.js"></script>
 
-    <!--  Plugin ng-Touch -->
-    <script src="lib/angular-touch/angular-touch.js"></script>
-
-
-    <!--  Plugin alaSQL -->
-    <!-- <script src="plugins/alasql/dist/alasql.js"></script> -->
-    <!-- <script src="plugins/alasql/dist/alasql.min.js"></script> -->
-    <script src="//cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script>
+  <!--  Plugin ng-Touch -->
+  <script src="lib/angular-touch/angular-touch.js"></script>
 
 
-    <!--  Plugin JSZIP -->
-    <script src="plugins/jszip/dist/jszip.js"></script>
-    <script src="plugins/jszip/dist/jszip.min.js"></script>
+  <!-- Plugin xlxs -->
+  <!-- <script src="plugins/xlsx/jszip.js"></script> -->
+  <script src="plugins/xlsx/dist/xlsx.js"></script>
+  <script src="plugins/xlsjs/dist/xls.js"></script>
+  <script lang="javascript" src="plugins/xlsx/dist/xlsx.core.min.js"></script>
+  <script src="plugins/xlsx/dist/xlsx.core.min.js"></script>
+  <script src='http://alasql.org/console/xlsx.core.min.js'></script>
+
+  <!--  Plugin JSZIP -->
+  <script src="plugins/jszip/dist/jszip.js"></script>
+  <script src="plugins/jszip/dist/jszip.min.js"></script>
+
+  <!--  Plugin alaSQL -->
+  <!-- <script src="plugins/alasql/dist/alasql.js"></script> -->
+  <!-- <script src="plugins/alasql/dist/alasql.min.js"></script> -->
+  <script src="//cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script>
 
 
-    <!-- Plugin xlxs -->
-    <!-- <script src="plugins/xlsx/jszip.js"></script> -->
-    <script src="plugins/xlsx/dist/xlsx.js"></script>
-    <script src="plugins/xlsjs/dist/xls.js"></script>
-    <script lang="javascript" src="plugins/xlsx/dist/xlsx.core.min.js"></script>
-    <script src="plugins/xlsx/dist/xlsx.core.min.js"></script>
-    <script src='http://alasql.org/console/xlsx.core.min.js'></script>
-
-
-    <!--your app's js -->
-    <script src="js/service/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/service/Scopes.js"></script>
-    <script src="js/service/FormatarCsv.js"></script>
-    <script src="js/service/PopUps.js"></script>
-    <script src="js/service/CriarDiretorio.js"></script>
-    <script src="js/service/buscaLista.js"></script>
-    <!-- <script src="lib/angular/ng-csv.js"></script> -->
-
-    <!-- Controllers -->
-    <script src="js/controller/loginCtrl.js"></script>
-    <script src="js/controller/editarProdutoCtrl.js"></script>
-    <script src="js/controller/cadastrarProdutoCtrl.js"></script>
-    <script src="js/controller/validarProdutoCtrl.js"></script>
-    <script src="js/controller/consultarProdutoCtrl.js"></script>
-    <script src="js/controller/consultarLocalCtrl.js"></script>
-    <script src="js/controller/listaLocaisCtrl.js"></script>
+  <!--  Plugin requireJS -->
+  <script src="plugins/requirejs/require.js"></script>
 
 
 
-  </head>
 
-  <body ng-app="starter">
-    <ion-nav-view>
 
-    </ion-nav-view>
-    <!-- <div ng-include="'modalLocais.html'" onload='onIncludeLoad()'></div> -->
-  </body>
+
+  <!--your app's js -->
+  <script src="js/service/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/service/Scopes.js"></script>
+  <script src="js/service/FormatarCsv.js"></script>
+  <script src="js/service/PopUps.js"></script>
+  <script src="js/service/CriarDiretorio.js"></script>
+  <script src="js/service/buscaLista.js"></script>
+  <!-- <script src="lib/angular/ng-csv.js"></script> -->
+
+  <!-- Controllers -->
+  <script src="js/controller/loginCtrl.js"></script>
+  <script src="js/controller/editarProdutoCtrl.js"></script>
+  <script src="js/controller/cadastrarProdutoCtrl.js"></script>
+  <script src="js/controller/validarProdutoCtrl.js"></script>
+  <script src="js/controller/consultarProdutoCtrl.js"></script>
+  <script src="js/controller/consultarLocalCtrl.js"></script>
+  <script src="js/controller/listaLocaisCtrl.js"></script>
+
+
+
+</head>
+
+<body ng-app="starter">
+  <ion-nav-view>
+
+  </ion-nav-view>
+  <!-- <div ng-include="'modalLocais.html'" onload='onIncludeLoad()'></div> -->
+</body>
+
 </html>

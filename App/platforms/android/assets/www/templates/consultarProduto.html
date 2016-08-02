@@ -9,12 +9,22 @@
 
 
   <ion-header-bar class="bar-subheader bar-stable">
-    <div class="row">
+    <!-- <div class="row"> -->
 
 
       <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-        <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">LOCAL:   |   CÓDIGO: {{dados.COD_LOCAL}}</div>
-    </div>
+        <!-- <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}}   </br>    LOCAL: {{dados.DESC_LOCAL}}</div> -->
+        <!-- <p class="item-input-wrapper"> LOCAL: GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p> -->
+
+                <label class="item-text-wrap">
+                    <div class="text-center" style="font-size: 13px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}}   </br>    LOCAL: {{dados.DESC_LOCAL}}
+                    </div>
+                </label>
+
+        </ion-header-bar>
+
+
+    <!-- </div> -->
   </ion-header-bar>
 
 
@@ -37,7 +47,10 @@
 
 
 
-<!-- LISTA COM UL E IL (SEM ION-LIST)  Também Não funciona em mobile -->
+
+
+
+<!-- LISTA COM UL E IL (SEM ION-LIST)  Começou a funcionar no device do nada? -->
 
   <ul class="list">
   <a ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
@@ -61,33 +74,28 @@
 
 
 
-  <!-- <ion-item ng-repeat="bem in bens" type="item-text-wrap" href="#/consultarProduto/infoProduto"> Também Não funciona em mobile -->
-  <ion-list>
+<!-- <ion-list>
   <button ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
     <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
     <p>{{bem.DESC_BEM}}</p>
 
-                      <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO local -->
+
     <p>LOCAL: TESTE  | CÓDIGO: {{bem.COD_LOCAL}}</p>
 
 
-    <!-- <button class="button button-assertive button-outline" type="button" ng-show="bem.COD_LOCAL != dados.COD_LOCAL" on-tap="editarBem(bem)>
-    <i class="ion-alert"></i>
-    </button> -->
+
 
     <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
-      <!-- <i class="ion-alert item-note" style="color:red;"></i> -->
+
       <h4 style="color:red; padding: 0px 15px 1px 0px">
       O local informado diverge do cadastro.
     </h4>
     </div>
 
-    <!-- <h5 style="text-transform: uppercase; text-align:right; color:red;" ng-show="bem.COD_LOCAL != local.codigoLocal" type="item-text-wrap">
-      Em outro local
-    </h5> -->
+
 
   </button>
-</ion-list>
+</ion-list> -->
 
 
 
