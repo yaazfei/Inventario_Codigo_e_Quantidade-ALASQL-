@@ -2,6 +2,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
 
   Scopes.blankItem($scope);
 

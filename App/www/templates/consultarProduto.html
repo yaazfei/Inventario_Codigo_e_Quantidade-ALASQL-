@@ -9,72 +9,174 @@
 
 
   <ion-header-bar class="bar-subheader bar-stable">
-    <!-- <div class="row"> -->
+    <label class="item-text-wrap">
+      <div class="text-center" style="font-size: 13px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}} </br> LOCAL: {{dados.DESC_LOCAL}}
+      </div>
+    </label>
 
-
-      <!-- Ao fazer a busca, colocar para aparecer também o nome do local -->
-        <!-- <div class="col col text-center" style="font-size: 15px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}}   </br>    LOCAL: {{dados.DESC_LOCAL}}</div> -->
-        <!-- <p class="item-input-wrapper"> LOCAL: GERENCIAMENTO DE CONTROLE DE HUEHUE BR (TESTE)</p> -->
-
-                <label class="item-text-wrap">
-                    <div class="text-center" style="font-size: 13px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}}   </br>    LOCAL: {{dados.DESC_LOCAL}}
-                    </div>
-                </label>
-
-        </ion-header-bar>
-
-
-    <!-- </div> -->
   </ion-header-bar>
 
 
 
-  <ion-content class="padding has-header has-subheader">
+
+<ion-content class="padding has-header has-subheader">
+      <div class="bar item-input-inset">
+        <label class="item-input-wrapper">
+
+          <input type="search" autofocus="true" placeholder="Informe o Bem" ng-model="search" style="text-transform: uppercase" required>
 
 
-    <div class="bar item-input-inset">
-      <label class="item-input-wrapper">
-        <!-- <i class="icon ion-ios7-search placeholder-icon"></i> -->
-        <input id="searchKey" type="search" placeholder="Informe o Bem" ng-model="search" style="text-transform: uppercase" autocorrect="off" autofocus="true" required>
-        <!-- <button class="button button-clear" ng-click="clearSearch()">X</button> -->
+        </label>
+        <input class="button button-clear" type="reset" value="X"/>
 
-      </label>
-      <input class="button button-clear" type="reset" value="X"/>
-      <!-- <button class="button button-clear" ng-if="search.length" ng-click="search()">Search</button> -->
-    </div>
+      </div>
 
-</br>
-
-
+  </br>
 
 
 
+      <!-- /*****************************************************************************/ -->
 
-<!-- LISTA COM UL E IL (SEM ION-LIST)  Começou a funcionar no device do nada? -->
-
-  <ul class="list">
-  <a ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
-    <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
-    <p>{{bem.DESC_BEM}}</p>
+      <!-- LISTA COM UL E IL (SEM ION-LIST)  ESTÁ FUNCIONANDO -->
 
 
-    <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
-    <!-- <p>LOCAL: {{dados.DESC_LOCAL}}</p> -->
+      <!-- Para aparecer a lista somente quando algo for digitado -->
+      <!-- <ul class="list"  ng-show="search.length"> -->
 
-    <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+      <ul class="list">
+    <a ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+      <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
+      <p>{{bem.DESC_BEM}}</p>
 
-      <h4 style="color:red; padding: 0px 15px 1px 0px">
-      O local informado diverge do cadastro.
-    </h4>
-    </div>
 
-  </a>
-</ul>
+      <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
+
+
+      <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+
+        <h4 style="color:red; padding: 0px 15px 1px 0px">
+        O local informado diverge do cadastro.
+      </h4>
+      </div>
+
+    </a>
+  </ul>
+<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+
+<!-- <ion-infinite-scroll
+  ng-if="moreDataCanBeLoaded()"
+  icon="ion-loading-c"
+  on-infinite="loadMoreData()">
+</ion-infinite-scroll> -->
+
+
+
+
+
 
 
 
 
 <!-- <ion-list>
+
+    <ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+      Bem: {{bem.CHAPA}}
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /*****************************************************************************/ -->
+<!-- Página sem lista (INCOMPLETA) -->
+
+
+
+  <!-- <ion-content class="padding has-header">
+
+    <div class="card">
+
+      <div class="item item-divider">
+        <p style="text-align:center;  font-weight:bold; font-size: 16px;"> LOCAL </p>
+      </div>
+
+      <div class="text-left" style=" text-align:center; font-size: 13px; color font-weight:bold; text-transform: uppercase; margin: 2% 5% 2% 5%;">
+        <p>CÓDIGO: {{dados.COD_LOCAL}}</br>
+        {{dados.DESC_LOCAL}}</p>
+      </div>
+
+    </div>
+  <form name="FormBuscaBem" onsubmit="" novalidate>
+    </br>
+    <label class="item item input">
+      <p>Código do Bem:</p>
+      <input type="text" autofocus="true" placeholder="Informe o Bem" style="text-transform: uppercase" ng-model="bem.COD_BEM" required>
+    </label>
+
+</br>
+<div class="button-bar">
+  <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
+  <input class="button button-positive" type="reset" value="Limpar"/>
+  <input class="button button-balanced" ng-click="buscaBem(dados, bem)" type="reset" value="Buscar"/>
+</div>
+
+</form>
+
+
+
+  <p> BEM : </p> {{bem.CHAPA}}
+  <a ng-repeat="bem in bemEncontrado | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+  <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
+  <p>{{bem.DESC_BEM}}</p>
+
+
+  <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
+
+
+  <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+
+    <h4 style="color:red; padding: 0px 15px 1px 0px">
+    O local informado diverge do cadastro.
+  </h4>
+  </div>
+  <p> BEM </p> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- /*****************************************************************************/ -->
+    <!-- LISTA COM ION-LIST E BUTTON -->
+
+    <!-- <ion-list>
   <button ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
     <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
     <p>{{bem.DESC_BEM}}</p>
@@ -96,37 +198,6 @@
 
   </button>
 </ion-list> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

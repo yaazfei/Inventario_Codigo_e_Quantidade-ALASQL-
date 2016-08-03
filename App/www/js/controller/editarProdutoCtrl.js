@@ -3,6 +3,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
 
   //$scope.local = Scopes.getLocal();
   //var local = Scopes.getLocal();
