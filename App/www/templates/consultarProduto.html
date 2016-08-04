@@ -61,13 +61,9 @@
 
     </a>
   </ul>
-<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+<!-- <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll> -->
 
-<!-- <ion-infinite-scroll
-  ng-if="moreDataCanBeLoaded()"
-  icon="ion-loading-c"
-  on-infinite="loadMoreData()">
-</ion-infinite-scroll> -->
+
 
 
 
@@ -79,13 +75,16 @@
 
 <!-- <ion-list>
 
-    <ion-item ng-repeat="bem in bens | filter:search"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
+    <ion-item ng-repeat="bem in bens | filter:search | limitTo:numberOfItemsToDisplay"  type="item-text-wrap"  class="item" item="bem" ng-click="editarBem(bem)">
       Bem: {{bem.CHAPA}}
+
     </ion-item>
 
   </ion-list>
 
-  <ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll> -->
+  <ion-infinite-scroll ng-if="listlength <= bens.length"
+              on-infinite="loadMore()" distance="3%">
+        </ion-infinite-scroll> -->
 
 
 

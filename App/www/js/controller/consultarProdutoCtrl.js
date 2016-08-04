@@ -9,7 +9,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
   //Início do alaSQL
   alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
-  .then(function(res) {
+    .then(function(res) {
 
       // ACHOU
       alert('Encontrou com o alaSQL');
@@ -22,11 +22,11 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-////// INFINITE SCROLL (NÃO ESTÁ MOSTRANDO OS DADOS DOS BENS QUANDO ATIVADO)
+      ////// INFINITE SCROLL (NÃO ESTÁ MOSTRANDO OS DADOS DOS BENS QUANDO ATIVADO)
       // $scope.noMoreItemsAvailable = false;
       //
       //  $scope.loadMore = function() {
-      //    $scope.bens.push({ id: $scope.bens.length});
+      //    $scope.bens.push({ CHAPA: $scope.bens.length});
       //
       //    if ( $scope.bens.length == 99 ) {
       //      $scope.noMoreItemsAvailable = true;
@@ -39,21 +39,18 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-// ///// (OUTRO EXEMPLO QUE NÃO ESTÁ FUNCIONANDO)
+      // ///// (OUTRO EXEMPLO QUE NÃO ESTÁ FUNCIONANDO)
       // $scope.bens = [];
-      //   $scope.loadMore = function() {
-      //     $http.get(res).success(function(bens) {
-      //       // useItems(bens);
-      //       $scope.$broadcast('scroll.infiniteScrollComplete');
-      //     });
-      //   };
+      // $scope.loadMoreData = function() {
+      // $http.get('url_to_load content').then(function(resp) {
+      //      $scope.items = resp.item;// json format replace with your data format returned from server
+      //      $scope.$broadcast('scroll.infiniteScrollComplete');
       //
-      //   $scope.$on('$stateChangeSuccess', function() {
-      //     $scope.loadMore();
+      //   }, function(err) {
+      //     console.error('ERR', err);
+      //     // err.status will contain the status code
       //   });
-
-
-
+      //   };
 
 
 
@@ -79,10 +76,47 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         if (bem.COD_LOCAL === dados.COD_LOCAL) {
 
         } else {
-          Scopes.setBem(bem);
-          console.log('Bem: ' + bem);
 
-          $state.go('app.editarProduto');
+
+
+
+          ///////////////////// PARA COMPARAR O COD_LOCAL DO BEM COM O COD_LOCAL DO LOCAL
+            localCod = bem.COD_LOCAL;
+            alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+            .then(function(res) {
+
+              // ACHOU O LOCAL E PEGOU O PRIMEIRO
+              alert('Encontrou o local com o alaSQL');
+              console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].DESC_LOCAL);
+              bem.DESC_LOCAL = res[0].DESC_LOCAL;
+
+
+              if (window.cordova) { //Só entra por device
+
+                //CriarDiretorio.processar($cordovaFile, dados);
+                //alert("Passou do CriarDiretorio.processar");
+              }
+
+
+              Scopes.setBem(bem);
+              console.log('Bem: ' + bem);
+
+              $state.go('app.editarProduto');
+
+
+            }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+              PopUps.erroConsultar("Bem não encontrado!");
+            });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -135,48 +169,13 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-
-
-
-
-
-
-
-
       /*****************/
       ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
-
-
-
 
     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
       PopUps.erroConsultar("Bens não encontrados!");
     });
-
-
-
-
-
-
-
-
-
-  // listarBens();
-
-
-
-
-
-
-  /*****************************************************************************/
-  /*/ Checar CODIGO DE LOCAL COM DESCRICAO /*/
-
-
-
-
-
-
 
 
 
