@@ -240,33 +240,30 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 // // ESSE AQUI FUNCIONA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ELE LISTA O JSON NA TELA (MAS NÃO USA ALASQL)
-// $scope.locais= [];
-// $http.get('js/locais.json').then(function(response) {
-//     $scope.locais =response.data;
-//     locais = $scope.locais;
-//     console.log($scope.locais);
-// });
+$scope.locais= [];
+$http.get('js/locais.json').then(function(response) {
+    $scope.locais =response.data;
+    locais = $scope.locais;
+    console.log($scope.locais);
+});
 
 
 
 
 /////////ESSE AQUI FUNCIONA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ELE LISTA O XLSX NA TELA (USA ALASQL)
-alasql.options.errorlog = true; // Log or throw error
 
-var dirname = "js";
-
-alert('passou do require: ' + alasql);
-
-          alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == "000053"',
-              [],function(data){
-              console.log(data);
-              $scope.locais = data;
-          });
-
-
-$scope.exportData = function () {
-        alasql('SELECT * INTO XLSX("locais.xlsx",{headers:true}) FROM ?',[$scope.locais]);
-    };
+// alert('passou do require: ' + alasql);
+//
+//           alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == "000053"',
+//               [],function(data){
+//               console.log(data);
+//               $scope.locais = data;
+//           });
+//
+//
+// $scope.exportData = function () {
+//         alasql('SELECT * INTO XLSX("locais.xlsx",{headers:true}) FROM ?',[$scope.locais]);
+//     };
 
 
 
@@ -274,6 +271,35 @@ $scope.exportData = function () {
 
 
 
+
+
+
+
+///////////////////////////////////////  TESTE PARA LISTA COM INFINTE-SCROLL (NÃO FUNCIONANDO)
+
+// alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+// .then(function(res) {
+//
+//     // ACHOU
+//     alert('Encontrou com o alaSQL');
+//     //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+//
+//     $scope.bens = res;
+//     //var bens = $scope.bens; //Precisa disso?
+//     console.log('Bens foi preenchido.');
+//
+//
+// // $scope.loadMoreData = function() {
+// $http.get(res).then(function(resp) {
+//      $scope.bens = resp;// json format replace with your data format returned from server
+//      $scope.$broadcast('scroll.infiniteScrollComplete');
+//
+//   }, function(err) {
+//     console.error('ERR', err);
+//     // err.status will contain the status code
+//   });
+//   // };
+// });
 
 
 

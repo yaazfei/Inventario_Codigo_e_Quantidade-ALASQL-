@@ -72,10 +72,10 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   };
 
 
-  this.erroConsultar = function(item) {
+  this.erroConsultar = function(msg) {
     var alertPopup = $ionicPopup.alert({
       title: 'Erro ao consultar',
-      template: item + ' não encontrado!'
+      template: msg
     });
   };
 

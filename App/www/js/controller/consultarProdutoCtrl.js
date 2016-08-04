@@ -23,17 +23,29 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
       ////// INFINITE SCROLL (NÃO ESTÁ MOSTRANDO OS DADOS DOS BENS QUANDO ATIVADO)
-      // $scope.noMoreItemsAvailable = false;
-      //
-      //  $scope.loadMore = function() {
-      //    $scope.bens.push({ CHAPA: $scope.bens.length});
-      //
-      //    if ( $scope.bens.length == 99 ) {
-      //      $scope.noMoreItemsAvailable = true;
-      //    }
-      //    $scope.$broadcast('scroll.infiniteScrollComplete');
-      //  };
-      // $scope.bens = [];  //RESETA OS BENS MAS NÃO FUNCIONA SEM
+
+      $scope.noMoreItemsAvailable = false;
+      $scope.todosBens = res;
+      $scope.bens = [];
+      var i=0;
+      $scope.loadMore = function() {
+        $scope.bens.push({
+          id: $scope.todosBens.length,
+          COD_BEM: $scope.todosBens[i].COD_BEM,
+          CHAPA: $scope.todosBens[i].CHAPA,
+          DESC_BEM: $scope.todosBens[i].DESC_BEM,
+          COD_LOCAL: $scope.todosBens[i].COD_LOCAL
+        });
+
+        i++;
+
+
+        if ($scope.bens.length == 99) {
+          $scope.noMoreItemsAvailable = true;
+        }
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      };
+    
 
 
 
@@ -81,8 +93,8 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
           ///////////////////// PARA COMPARAR O COD_LOCAL DO BEM COM O COD_LOCAL DO LOCAL
-            localCod = bem.COD_LOCAL;
-            alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+          localCod = bem.COD_LOCAL;
+          alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
             .then(function(res) {
 
               // ACHOU O LOCAL E PEGOU O PRIMEIRO
@@ -108,10 +120,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
               PopUps.erroConsultar("Bem não encontrado!");
             });
-
-
-
-
 
 
 
