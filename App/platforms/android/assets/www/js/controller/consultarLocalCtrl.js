@@ -32,7 +32,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
       // listarLocais(dados);
       Scopes.setLocal(dados);
 
-      alert('entrou no buscaLocal, vai fazer o alaSQL');
+      console.log('entrou no buscaLocal, vai fazer o alaSQL');
 
 
 
@@ -45,7 +45,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
         .then(function(res) {
 
           // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          alert('Encontrou o local com o alaSQL');
+          console.log('Encontrou o local com o alaSQL');
           console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
           Scopes.setLocal(res[0]);
 
@@ -55,7 +55,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
             //CriarDiretorio.processar($cordovaFile, dados);
             //alert("Passou do CriarDiretorio.processar");
           }
-          alert('saiu do alaSQL');
+          console.log('saiu do alaSQL');
           $state.go('app.consultarProduto');
 
 

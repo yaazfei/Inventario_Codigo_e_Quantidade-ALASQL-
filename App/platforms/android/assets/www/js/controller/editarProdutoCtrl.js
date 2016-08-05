@@ -12,7 +12,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
     .then(function(res) {
 
       // ACHOU
-      alert('Encontrou com o alaSQL');
+      console.log('Encontrou com o alaSQL');
       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
 
       $scope.locais = res;

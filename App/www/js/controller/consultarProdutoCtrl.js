@@ -12,7 +12,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
     .then(function(res) {
 
       // ACHOU
-      alert('Encontrou com o alaSQL');
+      console.log('Encontrou com o alaSQL');
       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
 
       $scope.bens = res;
@@ -22,30 +22,29 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
 
-      ////// INFINITE SCROLL (NÃO ESTÁ MOSTRANDO OS DADOS DOS BENS QUANDO ATIVADO)
+      ////// INFINITE SCROLL (funciona, mas inviabiliza a busca) (Não funcionando no debug, emulador ou chrome)
+      // $scope.noMoreItemsAvailable = false;
+      // $scope.todosBens = res;
+      // $scope.bens = [];
+      // var i=0;
+      // $scope.loadMore = function() {
+      //   $scope.bens.push({
+      //     id: $scope.todosBens.length,
+      //     COD_BEM: $scope.todosBens[i].COD_BEM,
+      //     CHAPA: $scope.todosBens[i].CHAPA,
+      //     DESC_BEM: $scope.todosBens[i].DESC_BEM,
+      //     COD_LOCAL: $scope.todosBens[i].COD_LOCAL
+      //   });
+      //
+      //   i++;
+      //
+      //
+      //   if ($scope.bens.length == 99) {
+      //     $scope.noMoreItemsAvailable = true;
+      //   }
+      //   $scope.$broadcast('scroll.infiniteScrollComplete');
+      // };
 
-      $scope.noMoreItemsAvailable = false;
-      $scope.todosBens = res;
-      $scope.bens = [];
-      var i=0;
-      $scope.loadMore = function() {
-        $scope.bens.push({
-          id: $scope.todosBens.length,
-          COD_BEM: $scope.todosBens[i].COD_BEM,
-          CHAPA: $scope.todosBens[i].CHAPA,
-          DESC_BEM: $scope.todosBens[i].DESC_BEM,
-          COD_LOCAL: $scope.todosBens[i].COD_LOCAL
-        });
-
-        i++;
-
-
-        if ($scope.bens.length == 99) {
-          $scope.noMoreItemsAvailable = true;
-        }
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-      };
-    
 
 
 
@@ -98,7 +97,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
             .then(function(res) {
 
               // ACHOU O LOCAL E PEGOU O PRIMEIRO
-              alert('Encontrou o local com o alaSQL');
+              console.log('Encontrou o local com o alaSQL');
               console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].DESC_LOCAL);
               bem.DESC_LOCAL = res[0].DESC_LOCAL;
 
