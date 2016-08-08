@@ -304,41 +304,17 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     };
 
 
-
-
-  // //Início do alaSQL
-  // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
-  //   .then(function(res) {
-  //
-  //     // ACHOU
-  //     console.log('Encontrou com o alaSQL');
-  //     //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-  //
-  //     $scope.bens = res;
-  //     //var bens = $scope.bens; //Precisa disso?
-  //     console.log('Bens foi preenchido.');
-
-
-      /*****************/
-      ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
-
-
-      // $scope.dados = Scopes.getLocal();
-      // dados = Scopes.getLocal();
-
-
-
-
-
       /*/ Escolher um Bem /*/
-
-      $scope.editarBem = function(bem) {
+      $scope.editarBem = function(bem, dados) {
         // alert('Entrou no editarBem');
         if (bem.COD_LOCAL === dados.COD_LOCAL) {
 
         } else {
 
+
+
           console.log('Entrou no editarBem, vai fazer o alaSQL');
+
           ///////////////////// PARA COMPARAR O COD_LOCAL DO BEM COM O COD_LOCAL DO LOCAL
           localCod = bem.COD_LOCAL;
           alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
@@ -346,7 +322,7 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
               // ACHOU O LOCAL E PEGOU O PRIMEIRO
               console.log('Encontrou o local com o alaSQL');
-              console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].DESC_LOCAL);
+              console.log('Resultado do ALQSQL: ' + res[0]);
               bem.DESC_LOCAL = res[0].DESC_LOCAL;
 
 
@@ -368,7 +344,8 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
               PopUps.erroConsultar("Bem não encontrado!");
             });
 
-
+          }
+        };
 
 
 
@@ -390,7 +367,7 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
                 console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
                 Scopes.setBem(res[0]);
-                $scope.bemEncontrado = res[0];
+                $scope.bemEncontrado = res;
                 // $scope.bem = res[0];
 
 
@@ -418,10 +395,6 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
               });
           };
 
-
-
-        }
-      };
 
 
 

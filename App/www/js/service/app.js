@@ -143,9 +143,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
       'menuContent': {
         templateUrl: 'templates/infoProduto.html',
         controller: 'validarProdutoCtrl'
-          //controller: 'geradorCsvCtrl',
-          //controller:  'gravaVeiculoY',
-          //controller: 'geradorArquivoY'
 
       }
     }

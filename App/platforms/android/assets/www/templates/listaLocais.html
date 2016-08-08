@@ -1,25 +1,25 @@
-<ion-view view-title="Lista de Locais">
+<!-- <ion-view view-title="Lista de Locais">
   <html ng-app="myApp">
     <head lang="en">
-      <!--  Plugin ng-Grid -->
+
       <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css">
         </head></html>
 
   <ion-nav-buttons side="right">
     <div class="buttons">
-    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+
       <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a>
     </div>
   </ion-nav-buttons>
 
   <ion-content class="padding has-header">
 
-  <div>
+  <div> -->
 
 
 <!-- ///////// ///////////////////////      TESTE PARA LISTA COM INFINITE-SCROLL -->
 
-    <!-- <ion-list>
+<!-- <ion-list>
 
       <ion-item collection-repeat="bem in bens | filter:search | limitTo:numberOfItemsToDisplay" type="item-text-wrap" class="item" item="bem" ng-click="editarBem(bem)">
         CHAPA: {{bem.CHAPA}}
@@ -49,7 +49,7 @@
 
 
 
-      <!-- <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
+<!-- <strong>Data Length:</strong> {{ gridOptions.data.length | number }}
       <br>
       <strong>Last Cell Edited:</strong> {{msg.lastCellEdited}}
       <br>
@@ -59,7 +59,7 @@
       <div>{{lastFile}}</div> -->
 
 
-
+<!--
       <button ng-click="exportData()">Export</button>
          <br/>
          <div id="exportable">
@@ -68,21 +68,18 @@
                  <tr>
                      <th>CÓDIGO DO LOCAL</th>
                      <th>DESCRIÇÃO DO LOCAL</th>
-                     <!-- <th>DoB</th> -->
+
                  </tr>
              </thead>
              <body>
                  <tr ng-repeat="local in locais">
                      <td>{{local.COD_LOCAL}}</td>
                      <td>{{local.DESC_LOCAL}}</td>
-                     <!-- <td>{{item.dob | date:'MM/dd/yy'}}</td> -->
+
 
                    </tr>
                  </br>
-                     <!-- <tr ng-repeat="(key, value) in locais">
-                         <td>{{key}}</td>
-                         <td>{{value}}</td>
-                 </tr> -->
+
              </body>
          </table>
          </div>
@@ -90,15 +87,133 @@
 
 
 
+    </div>
+
+
+  </ion-content>
+</ion-view>
+ -->
+
+<!-- //**********************************************************************************************************//
+//////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA -->
 
 
 
 
 
+<ion-view view-title="Consultar Bem">
+
+  <ion-nav-buttons side="right">
+    <div class="buttons">
+      <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
+    </div>
+  </ion-nav-buttons>
 
 
+  <!-- <ion-header-bar class="bar-subheader bar-stable">
+    <label class="item-text-wrap">
+      <div class="text-center" style="font-size: 13px; font-weight:bold; text-transform: uppercase">CÓDIGO: {{dados.COD_LOCAL}} </br> LOCAL: {{dados.DESC_LOCAL}}
+      </div>
+    </label>
+
+  </ion-header-bar>
+
+
+
+
+  <ion-content class="padding has-header has-subheader">
+    <div class="bar item-input-inset">
+      <label class="item-input-wrapper">
+
+        <input type="search" autofocus="true" placeholder="Informe o Bem" ng-model="search" style="text-transform: uppercase" required>
+
+
+      </label>
+      <input class="button button-clear" type="reset" value="X" />
 
     </div>
+
+    </br> -->
+
+
+
+  <!-- /*****************************************************************************/ -->
+  <!-- Página sem lista (INCOMPLETA) -->
+
+
+
+  <ion-content class="padding has-header">
+
+    <div class="card">
+
+      <div class="item item-divider">
+        <p style="text-align:center;  font-weight:bold; font-size: 16px;"> LOCAL </p>
+      </div>
+
+      <div class="text-left" style=" text-align:center; font-size: 13px; color font-weight:bold; text-transform: uppercase; margin: 2% 5% 2% 5%;">
+        <p>CÓDIGO: {{teste.COD_LOCAL}}</br>
+          {{teste.DESC_LOCAL}}</p>
+      </div>
+
+    </div>
+
+
+
+
+
+    <form name="FormBuscaBemTeste" novalidate>
+
+
+      <div class="list" id="DivFormTeste">
+        </br>
+        <label class="item item input">
+          <p>Código do Bem:</p>
+          <input type="text" autofocus="true" placeholder="Informe o Bem"
+           style="text-transform: uppercase" ng-model="bem.COD_BEM" required>
+        </label>
+
+        </br>
+        <div class="button-bar">
+          <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar" />
+          <input class="button button-positive" type="reset" value="Limpar" />
+          <input class="button button-balanced" ng-click="buscaBem(bem)" type="reset" value="Buscar" />
+        </div>
+      </div>
+    </form>
+
+
+
+
+
+  </br></br>
+    <a ng-repeat="bem in bemEncontrado | filter:search track by $index"
+     type="item-text-wrap"
+     class="item" item="bem" ng-click="editarBem(bem, teste)">
+      <h4>{{bem.CHAPA}} <i class="ion-alert item-note"
+         style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+       </i> </h4>
+      <p>{{bem.DESC_BEM}}</p>
+
+
+      <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
+
+
+
+      <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
+
+        <h4 style="color:red; padding: 0px 15px 1px 0px">
+          O local informado diverge do cadastro.
+        </h4>
+      </div>
+</a>
+
+
+
+
+
+
+
 
 
   </ion-content>

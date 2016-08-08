@@ -12,8 +12,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
     .then(function(res) {
 
       // ACHOU
-      console.log('Encontrou com o alaSQL');
-      //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+      console.log('Encontrou com o ALQSQL: ' + res[0]);
 
       $scope.locais = res;
       //var bens = $scope.bens; //Precisa disso?
@@ -41,18 +40,10 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       };
 
 
-
-      // $scope.localAtual = function() {
-      //   console.log('localAtual : ' + dados.COD_LOCAL);
-      //   $scope.search = dados.COD_LOCAL;
-      //   $scope.local = $scope.search;
-      //   $scope.hideModal();
-      // };
-
-
       $scope.localSelecionado = function(local) {
         console.log('Selecionou o local : ' + local.DESC_LOCAL + ' ' + local.COD_LOCAL);
         $scope.local = local;
+        // var localSelecionado = true;
         $scope.hideModal();
 
       };
@@ -71,38 +62,94 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       };
 
 
+      /*****************************************************************************/
+      /*/ ESCREVER PRODUTO INVÁLIDO - EDITAR /*/
+
+
+      $scope.escreverProdutoEditado = function(local) {
+
+        dados = Scopes.getLocal();
+        bem = Scopes.getBem();
+
+
+        if (local === undefined || local === '') {
+
+
+        }else{
+          console.log('Novo local foi preenchido. Será atualizado para ele.');
+          dados = local;
+        }
+
+
+        console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
+
+        // bemEscolhido = bem.CHAPA;
+        //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+        alasql('UPDATE Lista_de_Bens SET COD_LOCAL="23" IN xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA]);
+          // .then(function(res) {
+
+            // alasql('UPDATE ? SET ... WHERE ...', [data]);
+            // alasql('UPDATE RpdAssignments SET Name="id2" WHERE Id=1');
+            // console.log('Vamos ver o que aparece aqui: ' + res);
+
+          // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+          //
+          //   PopUps.erroConsultar("Bens não encontrados!");
+          // });
+
+      };
+
+
+
+
+
+
+
+      /*****************************************************************************/
+
+      /*/ MODAL DE LOCAL /*/ //Funcionando
+
+
+      $scope.openModal = function() {
+        $scope.modalCtrl.show();
+      };
+
+
+      $ionicModal.fromTemplateUrl('templates/modalLocais.html', function(modal) {
+        $scope.modalCtrl = modal;
+      }, {
+        scope: $scope,
+        animation: 'slide-in-up', //'slide-left-right', 'slide-in-up', 'slide-right-left'
+        backdropClickToClose: false,
+        focusFirstInput: true
+      });
+
+      console.log('modal', $scope);
+
+      $scope.hideModal = function() {
+        $scope.modalCtrl.hide();
+      };
+
+      $scope.applyModal = function() {
+        console.log('modal', $scope);
+        $scope.modalCtrl.remove();
+      };
+
+
+      /*****************/
+      ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
+
+
+
+    }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+      PopUps.erroConsultar("Bens não encontrados!");
+    });
 
 
 
   /*****************************************************************************/
-  ////// **********/ LISTA PELO ALASQL /*/ (Não funcionando)
-
-  // function listarLocais() {
-  //
-  //
-  //   alasql.promise('SELECT * FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true}')
-  //   .then(function(res) {
-  //
-  //       // ACHOU
-  //       alert('Encontrou com o alaSQL');
-  //       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-  //
-  //       $scope.locais = res.data;
-  //       var locais = $scope.locais;
-  //       console.log('$scope.locais: ' + $scope.locais);
-  //
-  //
-  //     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-  //
-  //       PopUps.erroConsultar("Locais não encontrados!");
-  //     });
-  //
-  // }
-
-
-
-  /*****************************************************************************/
-  /*/ LISTA EM JSON /*/
+  /*/ LISTA EM JSON  (NÃO ESTÁ EM USO) /*/
 
 
   /////////////////////////////////// Funcionando, modo melhor?
@@ -119,59 +166,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
   /*****************************************************************************/
-  /*/ MODAL DE LOCAL /*/ //Funcionando
-
-
-  $scope.openModal = function() {
-    $scope.modalCtrl.show();
-  };
-
-
-  $ionicModal.fromTemplateUrl('templates/modalLocais.html', function(modal) {
-    $scope.modalCtrl = modal;
-  }, {
-    scope: $scope,
-    animation: 'slide-in-up', //'slide-left-right', 'slide-in-up', 'slide-right-left'
-    backdropClickToClose: false,
-    focusFirstInput: true
-  });
-
-  console.log('modal', $scope);
-
-  $scope.hideModal = function() {
-    $scope.modalCtrl.hide();
-  };
-
-  $scope.applyModal = function() {
-    console.log('modal', $scope);
-    $scope.modalCtrl.remove();
-  };
-
-
-  /*****************/
-  ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
-
-
-
-  }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-
-  PopUps.erroConsultar("Bens não encontrados!");
-  });
-
-
-
-  /*****************************************************************************/
-  /*/ ESCREVER PRODUTO INVÁLIDO - EDITAR /*/
-
-
-
-
-
-
-
-
-
-  //*****************************************************************************//
 
 
 });
