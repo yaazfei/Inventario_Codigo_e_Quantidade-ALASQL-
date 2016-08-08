@@ -75,27 +75,59 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         if (local === undefined || local === '') {
 
 
-        }else{
+        } else {
           console.log('Novo local foi preenchido. Será atualizado para ele.');
           dados = local;
         }
-
-
         console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
 
-        // bemEscolhido = bem.CHAPA;
-        //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
-        alasql('UPDATE Lista_de_Bens SET COD_LOCAL="23" IN xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA]);
-          // .then(function(res) {
+        // var data = {
+        //   COD_BEM : bem.COD_BEM,
+        //   DESC_BEM : bem.DESC_BEM,
+        //   CHAPA : bem.CHAPA,
+        //   COD_LOCAL : bem.COD_LOCAL};
 
-            // alasql('UPDATE ? SET ... WHERE ...', [data]);
-            // alasql('UPDATE RpdAssignments SET Name="id2" WHERE Id=1');
-            // console.log('Vamos ver o que aparece aqui: ' + res);
 
-          // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-          //
-          //   PopUps.erroConsultar("Bens não encontrados!");
-          // });
+        // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx") SET COD_LOCAL = ? WHERE CHAPA == ?', [bem.COD_LOCAL, bem.CHAPA]);
+        alasql('UPDATE BensTable SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+        // alasql('UPDATE ? SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [data, bem.CHAPA]);
+
+        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
+          .then(function(res) {
+            // ACHOU
+            console.log('Encontrou com o ALQSQL: ' + res[0]);
+
+
+
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O bem
+
+            PopUps.erroConsultar("Bem não encontrado!");
+          });
+
+
+        // // bemEscolhido = bem.CHAPA;
+        // //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+        // alasql('UPDATE BensTable SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //   // .then(function(res) {
+        //      //UPDATE CSV('a.csv') SET b=20 WHERE a = 10;
+        //     // alasql('UPDATE ? SET ... WHERE ...', [data]);
+        //     // alasql('UPDATE RpdAssignments SET Name="id2" WHERE Id=1');
+        //     // console.log('Vamos ver o que aparece aqui: ' + res);
+        //
+        //   // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+        //   //
+        //   //   PopUps.erroConsultar("Bens não encontrados!");
+        //   // });
 
       };
 
