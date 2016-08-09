@@ -3,7 +3,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518');
 
 
   // listarLocais();
@@ -24,7 +24,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
 
-      var local;
+      // var local;
 
 
       $scope.bem = Scopes.getBem();
