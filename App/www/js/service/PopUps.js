@@ -3,10 +3,10 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
 
 
   //// POPUPS
-  this.produtoSalvo = function() {
+  this.produtoSalvo = function(msg) {
     var alertPopup = $ionicPopup.alert({
       title: 'Sucesso',
-      template: 'Veículo salvo com sucesso!'
+      template: msg
     });
     // alertPopup.then(function(res) {
     //   $state.go('app.consultarProduto');

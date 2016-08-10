@@ -2,47 +2,77 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
   console.log('Entrou no controller de Consultar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518');
 
   $scope.dados = Scopes.getLocal();
   console.log($scope.dados);
+
+  $scope.fecharApp = function() {
+    console.log('Apertou o fechar');
+    PopUps.showConfirm();
+
+  };
 
 
   /*/ Escolher um Bem /*/
   $scope.editarBem = function(bem, dados) {
     // alert('Entrou no editarBem');
-    if (bem.COD_LOCAL === dados.COD_LOCAL) {} else {
+    if (bem.COD_LOCAL !== undefined && bem.COD_LOCAL === dados.COD_LOCAL) {} else {
       console.log('Entrou no editarBem, vai fazer o alaSQL');
 
       ///////////////////// PARA COMPARAR O COD_LOCAL DO BEM COM O COD_LOCAL DO LOCAL
-      localCod = bem.COD_LOCAL;
-      alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
-        .then(function(res) {
-
-          // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          console.log('Encontrou o local com o alaSQL');
-          console.log('Resultado do ALQSQL: ' + res[0]);
-          bem.DESC_LOCAL = res[0].DESC_LOCAL;
 
 
-          if (window.cordova) { //Só entra por device
+      // if (bem.COD_LOCAL === " " || bem.COD_LOCAL === undefined) {
+      //   console.log("COD_BEM não estava cadastrado!");
+      //   bem.DESC_LOCAL = "Local não cadastrado";
+      //
+      //   Scopes.setBem(bem);
+      //   console.log('Bem: ' + bem);
+      //
+      //   $state.go('app.editarProduto');
+      //
+      // } else {
 
-            //CriarDiretorio.processar($cordovaFile, dados);
-            //alert("Passou do CriarDiretorio.processar");
-          }
+        console.log('Entrou no editarBem, vai fazer o alaSQL');
+        localCod = bem.COD_LOCAL;
 
-          Scopes.setBem(bem);
-          console.log('Bem: ' + bem);
+        alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+          .then(function(res) {
 
-          $state.go('app.editarProduto');
+            // ACHOU O LOCAL E PEGOU O PRIMEIRO
+            console.log('Encontrou o local com o alaSQL');
+            console.log('Resultado do ALQSQL: ' + res[0]);
+            bem.DESC_LOCAL = res[0].DESC_LOCAL;
 
 
-        }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+            if (window.cordova) { //Só entra por device
 
-          PopUps.erroConsultar("Bem não encontrado!");
-        });
+              //CriarDiretorio.processar($cordovaFile, dados);
+              //alert("Passou do CriarDiretorio.processar");
+            }
 
-    }
+            Scopes.setBem(bem);
+            console.log('Bem: ' + bem);
+
+            $state.go('app.editarProduto');
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+            console.log("COD_LOCAL do BEM não estava cadastrado!");
+              bem.DESC_LOCAL = "LOCAL NÃO CADASTRADO";
+              Scopes.setBem(bem);
+              console.log('Bem: ' + bem);
+
+              $state.go('app.editarProduto');
+
+
+
+          });
+
+      }
+    //}
   };
 
 

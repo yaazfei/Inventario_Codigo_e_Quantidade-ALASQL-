@@ -273,35 +273,19 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
 angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio) {
 
-  console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
-  console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
+      console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
+      console.log('Códigos de locais válidos: 000053, 000039, 000005');
+      console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
 
-  $scope.teste = {
-    COD_LOCAL: '000053',
-    DESC_LOCAL: 'GERENCIAMENTO DE CONTROLER DE HUEHUEBR'
-    };
+      $scope.teste = {
+        COD_LOCAL: '000053',
+        DESC_LOCAL: 'GERENCIAMENTO DE CONTROLER DE HUEHUEBR'
+      };
 
 
       /*/ Escolher um Bem /*/
@@ -344,7 +328,174 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
               PopUps.erroConsultar("Bem não encontrado!");
             });
 
+        }
+      };
+
+
+
+
+
+
+
+      //////////****** CONTROLLER DA PÁGINA SEM LISTA (INCOMPLETO)
+
+      $scope.buscaBem = function(bem) {
+
+        // localCod = teste.COD_LOCAL;
+        bemCod = bem.COD_BEM;
+        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bemCod])
+          .then(function(res) {
+
+            ////// ACHOU O LOCAL E PEGOU O PRIMEIRO
+            //alert('Encontrou o Bem com o alaSQL');
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+            Scopes.setBem(res[0]);
+            $scope.bemEncontrado = res;
+            // $scope.bem = res[0];
+
+
+            $scope.hideBem = false;
+            //return $scope.hideBem;
+
+
+
+            if (window.cordova) { //Só entra por device
+
+              //CriarDiretorio.processar($cordovaFile, dados);
+              //alert("Passou do CriarDiretorio.processar");
+            }
+
+
+            // alert('saiu do alaSQL');
+
+            console.log('Bem foi encontrado.');
+            $state.go('app.listaLocais');
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+            PopUps.erroConsultar("Bem não encontrado!");
+          });
+      };
+
+
+
+
+      $scope.teste2 = function() { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL
+
+        bem = {
+          COD_BEM: "000000023",
+          DESC_BEM: "Blau blau",
+          CHAPA: "000180",
+          COD_LOCAL: "000093"
+        };
+
+
+        dados = {
+          COD_LOCAL: "000053",
+          DESC_LOCAL: "Blau Local"
+        };
+
+
+        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+          .then(function(res) {
+            // ACHOU
+            //console.log('Encontrou com o ALQSQL: ' + res);
+            //res = angular.merge({}, bem);
+            res.push(bem);
+
+            // if (window.cordova) { //Só entra por device
+            //
+            //   CriarDiretorio.processar($cordovaFile, res);
+            //   //alert("Passou do CriarDiretorio.processar");
+            // }
+
+            $scope.teste3(res);
+
+
+
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O bem
+
+            PopUps.erroConsultar("Bens não encontrados!");
+          });
+
+      };
+
+
+
+
+
+
+
+
+
+      $scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
+
+          console.log(res);
+          var jsonObject = JSON.stringify(res);
+
+          console.log(jsonObject);
+
+          var finalCSV = ConvertToCSV(jsonObject);
+          console.log(finalCSV);
+
+
+
+
+          function ConvertToCSV(objArray) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
+
+            for (var i = 0; i < array.length; i++) {
+              var line = '';
+              for (var index in array[i]) {
+                if (line !== '') {
+                  line += ',';
+
+                  line += array[i][index];
+                }
+              }
+
+              str += line + '\r\n';
+            }
+
+            return str;
           }
+
+          if (window.cordova) { //Só entra por device
+
+            CriarDiretorio.processar($cordovaFile, finalCSV);
+            //alert("Passou do CriarDiretorio.processar");
+          }
+
+
+
+
+
+
+          // alasql.promise('SELECT * INTO XLSX("Lista_de_Bens.xlsx",{headers:true}) FROM ?',[res])
+          // .then(function(res) {
+          //     // ACHOU
+          //     //console.log('Encontrou com o ALQSQL: ' + res);
+          //     //res = angular.merge({}, bem);
+          //     // res.push(bem);
+          //
+          //     // if (window.cordova) { //Só entra por device
+          //     //
+          //     //   CriarDiretorio.processar($cordovaFile, res);
+          //     //   //alert("Passou do CriarDiretorio.processar");
+          //     // }
+          //
+          //   }).catch(function(err) { // NÃO ENCONTROU O bem
+          //
+          //     PopUps.erroConsultar("Bens não encontrados!");
+          //   });
+          //
+
+
         };
 
 
@@ -353,226 +504,251 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
-          //////////****** CONTROLLER DA PÁGINA SEM LISTA (INCOMPLETO)
-
-          $scope.buscaBem = function(bem) {
-
-            // localCod = teste.COD_LOCAL;
-            bemCod = bem.COD_BEM;
-            alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bemCod])
-              .then(function(res) {
-
-                ////// ACHOU O LOCAL E PEGOU O PRIMEIRO
-                //alert('Encontrou o Bem com o alaSQL');
-
-                console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
-                Scopes.setBem(res[0]);
-                $scope.bemEncontrado = res;
-                // $scope.bem = res[0];
 
 
-                $scope.hideBem = false;
-                //return $scope.hideBem;
+        $scope.teste1 = function() {
 
+          //   var population = 123;
+          //   var city = "Blaublau";
+          //   alasql('CREATE TABLE IF NOT EXISTS MyAtlas.City (city string, population number)');
+          //   alasql('SELECT * INTO MyAtlas.City FROM ?', [
+          //       [
+          //           { city: 'Vienna', population: 1731000 },
+          //           { city: 'Budapest', population: 1728000 }
+          //       ]
+          //   ]);
+          //
+          //   var res = alasql('SELECT * FROM MyAtlas.City WHERE city = "' + id + '";');
+          //   alasql('UPDATE MyAtlas.City SET population = "' + population + '" WHERE city = "' + id + '";');
+          //
+          // console.log (MyAtlas.City);
 
-
-                if (window.cordova) { //Só entra por device
-
-                  //CriarDiretorio.processar($cordovaFile, dados);
-                  //alert("Passou do CriarDiretorio.processar");
-                }
-
-
-                // alert('saiu do alaSQL');
-
-                console.log('Bem foi encontrado.');
-                $state.go('app.listaLocais');
-
-
-              }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-
-                PopUps.erroConsultar("Bem não encontrado!");
-              });
+          bem = {
+            COD_BEM: "000000023",
+            DESC_BEM: "Blau blau",
+            CHAPA: "000180",
+            COD_LOCAL: "000093"
           };
 
 
+          dados = {
+            COD_LOCAL: "000053",
+            DESC_LOCAL: "Blau Local"
+          };
+
+          // var data = {
+          //   COD_BEM : bem.COD_BEM,
+          //   DESC_BEM : bem.DESC_BEM,
+          //   CHAPA : bem.CHAPA,
+          //   COD_LOCAL : bem.COD_LOCAL};
 
 
-    //   /*****************/
-    //   ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
-    //
-    // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-    //
-    //   PopUps.erroConsultar("Bens não encontrados!");
+          // alasql('SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true}) FROM ', [bem.CHAPA]);
+          // alasql('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA],function(data){
+          //         console.log(data);
+          //         alasql('UPDATE TabelaBens SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+          //
+          //         console.log(data);
+          //     });
+
+
+          // alasql('INSERT INTO $Lista_de_Bens SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})', [bem.CHAPA]);
+
+
+          //alasql('SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA ===', [bem.CHAPA]);
+
+
+
+          // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx",{headers:true}) \ SET COD_LOCAL="666" WHERE CHAPA == ?', [bem.CHAPA]);
+          // alasql('UPDATE TabelaBens SET COD_LOCAL="666" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+
+
+          // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
+          //   .then(function(res) {
+          //     // ACHOU
+          //     console.log('Encontrou com o ALQSQL: ' + res[0]);
+          //     console.log(res);
+          //
+          //
+          //     // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx") SET COD_LOCAL = ? WHERE CHAPA == ?', [bem.COD_LOCAL, bem.CHAPA]);
+          //     alasql('UPDATE [Grid Results] SET COD_LOCAL="666" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+          //
+          //     // alasql.promise('UPDATE TabelaBens SET COD_LOCAL="666" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA])
+          //     //   .then(function(res) {
+          //     //
+          //     //
+          //     //     console.log(res);
+          //     //   }).catch(function(err) { // NÃO ENCONTROU O bem
+          //     //
+          //     //     PopUps.erroConsultar("UPDATE falhou!");
+          //     //   });
+          //     console.log(res);
+          //
+          //
+          //
+          //   }).catch(function(err) { // NÃO ENCONTROU O bem
+          //
+          //     PopUps.erroConsultar("Bem não encontrado!");
+          //   });
+
+
+
+          // alasql('select * into one from csv("mydata.csv")');
+          // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx") SET COD_LOCAL = ? WHERE CHAPA == ?', [bem.COD_LOCAL, bem.CHAPA]);
+          // alasql('UPDATE TabelaBens SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+          // alasql('UPDATE ? SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [data, bem.CHAPA]);
+
+          // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
+          //   .then(function(res) {
+          //     // ACHOU
+          //     console.log('Encontrou com o ALQSQL: ' + res[0]);
+          //
+          //
+          //   }).catch(function(err) { // NÃO ENCONTROU O bem
+          //
+          //     PopUps.erroConsultar("Bem não encontrado!");
+          //   });
+
+
+
+        };
+
+
+
+
+
+
+
+
+
+        //   /*****************/
+        //   ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
+        //
+        // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+        //
+        //   PopUps.erroConsultar("Bens não encontrados!");
+        // });
+
+
+
+        /*****************************************************************************/
+        //////******************* LISTA PELO ALASQL  (Não está funcionando)
+
+        // function listarBens() {
+        //
+        //
+        //   alasql.promise('SELECT * FROM xlsx("js/Lista de Bens.xlsx",{headers:true}')
+        //   .then(function(res) {
+        //
+        //       // ACHOU
+        //       alert('Encontrou com o alaSQL');
+        //       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+        //
+        //       $scope.bens = res.data;
+        //       var bens = $scope.bens;
+        //       console.log('$scope.bens: ' + $scope.bens);
+        //
+        //
+        //     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+        //
+        //       PopUps.erroConsultar("Bens não encontrados!");
+        //     });
+        //
+        // }
+
+
+
+        /*****************************************************************************/
+        /*/ LISTA EM JSON /*/
+
+
+        // ///////////////////////////////////// Funcionando, MELHOR MODO?
+        // function listarBens() {
+        //   var promisse;
+        //   $scope.bens = [];
+        //   promisse = $http.get('js/bens.json');
+        //     promisse.then(function (response){
+        //       $scope.bens = response.data;
+        //       var bens = $scope.bens;
+        //       console.log('$scope.bens: ' + $scope.bens);
+        //       //getBens();
+        //     });
+        //
+        // }
+
+
+
+        ///////////////////////////////////// Modo antigo. Dá várias voltas
+        // $scope.bens = [];
+        // $http.get('js/bens.json').then(function(response) {
+        //   $scope.bens = response.data;
+        //   var bens = $scope.bens;
+        //   console.log($scope.bens);
+        // });
+
+
+
+        ///////////////////////////////////// Funcionando, mas ainda dá voltas
+        // function listarLocais() {
+        //   $scope.locais = [];
+        //   $http.get('js/locais.json').then(function(response) {
+        //     $scope.locais = response.data;
+        //     var locais = $scope.locais;
+        //     console.log('$scope.locais: ' + $scope.locais);
+        //   });
+        // }
+        //
+        //
+        //
+        // function listarLocaisEspera($scope) {
+        //   var promise = listarLocais(); //make rest call
+        //   $scope.waitMessage = true;
+        //   console.log($scope.waitMessage);
+        //
+        //   $timeout(function() {
+        //     //before resolving the promise, wait a certain number of ms, then
+        //     //resolve and display data to user
+        //     promise.then(function(response) {
+        //
+        //       $scope.output = response.data;
+        //       $scope.waitMessage = false;
+        //       console.log($scope.waitMessage);
+        //     });
+        //   }, 1000);
+        // }
+
+
+
+        // ******************************************************************************* //
+
+
+
+        // ******************************************************************************* //
+
+
+        console.log("Passou uma vez. Esperando o alaSQL. ");
+        // console.log("$scope.locais: " + $scope.locais);
+        //console.log(bens);
+        //console.log(blau = $scope.getBem());
+        // console.log("$scope.bem: " + $scope.bens);
+        //console.log(listaBem);
+
+
+
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+
+
     // });
-
-
-
-  /*****************************************************************************/
-  //////******************* LISTA PELO ALASQL  (Não está funcionando)
-
-  // function listarBens() {
-  //
-  //
-  //   alasql.promise('SELECT * FROM xlsx("js/Lista de Bens.xlsx",{headers:true}')
-  //   .then(function(res) {
-  //
-  //       // ACHOU
-  //       alert('Encontrou com o alaSQL');
-  //       //console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-  //
-  //       $scope.bens = res.data;
-  //       var bens = $scope.bens;
-  //       console.log('$scope.bens: ' + $scope.bens);
-  //
-  //
-  //     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-  //
-  //       PopUps.erroConsultar("Bens não encontrados!");
-  //     });
-  //
-  // }
-
-
-
-  /*****************************************************************************/
-  /*/ LISTA EM JSON /*/
-
-
-  // ///////////////////////////////////// Funcionando, MELHOR MODO?
-  // function listarBens() {
-  //   var promisse;
-  //   $scope.bens = [];
-  //   promisse = $http.get('js/bens.json');
-  //     promisse.then(function (response){
-  //       $scope.bens = response.data;
-  //       var bens = $scope.bens;
-  //       console.log('$scope.bens: ' + $scope.bens);
-  //       //getBens();
-  //     });
-  //
-  // }
-
-
-
-  ///////////////////////////////////// Modo antigo. Dá várias voltas
-  // $scope.bens = [];
-  // $http.get('js/bens.json').then(function(response) {
-  //   $scope.bens = response.data;
-  //   var bens = $scope.bens;
-  //   console.log($scope.bens);
-  // });
-
-
-
-  ///////////////////////////////////// Funcionando, mas ainda dá voltas
-  // function listarLocais() {
-  //   $scope.locais = [];
-  //   $http.get('js/locais.json').then(function(response) {
-  //     $scope.locais = response.data;
-  //     var locais = $scope.locais;
-  //     console.log('$scope.locais: ' + $scope.locais);
-  //   });
-  // }
-  //
-  //
-  //
-  // function listarLocaisEspera($scope) {
-  //   var promise = listarLocais(); //make rest call
-  //   $scope.waitMessage = true;
-  //   console.log($scope.waitMessage);
-  //
-  //   $timeout(function() {
-  //     //before resolving the promise, wait a certain number of ms, then
-  //     //resolve and display data to user
-  //     promise.then(function(response) {
-  //
-  //       $scope.output = response.data;
-  //       $scope.waitMessage = false;
-  //       console.log($scope.waitMessage);
-  //     });
-  //   }, 1000);
-  // }
-
-
-
-  // ******************************************************************************* //
-
-
-
-  // ******************************************************************************* //
-
-
-  console.log("Passou uma vez. Esperando o alaSQL. ");
-  // console.log("$scope.locais: " + $scope.locais);
-  //console.log(bens);
-  //console.log(blau = $scope.getBem());
-  // console.log("$scope.bem: " + $scope.bens);
-  //console.log(listaBem);
-
-
-
-
-
-
-
-
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// });

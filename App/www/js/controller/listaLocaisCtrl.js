@@ -382,57 +382,131 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
-$scope.teste2 = function(){   //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL
+  $scope.teste2 = function() { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL
 
-  bem = {
-    COD_BEM: "000000023",
-    DESC_BEM: "Blau blau",
-    CHAPA: "000180",
-    COD_LOCAL: "000093"
+    bem = {
+      COD_BEM: "000000023",
+      DESC_BEM: "Blau blau",
+      CHAPA: "000180",
+      COD_LOCAL: "000093"
+    };
+
+
+    dados = {
+      COD_LOCAL: "000053",
+      DESC_LOCAL: "Blau Local"
+    };
+
+
+    alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+      .then(function(res) {
+        // ACHOU
+        //console.log('Encontrou com o ALQSQL: ' + res);
+        //res = angular.merge({}, bem);
+        res.push(bem);
+
+        // if (window.cordova) { //Só entra por device
+        //
+        //   CriarDiretorio.processar($cordovaFile, res);
+        //   //alert("Passou do CriarDiretorio.processar");
+        // }
+
+        $scope.teste3(res);
+
+
+
+
+
+      }).catch(function(err) { // NÃO ENCONTROU O bem
+
+        PopUps.erroConsultar("Bens não encontrados!");
+      });
+
   };
 
 
-  dados = {
-    COD_LOCAL: "000053",
-    DESC_LOCAL: "Blau Local"
-  };
 
 
-  alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
-    .then(function(res) {
-      // ACHOU
-      //console.log('Encontrou com o ALQSQL: ' + res);
-      //res = angular.merge({}, bem);
-      res.push(bem);
 
-      if (window.cordova) { //Só entra por device
 
-        CriarDiretorio.checarDiretorio($cordovaFile, res);
-        //alert("Passou do CriarDiretorio.processar");
+
+
+// NÃO FUNCIONANDO
+
+  $scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
+
+    console.log(res);
+    //var jsonObject = JSON.stringify(res);
+    // console.log(jsonObject);
+
+    var finalCSV = ConvertToCSV(res);
+    console.log(finalCSV);
+
+
+
+
+    function ConvertToCSV(res) {
+
+      total = res.length();
+    //  var n;
+
+      for (n = 1; n < total; n++) {
+        objArray = res[n];
+
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+          var line = '';
+          for (var index in array[i]) {
+            if (line !== '') {
+              line += ',';
+
+              line += array[i][index];
+            }
+          }
+
+          str += line + '\r\n';
+
+        }
+
+        return str;
       }
 
+    }
+
+    if (window.cordova) { //Só entra por device
+
+      CriarDiretorio.processar($cordovaFile, finalCSV);
+      //alert("Passou do CriarDiretorio.processar");
+    }
 
 
 
 
 
 
-    }).catch(function(err) { // NÃO ENCONTROU O bem
+    // alasql.promise('SELECT * INTO XLSX("Lista_de_Bens.xlsx",{headers:true}) FROM ?',[res])
+    // .then(function(res) {
+    //     // ACHOU
+    //     //console.log('Encontrou com o ALQSQL: ' + res);
+    //     //res = angular.merge({}, bem);
+    //     // res.push(bem);
+    //
+    //     // if (window.cordova) { //Só entra por device
+    //     //
+    //     //   CriarDiretorio.processar($cordovaFile, res);
+    //     //   //alert("Passou do CriarDiretorio.processar");
+    //     // }
+    //
+    //   }).catch(function(err) { // NÃO ENCONTROU O bem
+    //
+    //     PopUps.erroConsultar("Bens não encontrados!");
+    //   });
+    //
 
-      PopUps.erroConsultar("Bens não encontrados!");
-    });
 
-
-
-
-
-
-};
-
-
-
-
-
+  };
 
 
 
@@ -488,15 +562,15 @@ $scope.teste2 = function(){   //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO ED
     //     });
 
 
-  // alasql('INSERT INTO $Lista_de_Bens SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})', [bem.CHAPA]);
+    // alasql('INSERT INTO $Lista_de_Bens SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})', [bem.CHAPA]);
 
 
-  //alasql('SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA ===', [bem.CHAPA]);
+    //alasql('SELECT * INTO xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA ===', [bem.CHAPA]);
 
 
 
-  // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx",{headers:true}) \ SET COD_LOCAL="666" WHERE CHAPA == ?', [bem.CHAPA]);
-  // alasql('UPDATE TabelaBens SET COD_LOCAL="666" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
+    // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx",{headers:true}) \ SET COD_LOCAL="666" WHERE CHAPA == ?', [bem.CHAPA]);
+    // alasql('UPDATE TabelaBens SET COD_LOCAL="666" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
 
 
     // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])

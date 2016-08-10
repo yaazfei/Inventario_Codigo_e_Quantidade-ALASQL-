@@ -5,8 +5,9 @@ angular.module("starter").service('FormatarCsv', function() {
   this.iterateObject = function(obj, params) {
 
     var value = '',
+      valueTotal = '',
       header = '',
-      headerNOK = '',
+      // headerNOK = '',
       blankValue = '';
 
     for (var name in obj) {
@@ -19,27 +20,29 @@ angular.module("starter").service('FormatarCsv', function() {
 
 
         } else {
-          value += removeNewLine(obj[name]) + ', ';
-          blankValue += ' ,';
-          header += name + ', ';
-          headerNOK += name + ' NOK' + ', ';
+          value += removeNewLine(obj[name]) + '; ';
+          blankValue += ' ;';
+          header += name + '; ';
+          //headerNOK += name + ' NOK' + '; ';
         }
 
       }
+      valueTotal += value + "\n";
     }
 
     // //Apagar a última vírgula
     // value = value.substring(0, value.length - 2);
     // header = header.substring(0, header.length - 2);
-    headerNOK = headerNOK.substring(0, headerNOK.length - 2);
-    if (params == '0') {
-      value = value.substring(0, value.length - 2);
-    }
+    // headerNOK = headerNOK.substring(0, headerNOK.length - 2);
+    // if (params == '0') {
+    //   value = value.substring(0, value.length - 2);
+    // }
 
     return {
-      "value": value,
+      //"value": value,
+      "valueTotal": valueTotal,
       "header": header,
-      "headerNOK": headerNOK,
+      //"headerNOK": headerNOK,
       "blankValue": blankValue
     };
   } // Esta linha não está errada. =T  (Se colocar ; aqui o código roda duas vezes)
