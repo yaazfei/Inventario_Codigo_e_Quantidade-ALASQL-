@@ -1,0 +1,10 @@
+.DS_Store
+TAGS
+~*
+.git*
+*.coffee
+*.map
+*.md
+spec/
+tmp/
+node_modules/

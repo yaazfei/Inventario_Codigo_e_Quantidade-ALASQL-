@@ -1,0 +1,190 @@
+
+main.js,9685
+var Cell, EditXlsx, Libxmljs, NS, Row, SharedStrings, Sheet, Zip, fs, mkdirp, path, temp, _;Cell2,14
+fs = require('fs');fs4,108
+path = require('path');path6,129
+temp = require('temp').track();temp8,154
+mkdirp = require('mkdirp');mkdirp10,187
+Zip = require('node-zip');Zip12,216
+Libxmljs = require('libxmljs');Libxmljs14,244
+_ = require('underscore');_16,277
+NS = {NS18,305
+NS = {NS18,305
+  def: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',def19,312
+  def: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',def19,312
+Function.prototype.property = function(prop, desc) {property23,459
+Function.prototype.property = function(prop, desc) {property23,459
+  return Object.defineProperty(this.prototype, prop, desc);prop24,512
+EditXlsx = (function() {EditXlsx27,576
+  EditXlsx.defaults = {defaults28,601
+  EditXlsx.defaults = {defaults28,601
+    preserveCurrentValue: false,preserveCurrentValue29,625
+    preserveCurrentValue: false,preserveCurrentValue29,625
+    overwrite: trueoverwrite30,658
+    overwrite: trueoverwrite30,658
+  function EditXlsx(xlsxPath) {EditXlsx33,684
+    var data, filepath, obj, opts, zip, _ref;data34,716
+    this.cwd = process.cwd();cwd35,762
+    this.tempDir = temp.mkdirSync();tempDir36,792
+    this.sharedStrings = new SharedStrings(this.tempDir);sharedStrings37,829
+    this.sheets = [];sheets38,887
+    this.sheets = [];sheets38,887
+    this.files = [];files39,909
+    this.files = [];files39,909
+    opts = {opts40,930
+    opts = {opts40,930
+      encoding: 'binary'encoding41,943
+      encoding: 'binary'encoding41,943
+    data = fs.readFileSync(xlsxPath, opts);data43,975
+    zip = new Zip(data, {zip44,1019
+      base64: false,base6445,1045
+      base64: false,base6445,1045
+      checkCRC32: truecheckCRC3246,1066
+      checkCRC32: truecheckCRC3246,1066
+    _ref = zip.files;_ref49,1130
+      obj = _ref[filepath];obj51,1181
+        continue;continue54,1269
+  EditXlsx.prototype.sheet = function(sheetNum) {sheet62,1424
+  EditXlsx.prototype.sheet = function(sheetNum) {sheet62,1424
+    var _base;_base63,1474
+    this.curSheetNum = sheetNum;curSheetNum64,1489
+  EditXlsx.prototype.save = function(xlsxPath, opts) {save68,1625
+  EditXlsx.prototype.save = function(xlsxPath, opts) {save68,1625
+    var buffer, data, i, options, sheet, zip, _i, _j, _len, _ref, _ref1;buffer69,1680
+    opts = _.extend({}, EditXlsx.defaults, opts);opts70,1753
+    _ref = this.sheets;_ref74,1883
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {_len75,1907
+      sheet = _ref[_i];sheet76,1963
+    options = {options79,2017
+    options = {options79,2017
+      encoding: 'utf8'encoding80,2033
+      encoding: 'utf8'encoding80,2033
+    zip = new Zip();zip82,2063
+    data = zip.generate({data88,2255
+      type: 'arraybuffer'type89,2281
+      type: 'arraybuffer'type89,2281
+    buffer = new Buffer(data.byteLength);buffer91,2315
+    for (i = _j = 0, _ref1 = buffer.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; i = 0 <= _ref1 ? ++_j : --_j) {i92,2357
+    for (i = _j = 0, _ref1 = buffer.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; i = 0 <= _ref1 ? ++_j : --_j) {_ref192,2357
+    fs.writeFileSync(xlsxPath, buffer, options);buffer95,2504
+Sheet = (function() {Sheet103,2603
+  function Sheet(xlsx, num) {Sheet104,2625
+    this.sharedStrings = xlsx.sharedStrings;sharedStrings105,2655
+    this.path = path.join(xlsx.tempDir, "xl/worksheets/sheet" + num + ".xml");path106,2700
+    this.doc = Libxmljs.parseXml(fs.readFileSync(this.path));doc107,2779
+    this.ns = this.doc.root().namespace();ns108,2841
+    this.sheetData = this.doc.get('def:sheetData', NS);sheetData109,2884
+    this.rows = [];rows110,2940
+    this.rows = [];rows110,2940
+    this.cells = {};cells111,2960
+    this.cells = {};cells111,2960
+  Sheet.prototype.create = function(name, content) {create114,2986
+  Sheet.prototype.create = function(name, content) {create114,2986
+    var el;el115,3039
+      content = '';content117,3078
+      content = '';content117,3078
+    el = new Libxmljs.Element(this.doc, name, content + '');el119,3104
+    el = new Libxmljs.Element(this.doc, name, content + '');name119,3104
+  Sheet.prototype.c = function(addr) {c124,3213
+  Sheet.prototype.c = function(addr) {c124,3213
+    var ref, _base, _name;ref125,3252
+    ref = this.parseAddr(addr);ref126,3279
+  Sheet.prototype.value = function() {value130,3408
+  Sheet.prototype.value = function() {value130,3408
+    var res;res131,3447
+    res = Array.prototype.slice.call(arguments).map((function(_this) {res132,3460
+  Sheet.prototype.update = function(addr, value) {update144,3717
+  Sheet.prototype.update = function(addr, value) {update144,3717
+    var row, rowNum, _base;row145,3768
+    rowNum = this.parseAddr(addr).row;rowNum146,3796
+    row = (_base = this.rows)[rowNum] != null ? _base[rowNum] : _base[rowNum] = new Row(this, rowNum);row147,3835
+  Sheet.prototype.save = function(opts) {save152,3993
+  Sheet.prototype.save = function(opts) {save152,3993
+    var e, xml;e153,4035
+      opts = {};opts155,4075
+      opts = {};opts155,4075
+      xml = this.doc.toString(false).replace(/(<pageSetup .*?) r:id=".*?"(.*?>)/g, function(str, p1, p2) {xml158,4108
+      xml = this.doc.toString(false).replace(/(<pageSetup .*?) r:id=".*?"(.*?>)/g, function(str, p1, p2) {p1158,4108
+        xml = xml.replace(/(<f>.*?<\/f>|<f\/>)(<v>.*?<\/v>|<v\/>)/g, function(str, p1, p2) {xml162,4296
+        xml = xml.replace(/(<f>.*?<\/f>|<f\/>)(<v>.*?<\/v>|<v\/>)/g, function(str, p1, p2) {p1162,4296
+      e = _error;e169,4512
+  Sheet.prototype.parseAddr = function(addr) {parseAddr174,4562
+  Sheet.prototype.parseAddr = function(addr) {parseAddr174,4562
+    var col, row, _ref;col175,4609
+      _ref = this.addr2Nums(addr), col = _ref.col, row = _ref.row;_ref177,4661
+      addr = addr;addr178,4728
+      col = addr[0], row = addr[1];col180,4760
+      addr = this.nums2Addr.apply(this, addr);addr181,4796
+      col: col,col184,4862
+      row: row,row185,4878
+      addr: addraddr186,4894
+  Sheet.prototype.alphabet2Num = function(alphabets) {alphabet2Num190,4924
+  Sheet.prototype.alphabet2Num = function(alphabets) {alphabet2Num190,4924
+    var c, digit, i, res, _i, _ref;c191,4979
+    res = digit = 0;res192,5015
+    for (i = _i = _ref = alphabets.length - 1; _ref <= 0 ? _i <= 0 : _i >= 0; i = _ref <= 0 ? ++_i : --_i) {i193,5036
+      c = alphabets.charCodeAt(i) - 64;c194,5145
+  Sheet.prototype.num2Alphabet = function(num) {num2Alphabet201,5284
+  Sheet.prototype.num2Alphabet = function(num) {num2Alphabet201,5284
+    var res;res202,5333
+    res = '';res203,5346
+    res = '';res203,5346
+      res = String.fromCharCode(65 + (num % 26)) + res;res205,5380
+      num = Math.floor(num / 26);num206,5436
+  Sheet.prototype.addr2Nums = function(addr) {addr2Nums211,5498
+  Sheet.prototype.addr2Nums = function(addr) {addr2Nums211,5498
+    var matches;matches212,5545
+    matches = addr.match(/^([A-Z]+)(\d+)$/);matches213,5562
+      col: this.alphabet2Num(matches[1]),col215,5620
+      row: +matches[2]row216,5662
+  Sheet.prototype.nums2Addr = function(col, row) {nums2Addr220,5698
+  Sheet.prototype.nums2Addr = function(col, row) {nums2Addr220,5698
+Row = (function() {Row228,5820
+  function Row(sheet, r) {Row229,5840
+    var dest, doc, _ref;dest230,5867
+    this.sheet = sheet;sheet231,5892
+    doc = this.sheet.doc;doc232,5916
+    this.xml = doc.get("//def:row[@r=\"" + r + "\"]", NS);xml233,5942
+      this.xml = this.sheet.create('row');xml235,6022
+      dest = doc.get("//def:row[@r > " + r + "]", NS);dest239,6110
+        _ref;_ref241,6255
+Cell = (function() {Cell252,6375
+  function Cell(sheet, ref) {Cell253,6396
+    this.sheet = sheet;sheet254,6426
+    this.ref = ref;ref255,6450
+    this.xml = this.sheet.doc.get("//def:c[@r=\"" + this.ref.addr + "\"]", NS);xml256,6470
+    get: function() {get260,6582
+    get: function() {get260,6582
+      var v, _ref;v261,6604
+          v = (_ref = this.xml.get('def:v', NS)) != null ? _ref.text() : void 0;v264,6683
+            var _ref1, _ref2;_ref1266,6809
+    set: function(value) {set295,7736
+    set: function(value) {set295,7736
+      var dest, el, row, s, _i, _len, _ref, _ref1, _ref2;dest296,7763
+      row = this.sheet.rows[this.ref.row].xml;row297,7821
+        this.xml = this.sheet.create('c');xml299,7891
+        dest = null;dest303,7997
+        _ref = row.childNodes();_ref304,8018
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {_len305,8051
+          el = _ref[_i];el306,8111
+            dest = el;dest308,8209
+            break;break309,8232
+          _ref1;_ref1313,8368
+      s = row.attr('s');s319,8475
+          break;break332,8863
+          break;break338,9067
+          el = this.sheet.create('is');el343,9168
+      this._value = value;_value346,9289
+  Cell.prototype.empty = function() {empty351,9348
+  Cell.prototype.empty = function() {empty351,9348
+SharedStrings = (function() {SharedStrings361,9505
+  function SharedStrings(tempDir) {SharedStrings362,9535
+    this.path = path.join(tempDir, 'xl/sharedStrings.xml');path363,9571
+    this.cache = [];cache364,9631
+    this.cache = [];cache364,9631
+  SharedStrings.prototype.get = function(idx) {get367,9657
+  SharedStrings.prototype.get = function(idx) {get367,9657
+    var _base;_base368,9705
+    get: function() {get380,10078
+    get: function() {get380,10078
+module.exports = EditXlsx;exports389,10255

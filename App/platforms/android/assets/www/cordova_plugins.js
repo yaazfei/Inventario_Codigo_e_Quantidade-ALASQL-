@@ -317,6 +317,14 @@ module.exports = [
         "merges": [
             ""
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+        "id": "cordova-plugin-file-opener2.FileOpener2",
+        "pluginId": "cordova-plugin-file-opener2",
+        "clobbers": [
+            "cordova.plugins.fileOpener2"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -331,7 +339,8 @@ module.exports.metadata =
     "cordova-plugin-file": "3.0.0",
     "cordova-plugin-camera": "1.2.0",
     "phonegap-plugin-barcodescanner": "4.0.1",
-    "cordova-plugin-contacts": "2.0.1"
+    "cordova-plugin-contacts": "2.0.1",
+    "cordova-plugin-file-opener2": "2.0.2"
 }
 // BOTTOM OF METADATA
 });

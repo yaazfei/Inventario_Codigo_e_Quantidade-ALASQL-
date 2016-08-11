@@ -1,4 +1,76 @@
-angular.module("starter").service('FormatarCsv', function() {
+angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordovaFileOpener2, $ionicPlatform) {
+
+
+//// OpenFile
+
+// this.openXLSX = function() {
+//     $cordovaFileOpener2.open(
+//         '/sdcard/emulated/0/Queiroz Galvão', // Any system location, you CAN'T use your appliaction assets folder
+//         'application/xlsx'
+//     ).then(function() {
+//         console.log('Success');
+//     }, function(err) {
+//         console.log('An error occurred: ' + JSON.stringify(err));
+//     });
+// };
+//
+//     $scope.openPDF= function() {
+//         $cordovaFileOpener2.open(
+//             '/sdcard/Download/109.pdf',
+//             'application/pdf'
+//         ).then(function() {
+//             console.log('Success');
+//         }, function(err) {
+//         console.log('An error occurred: ' + JSON.stringify(err));
+//         });
+//     };
+// });
+
+//edit?
+// cordova.plugins.fileOpener2.open(
+//     '.......', // File location
+//     'application/docx',
+//     {
+//         error : function(e) {
+//             console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+//         },
+//         success : function () {
+//             console.log('file opened successfully');
+//         }
+//     }
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////****************************************************************************************************//
+
 
   // FORMATAR PARA CSV = Baseado em https://jsfiddle.net/dhou6y3o/
 

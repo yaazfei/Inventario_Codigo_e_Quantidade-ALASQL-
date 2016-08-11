@@ -398,20 +398,23 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     };
 
 
-    alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+    // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+      alasql.promise('SELECT ROW 1 FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
       .then(function(res) {
         // ACHOU
-        //console.log('Encontrou com o ALQSQL: ' + res);
+        console.log('Encontrou com o ALQSQL: ' + res);
         //res = angular.merge({}, bem);
-        res.push(bem);
+
+
+        // res.push(bem);
 
         // if (window.cordova) { //Só entra por device
-        //
+
         //   CriarDiretorio.processar($cordovaFile, res);
         //   //alert("Passou do CriarDiretorio.processar");
         // }
 
-        $scope.teste3(res);
+        // $scope.teste3(res);
 
 
 
@@ -426,6 +429,102 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
+$scope.teste4 = function(res) {
+
+  bem = {
+    COD_BEM: "000000023",
+    DESC_BEM: "Blau blau",
+    CHAPA: "000180",
+    COD_LOCAL: "000093"
+  };
+
+
+  dados = {
+    COD_LOCAL: "000053",
+    DESC_LOCAL: "Blau Local"
+  };
+
+
+
+//////////  OUTRO MODO https://www.npmjs.com/package/exceljs
+///////// OUTRO MODO https://github.com/SheetJS/js-xlsx#cell-object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////// https://github.com/takanopontaro/node-edit-xlsx
+
+
+  // var EditXlsx;
+
+  var EditXlsx = require('edit-xlsx');
+  // var data = {
+  //   title: 'AKIRA',
+  //   creator: 'Katsuhiro Otomo',
+  //   year: 1988
+  // };
+
+  var xlsx = new EditXlsx('js/Lista_de_Bens.xlsx');
+  var sheet = xlsx.sheet(0);
+
+  // sheet.update('A1', 'COD_BEM');
+  // sheet.update('B1', 'DESC_BEM');
+  // sheet.update('C1', 'CHAPA');
+  // sheet.update('D1', 'COD_LOCAL');
+
+  sheet.update('A2', bem.COD_BEM);
+  sheet.update('B2', bem.DESC_BEM);
+  sheet.update('C2', bem.CHAPA);
+  sheet.update('D2', bem.COD_LOCAL);
+
+  sheet = xlsx.sheet(1);
+  //sheet.update('A1', 'test');
+
+  xlsx.save('js/Lista_de_Bens_EDIT.xlsx');
+
+
+  xlsx = new EditXlsx('js/Lista_de_Bens_EDIT.xlsx');
+  sheet = xlsx.sheet(0);
+  console.log(sheet.value('B2'));
+  console.log(sheet.value('C2'));
+
+
+
+
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -435,51 +534,68 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
   $scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
 
-    console.log(res);
-    //var jsonObject = JSON.stringify(res);
-    // console.log(jsonObject);
-
-    var finalCSV = ConvertToCSV(res);
-    console.log(finalCSV);
 
 
 
+      // console.log(res);
+      // total = res.length;
+      // objArray = '';
+      // console.log(res[0]);
+      // console.log(res[0].CHAPA);
+      //
+      //
+      // for (n = 1; n < total; n++) {
+      //   objArray += res[n] + '; ';
+      //   console.log('Array: ' + objArray);
+      // }
 
-    function ConvertToCSV(res) {
 
-      total = res.length();
-    //  var n;
 
-      for (n = 1; n < total; n++) {
-        objArray = res[n];
-
-        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-        var str = '';
-
-        for (var i = 0; i < array.length; i++) {
-          var line = '';
-          for (var index in array[i]) {
-            if (line !== '') {
-              line += ',';
-
-              line += array[i][index];
-            }
-          }
-
-          str += line + '\r\n';
-
-        }
-
-        return str;
-      }
-
-    }
-
-    if (window.cordova) { //Só entra por device
-
-      CriarDiretorio.processar($cordovaFile, finalCSV);
-      //alert("Passou do CriarDiretorio.processar");
-    }
+    // console.log(res);
+    // //var jsonObject = JSON.stringify(res);
+    // // console.log(jsonObject);
+    //
+    // var finalCSV = ConvertToCSV(res);
+    // console.log(finalCSV);
+    //
+    //
+    //
+    //
+    // function ConvertToCSV(res) {
+    //
+    //   total = res.length();
+    // //  var n;
+    //
+    //   for (n = 1; n < total; n++) {
+    //     objArray = res[n];
+    //
+    //     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    //     var str = '';
+    //
+    //     for (var i = 0; i < array.length; i++) {
+    //       var line = '';
+    //       for (var index in array[i]) {
+    //         if (line !== '') {
+    //           line += ',';
+    //
+    //           line += array[i][index];
+    //         }
+    //       }
+    //
+    //       str += line + '\r\n';
+    //
+    //     }
+    //
+    //     return str;
+    //   }
+    //
+    // }
+    //
+    // if (window.cordova) { //Só entra por device
+    //
+    //   CriarDiretorio.processar($cordovaFile, finalCSV);
+    //   //alert("Passou do CriarDiretorio.processar");
+    // }
 
 
 

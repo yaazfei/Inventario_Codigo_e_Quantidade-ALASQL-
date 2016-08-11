@@ -51,6 +51,7 @@
   <!-- <script src="plugins/xlsx/dist/xlsx.core.min.js"></script> -->
   <!-- <script src="plugins/xlsx/dist/xlsx.core.min.js"></script> -->
   <script src='http://alasql.org/console/xlsx.core.min.js'></script>
+  <script lang="javascript" src="plugins/xlsx/dist/xlsx.core.min.js"></script>
 
   <!--  Plugin JSZIP -->
   <!-- <script src="plugins/jszip/dist/jszip.js"></script>
@@ -63,9 +64,12 @@
 
 
   <!--  Plugin requireJS -->
-  <!-- <script src="plugins/requirejs/require.js"></script> -->
+  <script src="plugins/requirejs/require.js"></script>
+  <script data-main="plugins/requirejs/main.js" src="plugins/requirejs/require.js"></script>
+  <script data-main="js/service/app.js" src="plugins/requirejs/require.js"></script>
 
-
+  <!--  Plugin edit-xlsx -->
+  <script src="plugins/node-edit-xlsx-master/lib/main.js"></script>
 
 
 

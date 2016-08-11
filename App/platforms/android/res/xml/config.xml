@@ -33,6 +33,9 @@
     <feature name="Contacts">
         <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
     </feature>
+    <feature name="FileOpener2">
+        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
+    </feature>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <icon density="ldpi" src="resources/android/icon/logo-nimal-160.png" />
     <icon density="mdpi" src="resources/android/icon/logo-nimal-160.png" />
