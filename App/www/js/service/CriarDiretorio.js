@@ -10,7 +10,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
       console.log(dados);
       // var dados1 = FormatarCsv.iterateObject(dados);
-      console.log(dados1);
+      //console.log(dados1);
 
       $cordovaFile.createDir(cordova.file.externalRootDirectory, "Queiroz Galvão", false)
           .then(function(success) {
@@ -24,7 +24,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
                           //              //alert("Criou o Arquivo");
 
                                       // alasql.promisse('SELECT * INTO XLSX("Lista_de_Bens.xlsx",{headers:true}) FROM ?',[dados])
-                                      $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv" , (dados.header + "\n" + dados.valueTotal), true)
+                                      $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv" , (dados), true)
 
                                       // $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv" , (dados), true)
                                       .then(function(success) {
@@ -128,7 +128,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
                           //             console.log('log: Sobreescreveu com um arquivo vazio');
                           //           //  alert("Criou o Arquivo");
 
-                                      $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx" , (dados), true)
+                                      $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv" , (dados), true)
                                      .then(function(success) {
 
                                        console.log('log: Escreveu no arquivo vazio');

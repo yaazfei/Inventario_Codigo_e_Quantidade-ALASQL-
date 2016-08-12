@@ -382,12 +382,80 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$scope.testeCriaArquivo = function (){
+
+  bem = {
+    COD_BEM: "000000023",
+    DESC_BEM: "Blau blau",
+    CHAPA: "0000000062",
+    COD_LOCAL: "000093"
+  };
+
+
+  dados = {
+    COD_LOCAL: "000053",
+    DESC_LOCAL: "Blau Local"
+  };
+
+
+alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+.then(function(res) {
+  // ACHOU
+  console.log('Encontrou com o ALQSQL: ' + res);
+
+
+ if (window.cordova) { //Só entra por device
+    CriarDiretorio.processar($cordovaFile, res);
+    //alert("Passou do CriarDiretorio.processar");
+}
+
+    $scope.teste3(res);
+
+
+
+
+}).catch(function(err) { // NÃO ENCONTROU O bem
+
+  PopUps.erroConsultar("Bens não encontrados!");
+});
+
+
+};
+
+
+
+
+
+
+
   $scope.teste2 = function() { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL
 
     bem = {
       COD_BEM: "000000023",
       DESC_BEM: "Blau blau",
-      CHAPA: "000180",
+      CHAPA: "0000000062",
       COD_LOCAL: "000093"
     };
 
@@ -398,8 +466,13 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     };
 
 
-    // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
-      alasql.promise('SELECT ROW 1 FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
+
+
+    // ('SELECT * \
+    //     FROM (SELECT a, ROWNUM() AS r FROM one)\
+    //     WHERE r BETWEEN 55 AND 60');
+        // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
+      alasql.promise('select * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
       .then(function(res) {
         // ACHOU
         console.log('Encontrou com o ALQSQL: ' + res);
@@ -407,14 +480,25 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
         // res.push(bem);
-
         // if (window.cordova) { //Só entra por device
-
         //   CriarDiretorio.processar($cordovaFile, res);
         //   //alert("Passou do CriarDiretorio.processar");
         // }
-
         // $scope.teste3(res);
+
+
+
+
+        // alasql.promise('SELECT ROW_NUMBER() AS linha FROM ? \ WHERE CHAPA == ?', [res, bem.CHAPA])
+        // .then(function(res1) {
+        //   // ACHOU
+        //   console.log('Encontrou com o ALQSQL: ' + res1);
+        //   //res = angular.merge({}, bem);
+        //
+        // }).catch(function(err) { // NÃO ENCONTROU O bem
+        //
+        //   PopUps.erroConsultar("Bens não encontrados!");
+        // });
 
 
 
@@ -532,7 +616,27 @@ $scope.teste4 = function(res) {
 
 // NÃO FUNCIONANDO
 
-  $scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
+$scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
+console.log("Faz nada ainda");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
