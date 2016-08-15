@@ -276,11 +276,11 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
   $scope.teste = {
     COD_LOCAL: '000053',
@@ -420,10 +420,13 @@ $scope.testeCriaArquivo = function (){
   };
 
 
+
 alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
 .then(function(res) {
   // ACHOU
   console.log('Encontrou com o ALQSQL: ' + res);
+
+
 
 
  if (window.cordova) { //Só entra por device
@@ -465,21 +468,26 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-
+    var dir = "js/Lista_de_Bens.xlsx";
 
 
     // ('SELECT * \
     //     FROM (SELECT a, ROWNUM() AS r FROM one)\
     //     WHERE r BETWEEN 55 AND 60');
         // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
-      alasql.promise('select * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+      alasql.promise('select * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
       .then(function(res) {
         // ACHOU
         console.log('Encontrou com o ALQSQL: ' + res);
         //res = angular.merge({}, bem);
+        res.push(bem);
 
 
-        // res.push(bem);
+        res = FormatarCsv.JSONToCSVConvertor(res, true);
+        console.log(res);
+
+
+
         // if (window.cordova) { //Só entra por device
         //   CriarDiretorio.processar($cordovaFile, res);
         //   //alert("Passou do CriarDiretorio.processar");
@@ -506,6 +514,7 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
 
       }).catch(function(err) { // NÃO ENCONTROU O bem
 
+        console.log(err);
         PopUps.erroConsultar("Bens não encontrados!");
       });
 
@@ -534,6 +543,17 @@ $scope.teste4 = function(res) {
 ///////// OUTRO MODO https://github.com/SheetJS/js-xlsx#cell-object
 
 
+////// *********************** PARA BAIXAR PELO BROWSER
+// alasql.promise('SELECT * INTO csv("TESTECSVJSON.csv",{headers:true}) FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+// .then(function(res) {
+//   // ACHOU
+//   console.log('Encontrou com o ALQSQL: ' + res);
+// }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//
+//   console.log(err);
+//   //PopUps.erroConsultar("Bens não encontrados!");
+// });
 
 
 
@@ -554,48 +574,48 @@ $scope.teste4 = function(res) {
 
 
 ///////////// https://github.com/takanopontaro/node-edit-xlsx
-
-
-  // var EditXlsx;
-
-  var EditXlsx = require('edit-xlsx');
-  // var data = {
-  //   title: 'AKIRA',
-  //   creator: 'Katsuhiro Otomo',
-  //   year: 1988
-  // };
-
-  var xlsx = new EditXlsx('js/Lista_de_Bens.xlsx');
-  var sheet = xlsx.sheet(0);
-
-  // sheet.update('A1', 'COD_BEM');
-  // sheet.update('B1', 'DESC_BEM');
-  // sheet.update('C1', 'CHAPA');
-  // sheet.update('D1', 'COD_LOCAL');
-
-  sheet.update('A2', bem.COD_BEM);
-  sheet.update('B2', bem.DESC_BEM);
-  sheet.update('C2', bem.CHAPA);
-  sheet.update('D2', bem.COD_LOCAL);
-
-  sheet = xlsx.sheet(1);
-  //sheet.update('A1', 'test');
-
-  xlsx.save('js/Lista_de_Bens_EDIT.xlsx');
-
-
-  xlsx = new EditXlsx('js/Lista_de_Bens_EDIT.xlsx');
-  sheet = xlsx.sheet(0);
-  console.log(sheet.value('B2'));
-  console.log(sheet.value('C2'));
-
-
-
-
-
-
-
-
+//
+//
+//   var EditXlsx;
+//
+//   var EditXlsx = require('edit-xlsx');
+//   // var data = {
+//   //   title: 'AKIRA',
+//   //   creator: 'Katsuhiro Otomo',
+//   //   year: 1988
+//   // };
+//
+//   var xlsx = new EditXlsx('js/Lista_de_Bens.xlsx');
+//   var sheet = xlsx.sheet(0);
+//
+//   // sheet.update('A1', 'COD_BEM');
+//   // sheet.update('B1', 'DESC_BEM');
+//   // sheet.update('C1', 'CHAPA');
+//   // sheet.update('D1', 'COD_LOCAL');
+//
+//   sheet.update('A2', bem.COD_BEM);
+//   sheet.update('B2', bem.DESC_BEM);
+//   sheet.update('C2', bem.CHAPA);
+//   sheet.update('D2', bem.COD_LOCAL);
+//
+//   sheet = xlsx.sheet(1);
+//   //sheet.update('A1', 'test');
+//
+//   xlsx.save('js/Lista_de_Bens_EDIT.xlsx');
+//
+//
+//   xlsx = new EditXlsx('js/Lista_de_Bens_EDIT.xlsx');
+//   sheet = xlsx.sheet(0);
+//   console.log(sheet.value('B2'));
+//   console.log(sheet.value('C2'));
+//
+//
+//
+//
+//
+//
+//
+//
 };
 
 
@@ -617,7 +637,78 @@ $scope.teste4 = function(res) {
 // NÃO FUNCIONANDO
 
 $scope.teste3 = function(res) { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL (BAIXANDO)
-console.log("Faz nada ainda");
+
+//
+//
+// // "SELECT * INTO CSV('mydata.csv', {headers:true}) FROM XLS('mydata.xls', {headers:true})"
+// "SELECT * FROM XLS('mydata.xls', {headers:true})"
+//
+// alasql.promise('select * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+// .then(function(res) {
+//   // ACHOU
+//   console.log('Encontrou com o ALQSQL: ' + res);
+//
+//
+// }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//   PopUps.erroConsultar("Bens não encontrados!");
+// });
+
+
+
+
+
+// alasql('SEARCH / AS @a \ UNION ALL( \ Object AS @b \  RETURN(@b->COD_BEM as [Object.COD_BEM], @b->DESC_BEM as [Object.DESC_BEM], @b->CHAPA as [Object.CHAPA],  @b->COD_LOCAL as [Object.COD_LOCAL], \ ) \ ) FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})'
+//
+//
+
+
+
+
+// alasql.promise('SEARCH / AS @a \ UNION ALL( \ Object AS @b \  RETURN(@b->COD_BEM as [COD_BEM], @b->DESC_BEM as [DESC_BEM], @b->CHAPA as [CHAPA],  @b->COD_LOCAL as [COD_LOCAL], \ ) \ ) FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+// .then(function(res) {
+//   // ACHOU
+//   console.log('Encontrou com o ALQSQL: ' + res);
+//
+//
+// }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//   PopUps.erroConsultar("Bens não encontrados!");
+// });
+
+bem = {
+  COD_BEM: "000000023",
+  DESC_BEM: "Blau blau",
+  CHAPA: "000180",
+  COD_LOCAL: "000093"
+};
+
+
+dados = {
+  COD_LOCAL: "000053",
+  DESC_LOCAL: "Blau Local"
+};
+
+
+// alasql.promise('SEARCH / FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})')
+// .then(function(blau) {
+//   // ACHOU
+//   console.log('Encontrou com o ALQSQL: ' + blau);
+//
+//
+// }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//   console.log(err);
+//   //PopUps.erroConsultar("Bens não encontrados!");
+// });
+//
+
+// blau = alasql('SEARCH / FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})');
+
+
+
+// var blau = alasql('SELECT type, ARRAY({food:food, color:color}) AS foods FROM ? GROUP BY type', [origArr]);
+var blau = alasql('SELECT * IN Object({CHAPA:CHAPA, DESC_BEM:DESC_BEM}) AS bem FROM  xlsx("js/Lista_de_Bens.xlsx",{headers:true})');
 
 
 
@@ -627,17 +718,21 @@ console.log("Faz nada ainda");
 
 
 
+// var blau = alasql('SEARCH /+CHAPA/ FROM ? WHERE CHAPA == ?', [res, bem.CHAPA]);
+// console.log('Encontrou com o ALQSQL: ' + res);
 
 
-
-
-
-
-
-
-
-
-
+// alasql.promise('SEARCH * FROM ? WHERE CHAPA == ?', [res, bem.CHAPA])
+// .then(function(blau) {
+//   // ACHOU
+//   console.log('Encontrou com o ALQSQL: ' + blau);
+//
+//
+// }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//   console.log(err);
+//   //PopUps.erroConsultar("Bens não encontrados!");
+// });
 
 
 

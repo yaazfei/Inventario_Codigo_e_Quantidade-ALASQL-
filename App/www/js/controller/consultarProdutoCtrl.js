@@ -2,7 +2,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
   console.log('Entrou no controller de Consultar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
   $scope.dados = Scopes.getLocal();
   console.log($scope.dados);
@@ -17,52 +17,50 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /*/ Escolher um Bem /*/
   $scope.editarBem = function(bem, dados) {
     // alert('Entrou no editarBem');
-    if (bem.COD_LOCAL !== undefined && bem.COD_LOCAL === dados.COD_LOCAL) {} else {
+
+    //// Para zerar o local se tiver voltado do EditarProduto
+    local = undefined;
+    $scope.local = undefined;
+
+    // if (local !== undefined || local !== ""){
+    //     local = null;
+    //     $scope.local = null;
+    // }
+
+
+    if (bem.COD_LOCAL !== undefined && bem.COD_LOCAL === dados.COD_LOCAL) {
+      ////Faz nada se o local não for encontrado, só cai no catch (gambiarra)
+    } else {
       console.log('Entrou no editarBem, vai fazer o alaSQL');
 
-      ///////////////////// PARA COMPARAR O COD_LOCAL DO BEM COM O COD_LOCAL DO LOCAL
 
-
-      // if (bem.COD_LOCAL === " " || bem.COD_LOCAL === undefined) {
-      //   console.log("COD_BEM não estava cadastrado!");
-      //   bem.DESC_LOCAL = "Local não cadastrado";
-      //
-      //   Scopes.setBem(bem);
-      //   console.log('Bem: ' + bem);
-      //
-      //   $state.go('app.editarProduto');
-      //
-      // } else {
 
         console.log('Entrou no editarBem, vai fazer o alaSQL');
-        localCod = bem.COD_LOCAL;
 
-        alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+        alasql.promise('SELECT DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [bem.COD_LOCAL])
           .then(function(res) {
 
             // ACHOU O LOCAL E PEGOU O PRIMEIRO
             console.log('Encontrou o local com o alaSQL');
             console.log('Resultado do ALQSQL: ' + res[0]);
-            bem.DESC_LOCAL = res[0].DESC_LOCAL;
+            dados.DESC_LOCAL_DO_BEM = res[0].DESC_LOCAL;
 
 
-            if (window.cordova) { //Só entra por device
-
-              //CriarDiretorio.processar($cordovaFile, dados);
-              //alert("Passou do CriarDiretorio.processar");
-            }
-
+            Scopes.setLocal(dados);
             Scopes.setBem(bem);
-            console.log('Bem: ' + bem);
+            console.log('Local: ' + dados);
 
             $state.go('app.editarProduto');
 
 
           }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
-            console.log("COD_LOCAL do BEM não estava cadastrado!");
-              bem.DESC_LOCAL = "LOCAL NÃO CADASTRADO";
+
+              console.log("COD_LOCAL do BEM não estava cadastrado! Gambiarra no try/cath");
+              dados.DESC_LOCAL_DO_BEM = "LOCAL NÃO CADASTRADO";
+              Scopes.setLocal(dados);
               Scopes.setBem(bem);
+              console.log('Local: ' + dados);
               console.log('Bem: ' + bem);
 
               $state.go('app.editarProduto');
@@ -80,23 +78,13 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   $scope.buscaBem = function(bem) {
 
     // localCod = teste.COD_LOCAL;
-    bemCod = bem.COD_BEM;
-    alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bemCod])
+
+    alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.COD_BEM])
       .then(function(res) {
 
         //ACHOU O LOCAL E PEGOU O PRIMEIRO
         console.log('Resultado do ALQSQL: ' + res[0]);
         $scope.bemEncontrado = res;
-
-
-
-        if (window.cordova) { //Só entra por device
-
-          //CriarDiretorio.processar($cordovaFile, dados);
-          //alert("Passou do CriarDiretorio.processar");
-        }
-
-
         console.log('Bem foi encontrado.');
 
         //Para atualizar a lista

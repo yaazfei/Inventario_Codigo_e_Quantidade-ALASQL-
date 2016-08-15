@@ -5,12 +5,12 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
  //// B1 METHOD
 
 
-  this.processar = function ($cordovaFile, dados){
+  this.processar = function ($cordovaFile, res){
   //alert("Entrou no processar");
 
+      console.log(res);
+      dados = FormatarCsv.JSONToCSVConvertor(res, true);
       console.log(dados);
-      // var dados1 = FormatarCsv.iterateObject(dados);
-      //console.log(dados1);
 
       $cordovaFile.createDir(cordova.file.externalRootDirectory, "Queiroz Galvão", false)
           .then(function(success) {

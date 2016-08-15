@@ -2,7 +2,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
   Scopes.blankItem($scope);
 
@@ -40,8 +40,29 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
       // alert('passou do require: ' + alasql);
 
       // PROMISSE ASYNC?
-      localCod = dados.COD_LOCAL;
-      alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
+
+      var arquivo = Scopes.getArquivo;
+
+      if (arquivo === "csv") {
+        dir = "";
+      } else {
+        if (arquivo === "xsl") {
+          dir = "";
+        } else {
+          if (arquivo === "xlsx") {
+            dir = "";
+          } else {
+            dir = "js/Lista_de_Locais.xlsx";
+          }
+        }
+      }
+      }
+      };
+
+
+
+
+      alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
         .then(function(res) {
 
           // ACHOU O LOCAL E PEGOU O PRIMEIRO

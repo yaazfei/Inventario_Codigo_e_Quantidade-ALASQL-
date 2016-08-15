@@ -38,7 +38,7 @@
         <a style="float:right; text-align:left;">{{bem.COD_LOCAL}}</a>
 
                     <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
-        <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{bem.DESC_LOCAL}}</p>
+        <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{dados.DESC_LOCAL_DO_BEM}}</p>
       </div>
 
     </div>
@@ -150,7 +150,7 @@
 
 
 
-          <button class="button button-block button-dark" ng-click="escreverProdutoEditado($scope.local)">Salvar</button>
+          <button class="button button-block button-dark" ng-click="escreverProdutoEditado()">Salvar</button>
 
           <!-- <button class="button button-block button-dark" ng-click="" ng-disabled="!editarProdutoForm.$valid">Salvar</button> -->
       </form>

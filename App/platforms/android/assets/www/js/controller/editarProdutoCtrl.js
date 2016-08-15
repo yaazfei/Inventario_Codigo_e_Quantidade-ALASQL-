@@ -1,9 +1,9 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio) {
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv) {
 
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
-  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518');
+  console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
 
   // listarLocais();
@@ -17,6 +17,8 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.locais = res;
       //var bens = $scope.bens; //Precisa disso?
       console.log('locais foi preenchido.');
+      $scope.localModificado = false;
+
 
 
 
@@ -43,7 +45,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.localSelecionado = function(local) {
         console.log('Selecionou o local : ' + local.DESC_LOCAL + ' ' + local.COD_LOCAL);
         $scope.local = local;
-        // var localSelecionado = true;
+        $scope.localModificado = true;
         $scope.hideModal();
 
       };
@@ -63,73 +65,60 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
       /*****************************************************************************/
-      /*/ ESCREVER PRODUTO INVÁLIDO - EDITAR /*/
+      /*/ ESCREVER PRODUTO INVÁLIDO - EDITADO (ESTÁ COPIANDO TODOS OS DADOS EXCETO O ESCOLHIDO E REESCREVENDO UM ARQUIVO INTEIRO) /*/
 
 
-      $scope.escreverProdutoEditado = function(local) {
+      $scope.escreverProdutoEditado = function() {
 
         dados = Scopes.getLocal();
         bem = Scopes.getBem();
+        local = $scope.local;
 
-
-        if (local === undefined || local === '') {
-
-
-        } else {
+        if ($scope.localModificado === true) {
           console.log('Novo local foi preenchido. Será atualizado para ele.');
           dados = local;
-        }
+        } else {
         console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
-
-        // var data = {
-        //   COD_BEM : bem.COD_BEM,
-        //   DESC_BEM : bem.DESC_BEM,
-        //   CHAPA : bem.CHAPA,
-        //   COD_LOCAL : bem.COD_LOCAL};
-
-
-        // alasql('UPDATE XLSX("js/Lista_de_Bens.xlsx") SET COD_LOCAL = ? WHERE CHAPA == ?', [bem.COD_LOCAL, bem.CHAPA]);
-        alasql('UPDATE BensTable SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
-        // alasql('UPDATE ? SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [data, bem.CHAPA]);
-
-        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bem.CHAPA])
-          .then(function(res) {
-            // ACHOU
-            console.log('Encontrou com o ALQSQL: ' + res[0]);
+        }
 
 
 
+        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+        .then(function(res) {
+          // ACHOU
+          //console.log('Encontrou com o ALQSQL: ' + res);
+
+          // res = angular.merge({}, bem);
+          bem.COD_LOCAL = dados.COD_LOCAL;
+          res.push(bem);
+
+          console.log('Primeiro de res ' + res[1].CHAPA);
 
 
-          }).catch(function(err) { // NÃO ENCONTROU O bem
+          //// A conversão já está no CriarDiretorio
+          // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
+          // console.log(resConvertida);
 
-            PopUps.erroConsultar("Bem não encontrado!");
-          });
+
+          if (window.cordova) { //Só entra por device
+            CriarDiretorio.processar($cordovaFile, res);
+
+          }
 
 
-        // // bemEscolhido = bem.CHAPA;
-        // //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE COD_LOCAL == ?', [localCod])
-        // alasql('UPDATE BensTable SET COD_LOCAL="23" IN xlsx("js/Lista_de_Bens.xlsx")\ WHERE CHAPA == ?', [bem.CHAPA]);
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //   // .then(function(res) {
-        //      //UPDATE CSV('a.csv') SET b=20 WHERE a = 10;
-        //     // alasql('UPDATE ? SET ... WHERE ...', [data]);
-        //     // alasql('UPDATE RpdAssignments SET Name="id2" WHERE Id=1');
-        //     // console.log('Vamos ver o que aparece aqui: ' + res);
-        //
-        //   // }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-        //   //
-        //   //   PopUps.erroConsultar("Bens não encontrados!");
-        //   // });
 
-      };
+
+
+
+        }).catch(function(err) { // NÃO ENCONTROU O bem
+
+          console.log(err);
+          PopUps.erroConsultar("Bem não encontrado!");
+        });
+
+        };
+
+
 
 
 
@@ -156,7 +145,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         focusFirstInput: true
       });
 
-      console.log('modal', $scope);
+      console.log('Criou o modal.');
 
       $scope.hideModal = function() {
         $scope.modalCtrl.hide();
