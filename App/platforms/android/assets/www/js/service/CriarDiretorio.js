@@ -32,6 +32,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
                                                     console.log('log: Escreveu no arquivo vazio');
                                                     PopUps.produtoSalvo('Bem salvo com sucesso!');
+                                                    $scope.bemEncontrado = null;
                                                     $state.go('app.consultarProduto');
                                                     //alert("Criou o Arquivo");
 
@@ -133,6 +134,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
                                        console.log('log: Escreveu no arquivo vazio');
                                        PopUps.produtoSalvo('Bem salvo com sucesso!');
+                                       $scope.bemEncontrado = null;
                                        $state.go('app.consultarProduto');
 
                                       }, function(error) {

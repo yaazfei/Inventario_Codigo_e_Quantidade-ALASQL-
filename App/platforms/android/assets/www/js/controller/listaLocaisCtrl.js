@@ -468,26 +468,27 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-
+    var dir = "js/Lista_de_Bens.xlsx";
+    var xlsx = "xlsx";
 
 
     // ('SELECT * \
     //     FROM (SELECT a, ROWNUM() AS r FROM one)\
     //     WHERE r BETWEEN 55 AND 60');
         // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
-      alasql.promise('select * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
+      alasql.promise('select * FROM ?(?,{headers:true})\ WHERE CHAPA !== ?', [xlsx,dir, bem.CHAPA])
       .then(function(res) {
         // ACHOU
         console.log('Encontrou com o ALQSQL: ' + res);
-        res = angular.merge({}, bem);
-
+        //res = angular.merge({}, bem);
+        res.push(bem);
 
 
         res = FormatarCsv.JSONToCSVConvertor(res, true);
         console.log(res);
 
 
-        // res.push(bem);
+
         // if (window.cordova) { //Só entra por device
         //   CriarDiretorio.processar($cordovaFile, res);
         //   //alert("Passou do CriarDiretorio.processar");

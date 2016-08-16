@@ -1,4 +1,4 @@
-angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio) {
+angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -41,26 +41,7 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
       // PROMISSE ASYNC?
 
-      var arquivo = Scopes.getArquivo;
-
-      if (arquivo === "csv") {
-        dir = "";
-      } else {
-        if (arquivo === "xsl") {
-          dir = "";
-        } else {
-          if (arquivo === "xlsx") {
-            dir = "";
-          } else {
-            dir = "js/Lista_de_Locais.xlsx";
-          }
-        }
-      }
-      }
-      };
-
-
-
+      var dir = "files/Lista_de_Locais.xlsx";
 
       alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
         .then(function(res) {
@@ -101,20 +82,20 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
   //////// **************************************** LISTA PELO ALASQL (DANDO DUAS VOLTAS)
 
 
-  function listarLocais(dados) {
-
-
-    // ESTÁ DANDO DUAS VOLTAS NO CONTROLLER (MELHORAR)
-    localCod = dados.COD_LOCAL;
-     alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod],function(data){
-
-                  console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
-                  console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
-                  Scopes.setLocal(data[0]);
-
-              });
-
-    }
+  // function listarLocais(dados) {
+  //
+  //
+  //   // ESTÁ DANDO DUAS VOLTAS NO CONTROLLER (MELHORAR)
+  //   localCod = dados.COD_LOCAL;
+  //    alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod],function(data){
+  //
+  //                 console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
+  //                 console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
+  //                 Scopes.setLocal(data[0]);
+  //
+  //             });
+  //
+  //   }
 
 
   ////// TESTE PARA NÃO DAR DUAS VOLTAS (NÃO FUNCIONANDO)

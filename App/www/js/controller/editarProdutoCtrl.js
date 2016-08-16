@@ -1,4 +1,4 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv) {
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
@@ -8,7 +8,8 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   // listarLocais();
 
-  alasql.promise('SELECT * FROM xlsx("js/Lista_de_Locais.xlsx",{headers:true})')
+  var dir = "files/Lista_de_Locais.xlsx";
+  alasql.promise('SELECT * FROM xlsx(?,{headers:true})', [dir])
     .then(function(res) {
 
       // ACHOU
@@ -38,7 +39,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
       $scope.teste1 = function(i) {
         console.log('teste1 : ' + i);
-
       };
 
 
@@ -47,7 +47,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         $scope.local = local;
         $scope.localModificado = true;
         $scope.hideModal();
-
       };
 
 
@@ -59,8 +58,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         // $scope.form.$setPristine();
         $scope.input = "";
         input = "";
-
-
       };
 
 
@@ -78,53 +75,153 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           console.log('Novo local foi preenchido. Será atualizado para ele.');
           dados = local;
         } else {
-        console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
+          console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
         }
 
+        if (window.cordova) { //Só entra por device
+
+          buscaArquivos.checarArquivo($cordovaFile);
+          // .then(function(success) {
+          var arquivo = Scopes.getArquivo();
+
+          if (arquivo === "csv") {
+            dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.csv";
 
 
-        alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
-        .then(function(res) {
-          // ACHOU
-          //console.log('Encontrou com o ALQSQL: ' + res);
+            alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+              .then(function(res) {
+                // ACHOU
+                bem.COD_LOCAL = dados.COD_LOCAL;
+                res.push(bem);
 
-          // res = angular.merge({}, bem);
-          bem.COD_LOCAL = dados.COD_LOCAL;
-          res.push(bem);
+                console.log('Primeiro de res ' + res[1].CHAPA);
 
-          console.log('Primeiro de res ' + res[1].CHAPA);
+                if (window.cordova) { //Só entra por device
+                  CriarDiretorio.processar($cordovaFile, res);
+                }
+
+              }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                console.log(err);
+                PopUps.erroConsultar("Bem não encontrado!");
+              });
+
+          } else {
+            if (arquivo === "xslx") {
+              dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
 
 
-          //// A conversão já está no CriarDiretorio
-          // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
-          // console.log(resConvertida);
+              alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                .then(function(res) {
+                  // ACHOU
+                  bem.COD_LOCAL = dados.COD_LOCAL;
+                  res.push(bem);
+
+                  console.log('Primeiro de res ' + res[1].CHAPA);
+
+                  if (window.cordova) { //Só entra por device
+                    CriarDiretorio.processar($cordovaFile, res);
+                  }
+
+                }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                  console.log(err);
+                  PopUps.erroConsultar("Bem não encontrado!");
+                });
 
 
-          if (window.cordova) { //Só entra por device
-            CriarDiretorio.processar($cordovaFile, res);
 
+            } else {
+              if (arquivo === "xls") {
+                dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xls";
+
+
+                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                  .then(function(res) {
+                    // ACHOU
+                    bem.COD_LOCAL = dados.COD_LOCAL;
+                    res.push(bem);
+
+                    console.log('Primeiro de res ' + res[1].CHAPA);
+
+                    if (window.cordova) { //Só entra por device
+                      CriarDiretorio.processar($cordovaFile, res);
+                    }
+
+                  }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                    console.log(err);
+                    PopUps.erroConsultar("Bem não encontrado!");
+                  });
+
+
+              } else {
+                dir = "files/Lista_de_Bens.xlsx";
+
+
+                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                  .then(function(res) {
+                    // ACHOU
+                    bem.COD_LOCAL = dados.COD_LOCAL;
+                    res.push(bem);
+
+                    console.log('Primeiro de res ' + res[1].CHAPA);
+
+                    if (window.cordova) { //Só entra por device
+                      CriarDiretorio.processar($cordovaFile, res);
+                    }
+
+                  }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                    console.log(err);
+                    PopUps.erroConsultar("Bem não encontrado!");
+                  });
+
+
+              }
+            }
           }
+        // }, function(error) {
+        //   console.log("Não fez o checkArquivo" + error);
+        // });
+
+
+        } else {
+          // Se não estiver no device
+
+          console.log("Não está no device então pegou o arquivo dentro do app");
+
+          dir = "files/Lista_de_Bens.xlsx";
+          alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+            .then(function(res) {
+              // ACHOU
+              //console.log('Encontrou com o ALQSQL: ' + res);
+
+              bem.COD_LOCAL = dados.COD_LOCAL;
+              res.push(bem);
+
+              console.log('Primeiro de res ' + res[1].CHAPA);
+
+              //// A conversão já está no CriarDiretorio
+              // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
+              // console.log(resConvertida);
+
+              if (window.cordova) { //Só entra por device
+                CriarDiretorio.processar($cordovaFile, res);
+              }
+              console.log("Não está no device então não salvou.");
+
+            }).catch(function(err) { // NÃO ENCONTROU O bem
+              console.log(err);
+              PopUps.erroConsultar("Bem não encontrado!");
+            });
+
+          }//Se não estiver no device
 
 
 
 
-
-
-        }).catch(function(err) { // NÃO ENCONTROU O bem
-
-          console.log(err);
-          PopUps.erroConsultar("Bem não encontrado!");
-        });
-
-        };
-
-
-
-
-
-
-
-
+      };
 
       /*****************************************************************************/
 
@@ -161,12 +258,10 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       ////// Termina o controller ainda dentro do alaSQL (porque ele está async?)
 
 
-
     }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
       PopUps.erroConsultar("Bens não encontrados!");
     });
-
 
 
   /*****************************************************************************/

@@ -469,13 +469,14 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
     };
 
     var dir = "js/Lista_de_Bens.xlsx";
+    var xlsx = "xlsx";
 
 
     // ('SELECT * \
     //     FROM (SELECT a, ROWNUM() AS r FROM one)\
     //     WHERE r BETWEEN 55 AND 60');
         // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
-      alasql.promise('select * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+      alasql.promise('select * FROM ?(?,{headers:true})\ WHERE CHAPA !== ?', [xlsx,dir, bem.CHAPA])
       .then(function(res) {
         // ACHOU
         console.log('Encontrou com o ALQSQL: ' + res);
