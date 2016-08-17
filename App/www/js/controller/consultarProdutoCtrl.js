@@ -73,6 +73,21 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
     }
   };
 
+// function check(){
+//     buscaArquivos.checarArquivo($cordovaFile);
+//
+//
+// }
+// function check (callback) {
+//     buscaArquivos.checarArquivo($cordovaFile).success(function(success){
+//     // other stuff here...
+//     // bla bla..
+//     callback(success); // this will "return" your value to the original caller
+//   });
+// }
+
+
+
 
   /*/ Buscar um Bem pela CHAPA /*/
   $scope.buscaBem = function(bem) {
@@ -81,11 +96,80 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
 
     if (window.cordova) { //Só entra por device
-      buscaArquivos.checarArquivo($cordovaFile);
-      // .then(function(success) {
 
-      var arquivo = Scopes.getArquivo();
 
+////************************************************//
+      // check().then(function(success){
+      //   console.log('passou do check');
+      //   var arquivo = Scopes.getArquivo();
+      // }, function(error) {
+      //   console.log("Não fez o check" + error);
+      // });
+
+
+////************************************************//
+// checarArquivo = function(){
+//     console.log('Entrou na função');
+//     buscaArquivos.checarArquivo($cordovaFile);
+// };
+//
+// checarArquivo().then(function (sucess){
+////************************************************//
+
+  // setTimeout(function() {
+  //      buscaArquivos.checarArquivo($cordovaFile);
+  //  }, 1000);
+
+
+////************************************************//
+      //
+      // var promise = new Promise(function(resolve, reject) {
+      //   buscaArquivos.checarArquivo($cordovaFile);
+      //
+      //   if ($scope.log == "Fez") {
+      //     resolve("Stuff worked!");
+      //
+      //   }else {
+      //     reject(Error("It broke"));
+      //   }
+      // });
+      //
+      // promise.then(function(result) {
+      //   console.log(result); // "Stuff worked!"
+      // }, function(err) {
+      //   console.log(err); // Error: "It broke"
+      // });
+
+
+
+////************************************************//
+      // checarArquivo = function(){
+      //     console.log('Entrou na função');
+      //   //buscaArquivos.checarArquivo($cordovaFile);
+      // };
+      //
+      // var buscaArquivosPromise = checarArquivo();
+      // buscaArquivosPromise.then(function (){
+      //   console.log('Entrou no promisse');
+      //   buscaArquivos.checarArquivo($cordovaFile);
+      // }, function (error){
+      //   console.log(error);
+      // });
+
+
+////************************************************//
+
+
+////// O buscaArquivos está inviabilizando todo o resto do controller
+buscaArquivos.checarArquivo($cordovaFile);
+      // // .then(function(success) {
+      // var arquivo = Scopes.getArquivo();
+
+
+
+
+
+      arquivo = "csv"; //PARA TESTE POR ENQUANTO QUE O DE CIMA NÃO PEGA
       if (arquivo === "csv") {
         dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.csv";
 

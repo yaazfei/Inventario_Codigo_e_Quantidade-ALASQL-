@@ -1,5 +1,5 @@
 {
-  "name": "Invenario_Yapp",
+  "name": "Inventario_Yapp",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.1",

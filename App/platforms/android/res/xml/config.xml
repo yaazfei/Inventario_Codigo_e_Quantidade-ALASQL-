@@ -55,7 +55,7 @@
     <splash density="port-xhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/logo-nimal.png" />
-    <name>Inventario - Queiroz Galvao</name>
+    <name>Inventario Queiroz Galvao</name>
     <description>
       Aplicativo desenvolvido por Yasmin Feitosa
     </description>

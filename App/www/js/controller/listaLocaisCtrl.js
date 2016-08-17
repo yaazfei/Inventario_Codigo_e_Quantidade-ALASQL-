@@ -468,15 +468,15 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-    var dir = "js/Lista_de_Bens.xlsx";
-    var xlsx = "xlsx";
+    dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv";
+
 
 
     // ('SELECT * \
     //     FROM (SELECT a, ROWNUM() AS r FROM one)\
     //     WHERE r BETWEEN 55 AND 60');
         // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
-      alasql.promise('select * FROM ?(?,{headers:true})\ WHERE CHAPA !== ?', [xlsx,dir, bem.CHAPA])
+      alasql.promise('select * FROM CSV(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
       .then(function(res) {
         // ACHOU
         console.log('Encontrou com o ALQSQL: ' + res);
@@ -709,7 +709,7 @@ dados = {
 
 
 // var blau = alasql('SELECT type, ARRAY({food:food, color:color}) AS foods FROM ? GROUP BY type', [origArr]);
-var blau = alasql('SELECT * IN Object({CHAPA:CHAPA, DESC_BEM:DESC_BEM}) AS bem FROM  xlsx("js/Lista_de_Bens.xlsx",{headers:true})');
+// var blau = alasql('SELECT * IN Object({CHAPA:CHAPA, DESC_BEM:DESC_BEM}) AS bem FROM  xlsx("js/Lista_de_Bens.xlsx",{headers:true})');
 
 
 

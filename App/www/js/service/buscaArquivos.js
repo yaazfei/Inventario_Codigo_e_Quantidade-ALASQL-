@@ -15,13 +15,13 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
             Scopes.setArquivo("csv");
 
             //MELHOR COPIAR? PRA ONDE?
+            $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Lista_de_Bens.csv", cordova.file.applicationDirectory, "App/www/files/Lista_de_Bens.csv")
+              .then(function (success){
+                console.log('Copiou o arquivo .csv para o /files');
 
-            // $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Lista_de_Bens.csv", cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xsl")
-            //   .then(function (success) {
-            //     // success
-            //     }, function (error) {
-            //       // error
-            //       });
+                }, function (error) {
+                  // error
+                  });
 
           }, function(error) {
             console.log('log: Não achou o arquivo .csv, vai procurar por outro');
@@ -54,4 +54,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
         });
 
   };
+  //return Scopes.getArquivo();
+  //$scope.log = "Fez";
 });
