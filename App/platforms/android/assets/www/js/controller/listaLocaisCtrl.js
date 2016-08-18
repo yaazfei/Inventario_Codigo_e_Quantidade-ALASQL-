@@ -276,7 +276,7 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -468,8 +468,10 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-    dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv";
+    //alert("CAMINHO DO APP :" + window.location.pathname); //"/android_asset/www/index.html"
 
+    // dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
+    dir = "/storage/sdcard0/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
 
 
     // ('SELECT * \
@@ -537,6 +539,52 @@ $scope.teste4 = function(res) {
     COD_LOCAL: "000053",
     DESC_LOCAL: "Blau Local"
   };
+
+
+buscaArquivos.checarArquivo($cordovaFile);
+
+
+setTimeout(function() {
+
+
+dir = "files/Lista_de_Bens.csv";
+alasql.promise('SELECT * FROM csv(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+  .then(function(res) {
+
+    //ACHOU O LOCAL E PEGOU O PRIMEIRO
+    console.log('Resultado do ALQSQL: ' + res[0]);
+    $scope.bemEncontrado = res;
+    console.log('Bem foi encontrado.');
+
+    //Para atualizar a lista
+    $scope.$apply(function() {
+      $scope.bemEncontrado = res;
+    });
+
+    // $state.go('app.consultarProdutoCtrl');
+    // $scope.$broadcast('scroll.refreshComplete');
+
+  }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+    PopUps.erroConsultar("Bem não encontrado!");
+  });
+
+
+}, 2000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -617,8 +665,8 @@ $scope.teste4 = function(res) {
 //
 //
 //
-};
 
+};
 
 
 

@@ -2,7 +2,9 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
 
 /*/************************************************************************************************************/
- //// B1 METHOD
+//////////////////////////
+//////// B1 METHOD //////
+/////////////////////////
 
 
   this.processar = function ($cordovaFile, res){
@@ -31,10 +33,26 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
 
                                                     console.log('log: Escreveu no arquivo vazio');
-                                                    PopUps.produtoSalvo('Bem salvo com sucesso!');
-                                                    $scope.bemEncontrado = null;
-                                                    $state.go('app.consultarProduto');
-                                                    //alert("Criou o Arquivo");
+                                                    // PopUps.produtoSalvo('Bem salvo com sucesso!');
+                                                    // $scope.bemEncontrado = null;
+                                                    // $state.go('app.consultarProduto');
+
+
+
+
+                                                      //Não sei se funciona
+                                                      $cordovaFile.writeFile(cordova.file.applicationDirectory + "www/files", "Lista_de_Bens.csv" , (dados), true)
+                                                      .then(function(success) {
+
+                                                                  console.log('log: Escreveu num arquivo vazio dentro do /files');
+                                                                  PopUps.produtoSalvo('Bem salvo com sucesso!');
+                                                                  $scope.bemEncontrado = null;
+                                                                  $state.go('app.consultarProduto');
+                                                                  //alert("Criou o Arquivo");
+
+
+                                                    });
+
 
 
                                       }, function(error) {

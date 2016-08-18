@@ -19,7 +19,10 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 /*/*************************************************************************************************************/
-////// Busca o código do local selecionado
+
+//////////////////////////////////////////////////
+////// BUSCAR O CÓDIGO DO LOCAL SELECIONADO //////
+/////////////////////////////////////////////////
 
   $scope.buscaLocal = function(dados) {
 

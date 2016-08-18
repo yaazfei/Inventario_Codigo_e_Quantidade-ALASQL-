@@ -62,7 +62,12 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
       /*****************************************************************************/
-      /*/ ESCREVER PRODUTO INVÁLIDO - EDITADO (ESTÁ COPIANDO TODOS OS DADOS EXCETO O ESCOLHIDO E REESCREVENDO UM ARQUIVO INTEIRO) /*/
+
+      /////////////////////////////////////
+      //// ESCREVER PRODUTO INVÁLIDO /////
+      ////////////////////////////////////
+
+      /*/ EDITADO (ESTÁ COPIANDO TODOS OS DADOS EXCETO O ESCOLHIDO E REESCREVENDO UM ARQUIVO INTEIRO) /*/
 
 
       $scope.escreverProdutoEditado = function() {
@@ -225,7 +230,11 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
       /*****************************************************************************/
 
-      /*/ MODAL DE LOCAL /*/ //Funcionando
+      //////////////////////////
+      //// MODAL DE LOCAL /////
+      /////////////////////////
+
+      ////Funcionando
 
 
       $scope.openModal = function() {
