@@ -1,4 +1,4 @@
-angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state) {
+angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, alaSQLBuscas) {
 
 
   this.checarArquivo = function($cordovaFile) {
@@ -18,13 +18,16 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
 
 
             //MELHOR COPIAR? PRA ONDE?
-            $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.csv", cordova.file.externalDataDirectory + "www/files/Lista_de_Bens.csv")
+            $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.csv", "file:///data/data/com.ionicframework.myaoo100386/files/", "Lista_de_Bens.csv")
               .then(function(success) {
                 console.log('Copiou o arquivo .csv para o /files');
                 //Scopes.setArquivo("csv");
                 //dir = "/android_asset/www/files/Lista_de_Bens.csv";
 
 
+                  alaSQLBuscas.salvarXLSX().then(function(success){
+                    console.log("passou no salvarXLSX");
+                  });
 
 
 
