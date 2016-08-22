@@ -339,11 +339,23 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
   //////////****** CONTROLLER DA PÁGINA SEM LISTA (INCOMPLETO)
 
-  $scope.buscaBem = function(bem) {
+  $scope.buscaBem = function(bem) { //funcionando
 
 
-    dir = "files/Lista_de_Bens.xlsx";
-    alasql.promise('SELECT * FROM XLSX(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+    //dir = "files/Lista_de_Bens.xlsx";
+    //dir = "/Android/data/com.ionicframework.myaoo100386/Lista_de_Bens.csv";
+    $scope.teste4();
+
+    var arquivoLido = Scopes.getArquivo();
+
+    if (arquivoLido != "nd") {
+
+    dir = FormatarCsv.CSV2JSON(arquivoLido);
+
+    // var dir = JSON.parse(arquivoLido);
+    console.log(dir);
+
+    alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [dir, bem.COD_BEM])
       .then(function(res) {
 
         //// ACHOU O LOCAL E PEGOU O PRIMEIRO
@@ -357,7 +369,7 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
             $scope.hideBem = false;
             //return $scope.hideBem;
-      
+
 
             console.log('Bem foi encontrado.');
             $state.go('app.listaLocais');
@@ -368,6 +380,36 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
         PopUps.erroConsultar("Bem não encontrado!");
       });
 
+    }else{ //Se arquivoLido = "nd"
+
+
+    dir = "js/Lista_de_Bens.xlsx";
+    alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+      .then(function(res) {
+
+        //// ACHOU O LOCAL E PEGOU O PRIMEIRO
+            //alert('Encontrou o Bem com o alaSQL');
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+            Scopes.setBem(res[0]);
+            $scope.bemEncontrado = res;
+            // $scope.bem = res[0];
+
+
+            $scope.hideBem = false;
+            //return $scope.hideBem;
+
+
+            console.log('Bem foi encontrado.');
+            $state.go('app.listaLocais');
+
+
+      }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+        PopUps.erroConsultar("Bem não encontrado!");
+      });
+
+    }
 
 
 
@@ -410,22 +452,6 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     //   });
 
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -559,20 +585,6 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
 
 
 $scope.teste4 = function(res) {
-
-  bem = {
-    COD_BEM: "000000023",
-    DESC_BEM: "Blau blau",
-    CHAPA: "000180",
-    COD_LOCAL: "000093"
-  };
-
-
-  dados = {
-    COD_LOCAL: "000053",
-    DESC_LOCAL: "Blau Local"
-  };
-
 
 buscaArquivos.checarArquivo($cordovaFile);
 

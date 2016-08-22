@@ -21,8 +21,9 @@ angular.module("starter").service('Scopes', function() {
           return arquivoSelecionado;
       },
         setArquivo: function(value) {
-          ArquivoSelecionado = value;
+          arquivoSelecionado = value;
     },
+
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
       var local = "";
