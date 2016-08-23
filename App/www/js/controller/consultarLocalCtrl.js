@@ -1,4 +1,4 @@
-angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio, buscaArquivos) {
+angular.module('starter').controller('consultarLocalCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $http, Scopes, FormatarCsv, PopUps, CriarDiretorio, buscaArquivos, $cordovaSQLite) {
 
   console.log('Entrou no controller de Consultar Local ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -11,7 +11,6 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
     PopUps.showConfirm();
 
   };
-
 
 
 
@@ -34,32 +33,25 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
       // listarLocais(dados);
       Scopes.setLocal(dados);
-
-      console.log('entrou no buscaLocal, vai fazer o alaSQL');
-
+      console.log('entrou no buscaLocal, vai fazer o SQLite');
 
 
-      // var alasql = require('alasql');
-      // alert('passou do require: ' + alasql);
+      // var dir = "files/Lista_de_Locais.xlsx";
+      //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
 
-      // PROMISSE ASYNC?
-
-      var dir = "files/Lista_de_Locais.xlsx";
-
-      alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
+if (window.cordova) { //Só entra por device
+      $cordovaSQLite.execute(db, 'SELECT * FROM local WHERE COD_LOCAL == ? ',[dados.COD_LOCAL])
         .then(function(res) {
 
           // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          console.log('Encontrou o local com o alaSQL');
-          console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-          Scopes.setLocal(res[0]);
+          console.log('Encontrou o local com o ALASQL');
 
+          // console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+          // Scopes.setLocal(res[0]);
 
-          if (window.cordova) { //Só entra por device
+          console.log('Resultado do ALQSQL: ' +   res.rows.item(0) + ' ' +   res.rows.item(0).COD_LOCAL + ' ' + res.rows.item(0).DESC_LOCAL);
+          Scopes.setLocal(res.rows.item(0));
 
-            //CriarDiretorio.processar($cordovaFile, dados);
-            //alert("Passou do CriarDiretorio.processar");
-          }
           console.log('saiu do alaSQL');
           $state.go('app.consultarProduto');
 
@@ -70,6 +62,32 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
         });
 
 
+
+
+      } else {  // TESTE PARA BROWSER
+
+         console.log (" >>>>>>>>>>   Não está em device. Vai testar com o arquivo interno e com > ALaSQL < ");
+
+         var dir = "files/Lista_de_Locais.xlsx";
+         alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
+           .then(function(res) {
+
+             // ACHOU O LOCAL E PEGOU O PRIMEIRO
+             console.log('Encontrou o local com o ALASQL');
+
+             console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+             Scopes.setLocal(res[0]);
+
+             console.log('saiu do alaSQL');
+             $state.go('app.consultarProduto');
+
+
+           }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+             PopUps.erroConsultar("Local não encontrado!");
+           });
+
+      }
     }
   };
 

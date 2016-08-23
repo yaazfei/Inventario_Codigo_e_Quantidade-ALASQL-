@@ -47,6 +47,10 @@
                         {
                             "xml": "<feature name=\"FileOpener2\"><param name=\"android-package\" value=\"io.github.pwlin.cordova.plugins.fileopener2.FileOpener2\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -632,6 +636,9 @@
         },
         "cordova-plugin-file-opener2": {
             "PACKAGE_NAME": "com.ionicframework.myaoo100386"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.ionicframework.myaoo100386"
         }
     },
     "dependent_plugins": {},
@@ -961,6 +968,14 @@
             "clobbers": [
                 "cordova.plugins.fileOpener2"
             ]
+        },
+        {
+            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+            "id": "cordova-sqlite-storage.SQLitePlugin",
+            "pluginId": "cordova-sqlite-storage",
+            "clobbers": [
+                "SQLitePlugin"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -974,6 +989,7 @@
         "cordova-plugin-camera": "1.2.0",
         "phonegap-plugin-barcodescanner": "4.0.1",
         "cordova-plugin-contacts": "2.0.1",
-        "cordova-plugin-file-opener2": "2.0.2"
+        "cordova-plugin-file-opener2": "2.0.2",
+        "cordova-sqlite-storage": "1.4.7"
     }
 }
