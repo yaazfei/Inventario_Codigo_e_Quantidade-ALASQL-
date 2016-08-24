@@ -44,15 +44,15 @@ if (window.cordova) { //Só entra por device
         .then(function(res) {
 
           // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          console.log('Encontrou o local com o ALASQL');
+          console.log('Encontrou o local com o SQLITE');
 
           // console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
           // Scopes.setLocal(res[0]);
 
-          console.log('Resultado do ALQSQL: ' +   res.rows.item(0) + ' ' +   res.rows.item(0).COD_LOCAL + ' ' + res.rows.item(0).DESC_LOCAL);
+          console.log('Resultado do SQLITE: ' +   res.rows.item(0) + ' ' +   res.rows.item(0).COD_LOCAL + ' ' + res.rows.item(0).DESC_LOCAL);
           Scopes.setLocal(res.rows.item(0));
 
-          console.log('saiu do alaSQL');
+          console.log('saiu do SQLITE');
           $state.go('app.consultarProduto');
 
 

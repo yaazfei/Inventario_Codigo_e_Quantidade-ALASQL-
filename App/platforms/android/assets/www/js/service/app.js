@@ -27,7 +27,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
-       if (window.cordova) {
+       if (window.cordova) { //Mas já não está dentro de um window.cordova?
           db = $cordovaSQLite.openDB({name: 'QueirozGalvao.db', location: 2, createFromLocation: 1}); //device
           //db = window.openDatabase("QueirozGalvao.db", '1', 'QueirozGalvao', 1024 * 1024 * 100); // browser
         }else{
@@ -35,25 +35,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
         }
 
           $cordovaSQLite.execute(db, 'select * from local', null).then(function (res){
-            console.log('nao deu erro de table no exists' + res);
+            console.log('Não deu erro de table no exists' + res);
           }).catch(function (err){
             console.log('erro de table no exists' + err);
             tabelasJaCriadas = true;
 
-            $cordovaSQLite.execute(db,'CREATE TABLE local (COD_LOCAL STRING PRIMARY KEY, DESC_LOCAL STRING)');
-           $cordovaSQLite.execute(db,'CREATE TABLE bem ( COD_BEM STRING,  DESC_BEM STRING, CHAPA STRING, COD_LOCAL STRING)');
+            $cordovaSQLite.execute(db,'CREATE TABLE local (COD_LOCAL TEXT PRIMARY KEY, DESC_LOCAL STRING)');
+            $cordovaSQLite.execute(db,'CREATE TABLE bem ( COD_BEM TEXT,  DESC_BEM STRING, CHAPA TEXT, COD_LOCAL TEXT)');
+
+            //DEVE CHECAR SE HÁ ARQUIVO NA PASTA ANTES
 
             var dir = "files/Lista_de_Locais.xlsx";
 
             alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
                       .then(function(res) {
 
-                                console.log('Encontrou o local com o alaSQL');
+                                console.log('Encontrou os locais com o alaSQL');
                                 try{
                                         for(i=0;i< res.length; i++){
                                                    console.log(res[i]);
-                                                   var query = "INSERT INTO local (COD_LOCAL, DESC_LOCAL) VALUES (?, ? )  ";
-                                                   $cordovaSQLite.execute(db, query, [res[i].COD_LOCAL, res[i].DESC_LOCAL]);
+                                                   var query = "INSERT INTO local (COD_LOCAL, DESC_LOCAL) VALUES ('?', '?' )  ";
+                                                   $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
                                          }
                                }catch(err){
                                         console.log('err1' + err);
@@ -69,11 +71,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
             alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL FROM xlsx(?,{headers:true})\ ', [dir2])
                     .then(function(res) {
 
-                              console.log('Encontrou o bem com o alaSQL');
+                              console.log('Encontrou os bens com o alaSQL');
                                try{
                                         for(i=0;i< res.length; i++){
                                                    //console.log(res[i]);
-                                                   var query = "INSERT INTO bem (COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL) VALUES (?, ?, ?, ? ) ";
+                                                   var query = "INSERT INTO bem (COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL) VALUES ('?', '?', '?', '?') ";
                                                    $cordovaSQLite.execute(db, query, [res[i].COD_BEM, res[i].DESC_BEM, res[i].CHAPA, res[i].COD_LOCAL]);
                                          }
                                }catch(err){
