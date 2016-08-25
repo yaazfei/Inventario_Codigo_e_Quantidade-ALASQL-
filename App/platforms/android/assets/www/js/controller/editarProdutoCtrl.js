@@ -37,9 +37,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.dados = Scopes.getLocal();
       dados = Scopes.getLocal();
 
-      $scope.teste1 = function(i) {
-        console.log('teste1 : ' + i);
-      };
+      // $scope.teste1 = function(i) {
+      //   console.log('teste1 : ' + i);
+      // };
 
 
       $scope.localSelecionado = function(local) {
@@ -50,14 +50,21 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       };
 
 
-      $scope.clearInput = function(input, form) { // NÃO FUNCIONA
+      $scope.clearInput = function() { //// >>>>>>>>>>>>>>>>>>>>>>>>> NÃO FUNCIONA
         console.log('Entrou no clearSearch');
+
+        $scope.form.$setPristine();
+
+        $scope.$apply(function() {
+          $scope.input = null;
+        });
+
+        $state.go('app.editarProduto');
 
         // console.log (buscaLocalForm + $scope.buscaLocalForm);
         // console.log (search + $scope.search);
-        // $scope.form.$setPristine();
-        $scope.input = "";
-        input = "";
+        //$scope.input = "";
+        //input = "";
       };
 
 

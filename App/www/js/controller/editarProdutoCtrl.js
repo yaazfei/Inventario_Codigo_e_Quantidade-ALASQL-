@@ -6,6 +6,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
 
+
   // listarLocais();
 
   var dir = "files/Lista_de_Locais.xlsx";
@@ -22,8 +23,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
 
-
-
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
 
@@ -37,9 +36,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.dados = Scopes.getLocal();
       dados = Scopes.getLocal();
 
-      $scope.teste1 = function(i) {
-        console.log('teste1 : ' + i);
-      };
+      // $scope.teste1 = function(i) {
+      //   console.log('teste1 : ' + i);
+      // };
 
 
       $scope.localSelecionado = function(local) {
@@ -50,14 +49,21 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       };
 
 
-      $scope.clearInput = function(input, form) { // NÃO FUNCIONA
+      $scope.clearInput = function(local) { //// >>>>>>>>>>>>>>>>>>>>>>>>> NÃO FUNCIONA
         console.log('Entrou no clearSearch');
 
-        // console.log (buscaLocalForm + $scope.buscaLocalForm);
-        // console.log (search + $scope.search);
-        // $scope.form.$setPristine();
-        $scope.input = "";
-        input = "";
+        // search.local.$setPristine();
+        // $scope.search.local.$setPristine();
+
+          $scope.local = null;
+          local = null;
+          $scope.localModificado = false;
+
+        // if ($scope.searchLocal !== undefined){
+        //   $scope.searchLocal.$setPristine();
+        // }
+
+        //$state.go('app.editarProduto');
       };
 
 
@@ -242,6 +248,13 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
       $scope.openModal = function() {
+
+        if ($scope.selectlocal !== undefined){ //sempre aparecem undefined? (NÃO PEGA)
+          $scope.modalCtrl.$setPristine(); //Esse não é uma função
+          $scope.selectlocalradio.$setPristine();
+        }
+
+        //$scope.localModificado = null;
         $scope.modalCtrl.show();
       };
 
@@ -296,5 +309,5 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   /*****************************************************************************/
 
-
+        console.log("Passou uma vez no editarProdutoCtrl.");
 });

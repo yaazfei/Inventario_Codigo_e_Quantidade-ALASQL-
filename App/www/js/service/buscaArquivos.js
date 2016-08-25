@@ -1,8 +1,9 @@
-angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state) {
+angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, alaSQLBuscas) {
 
 
   this.checarArquivo = function($cordovaFile) {
     //alert("Entrou no processar");
+
 
     $cordovaFile.checkDir(cordova.file.externalRootDirectory, "Queiroz Galvão")
       .then(function(success) {
@@ -12,20 +13,43 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
         $cordovaFile.checkFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.csv")
           .then(function(success) {
             console.log('log: Achou o arquivo .csv');
-            Scopes.setArquivo("csv");
-            //alert("CAMINHO DO APP :" + window.location.pathname);
+
+            // //COPIAR PARA UMA VARIÁVEL COM O ANGULAR.COPY
+            // angular.copy(source, [destination]);
+
+            //SÓ LÊ O ARQUIVO E COLOCAR EM UMA VARIÁVEL
+            $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv")
+                 .then(function (success) {
+
+                   console.log("Leu o arquivo CSV");
+                   Scopes.setArquivo(success);
+                   console.log("Copiou o arquivo CSV");
+
+
+                 }, function (error) {
+
+                   console.log ( "Não leu o arquivo CSV: " + error);
+                   // error
+                 });
 
 
             // //MELHOR COPIAR? PRA ONDE?
-            // $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Queiroz GalvÃ£o/Lista_de_Bens.csv", cordova.file.externalDataDirectory + "www/files/Lista_de_Bens.csv")
+            // $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.csv", cordova.file.externalApplicationStorageDirectory, "Lista_de_Bens.csv")
             //   .then(function(success) {
-            //     console.log('Copiou o arquivo .csv para o /files');
+            //     console.log('Copiou o arquivo .csv para o /Android/data/com.ionicframework.myaoo100386/');
+            //
+            //     // dir = /Android/data/com.ionicframework.myaoo100386/
+            //     //dir = "file:///data/data/com.ionicframework.myaoo100386/files/";   //ESSE APARENTEMENTE FUNCIONA, SÓ QUE NADA É COPIADO PARA LÁ.
             //     //Scopes.setArquivo("csv");
             //     //dir = "/android_asset/www/files/Lista_de_Bens.csv";
-
+            //
+            //     alaSQLBuscas.buscarCSV();
+            //
             //   }, function(error) {
-            //     console.log('NÃ£o copiou o arquivo: ' + error);
+            //     console.log('Não copiou o arquivo: ' + error);
             //   });
+
+
 
 
           }, function(error) {
@@ -35,7 +59,26 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
             $cordovaFile.checkFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.xlsx")
               .then(function(success) {
                 console.log('log: Achou o arquivo .xlsx');
-                Scopes.setArquivo("xlsx");
+                // Scopes.setArquivo("xlsx");
+
+
+
+                //SÓ LÊ O ARQUIVO E COLOCAR EM UMA VARIÁVEL
+                $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
+                     .then(function (success) {
+
+                       console.log("Leu o arquivo XLSX");
+                       Scopes.setArquivo(success);
+                       console.log("Copiou o arquivo XLSX");
+
+
+                     }, function (error) {
+
+                       console.log ( "Não leu o arquivo XLSX: " + error);
+                       // error
+                     });
+
+
 
 
               }, function(error) {
@@ -45,7 +88,27 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                 $cordovaFile.checkFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.xls")
                   .then(function(success) {
                     console.log('log: Achou o arquivo .xls');
-                    Scopes.setArquivo("xls");
+                    // Scopes.setArquivo("xls");
+
+
+                    //SÓ LÊ O ARQUIVO E COLOCAR EM UMA VARIÁVEL
+                    $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xls")
+                         .then(function (success) {
+
+                           console.log("Leu o arquivo XLS");
+                           Scopes.setArquivo(success);
+                           console.log("Copiou o arquivo XLX");
+
+
+
+                         }, function (error) {
+
+                           console.log ( "Não leu o arquivo XLS: " + error);
+                           // error
+                         });
+
+
+
 
 
                   }, function(error) {
@@ -60,9 +123,9 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
           });
 
 
-      }, function(error) { // NÃ£o achou o diretÃ³rio
+      }, function(error) { // Não achou o diretório
 
-        console.log('log: NÃ£o encontrou o diretorio. Vai pegar o arquivo interno.' + error);
+        console.log('log: Não encontrou o diretório. Vai pegar o arquivo interno.' + error);
         Scopes.setArquivo("nd");
 
       });

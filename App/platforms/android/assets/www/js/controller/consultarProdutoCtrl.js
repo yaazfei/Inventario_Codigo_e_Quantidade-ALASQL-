@@ -156,14 +156,19 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                 var dataset = res.rows;
 
                 var dataCollected = [];
+                var bem = {};
                 var len = res.rows.length, i;
                 for (i = 0; i < len; i++) {
                   //alert(results.rows.item(i).text);
 
 
                   var item = dataset.item(i);
-                  item = JSON.stringify(item);
-                  dataCollected.push(item);
+                  bem[i] = item;
+                  //item = JSON.stringify(item);
+
+                  // container.objects.push(container["object" + i]);
+
+                  dataCollected.push(bem[i]);
                   console.log(dataCollected.length);
                 }
 
