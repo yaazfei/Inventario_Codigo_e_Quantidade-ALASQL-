@@ -91,36 +91,90 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
         if (window.cordova) { //Só entra por device
 
-          buscaArquivos.checarArquivo($cordovaFile);
-          // .then(function(success) {
-          var arquivo = Scopes.getArquivo();
 
-          // if (arquivo === "csv") {
-          //   dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.csv";
+////// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MÉTODO DE UPDATE COM O SQLITE
+
+// UPDATE Cars SET Name='Skoda Octavia' WHERE Id=3;
+    db.transaction(function (tx) {
+
+        var query = "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?";
+
+        tx.executeSql(query, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM], function(tx, res) {
+            console.log("COD_LOCAL editado de res: " + res.COD_LOCAL);
+            console.log("CHAPA e COD_BEM do bem editado: " + res.CHAPA + ' ' + res.COD_BEM);
+        },
+        function(tx, error) {
+            console.log('UPDATE error: ' + error.message);
+        });
+    }, function(error) {
+        console.log('transaction error: ' + error.message);
+    }, function() {
+        console.log('transaction ok');
+    });
 
 
-            //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-             $cordovaSQLite.execute(db, 'select * from bem  where CHAPA !== ? ',[bem.CHAPA])
-              .then(function(res) {
-                // ACHOU
-                bem.COD_LOCAL = dados.COD_LOCAL;
-                res.push(bem);
+      CriarDiretorio.processar($cordovaFile, res);
 
-                // console.log('Primeiro de res ' + res[1].CHAPA);
-                console.log('Primeiro de res ' + res.rows.item(0).CHAPA);
 
-                if (window.cordova) { //Só entra por device
-                  CriarDiretorio.processar($cordovaFile, res);
-                }
 
-              }).catch(function(err) { // NÃO ENCONTROU O bem
+}
 
-                console.log(err);
-                PopUps.erroConsultar("Bem não encontrado!");
-              });
 
-            }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ////// >>>>>>>>>>>>>>>>>>> MÉTODO DE LER TODOS OS ARQUIVOS MENOS O ALVO E DEPOIS COLOCAR ELE NA RESPOSTA JÁ EDITADO
+//
+//           // buscaArquivos.checarArquivo($cordovaFile);
+//           //// .then(function(success) {
+//           // var arquivo = Scopes.getArquivo();
+//
+//             //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+//              $cordovaSQLite.execute(db, 'SELECT * FROM bem WHERE CHAPA !== ? ',[bem.CHAPA])
+//               .then(function(res) {
+//                 // ACHOU
+//                 bem.COD_LOCAL = dados.COD_LOCAL;
+//                 res.push(bem);
+//
+//                 // console.log('Primeiro de res ' + res[1].CHAPA);
+//                 console.log('Primeiro de res ' + res.rows.item(0).CHAPA);
+//
+//                 if (window.cordova) { //Só entra por device
+//                   CriarDiretorio.processar($cordovaFile, res);
+//                 }
+//
+//               }).catch(function(err) { // NÃO ENCONTROU O bem
+//
+//                 console.log(err);
+//                 PopUps.erroConsultar("Bem não encontrado!");
+//               });
+//
+//             }
+
+
+
+
+
+///////////// ------------------------
         //   } else {
         //     if (arquivo === "xslx") {
         //       dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
@@ -235,6 +289,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         //
         //
 
+  ///////////// ---------------
 
       };
 

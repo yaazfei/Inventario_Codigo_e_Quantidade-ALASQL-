@@ -1,10 +1,10 @@
-angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, alaSQLBuscas) {
+angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state) {
 
 
-  this.checarArquivo = function($cordovaFile) {
+this.checarArquivo = function($cordovaFile) {
     //alert("Entrou no processar");
 
-
+//async.series([
     $cordovaFile.checkDir(cordova.file.externalRootDirectory, "Queiroz Galvão")
       .then(function(success) {
         console.log('log: Achou o diretorio');
@@ -129,9 +129,10 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
         Scopes.setArquivo("nd");
 
       });
+//]);
+
 
   };
-
   //return Scopes.getArquivo();
   //$scope.log = "Fez";
 

@@ -37,8 +37,8 @@
       <div class="item"><b>Local: </b>
         <a style="float:right; text-align:left;">{{bem.COD_LOCAL}}</a>
 
-                    <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
-        <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{dados.DESC_LOCAL_DO_BEM}}</p>
+
+        <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{local.DESC_LOCAL_DO_BEM}}</p>
       </div>
 
     </div>
@@ -48,7 +48,7 @@
       <a style="float:right; text-align:left;">{{dados.COD_LOCAL}}</a>
 
 
-                    <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
+
       <br/><br/><p style="text-align:right; align:justify; margin-left:30%">{{dados.DESC_LOCAL}}</p>
     </div>
 
@@ -57,12 +57,12 @@
 
       <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
         <div class="col col -50"><b>Novo local:</b></div>
-        <div class="col col -50 button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click="clearInput()"><i class="ion-close"></i></div>
+        <div class="col col -50 button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click="clearInput(local)"><i class="ion-close"></i></div>
       </div>
 
           <div class="list" padding>
             <div class="item item-input item-floating-label">
-              <input ng-focus="openModal()"  name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
+              <input ng-focus="openModal()" name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
               <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
             </div>
 
