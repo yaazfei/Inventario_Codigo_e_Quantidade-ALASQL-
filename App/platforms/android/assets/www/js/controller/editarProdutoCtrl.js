@@ -1,4 +1,4 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $cordovaSQLite, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
@@ -55,9 +55,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         // search.local.$setPristine();
         // $scope.search.local.$setPristine();
 
-          $scope.local = null;
-          local = null;
-          $scope.localModificado = false;
+        $scope.local = null;
+        local = null;
+        $scope.localModificado = false;
 
         // if ($scope.searchLocal !== undefined){
         //   $scope.searchLocal.$setPristine();
@@ -92,36 +92,88 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         if (window.cordova) { //Só entra por device
 
 
-////// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MÉTODO DE UPDATE COM O SQLITE
+          ////// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MÉTODO DE UPDATE COM O SQLITE
 
-// UPDATE Cars SET Name='Skoda Octavia' WHERE Id=3;
-    db.transaction(function (tx) {
-
-        var query = "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?";
-
-        tx.executeSql(query, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM], function(tx, res) {
-            console.log("COD_LOCAL editado de res: " + res.COD_LOCAL);
-            console.log("CHAPA e COD_BEM do bem editado: " + res.CHAPA + ' ' + res.COD_BEM);
-        },
-        function(tx, error) {
-            console.log('UPDATE error: ' + error.message);
-        });
-    }, function(error) {
-        console.log('transaction error: ' + error.message);
-    }, function() {
-        console.log('transaction ok');
-    });
-
-
-      CriarDiretorio.processar($cordovaFile, res);
-
-
-
-}
+          // FUNCIONANDO(?), MAS ESTÁ ASYNC
+          // db.transaction(function(tx) {
+          //
+          //   var query = "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?";
+          //
+          //   tx.executeSql(query, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM], function(tx, res1) {
+          //       console.log("COD_LOCAL editado de res1: " + res1.COD_LOCAL);
+          //       console.log("CHAPA e COD_BEM do bem editado: " + res1.CHAPA + ' ' + res1.COD_BEM);
+          //     },
+          //     function(tx, error) {
+          //       console.log('UPDATE error: ' + error.message);
+          //     });
+          // }, function(error) {
+          //   console.log('transaction error: ' + error.message);
+          // }, function() {
+          //   console.log('transaction ok');
+          //
+          //   console.log(tx + ' ' + res1);
+          //   CriarDiretorio.processar($cordovaFile, res1);
+          // });
 
 
 
 
+          //
+          // // textField.addEventListener('return',function(e)
+          // // {
+          // // db.execute("UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?", dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM);
+          // $cordovaSQLite.execute(db, "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?", dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM);
+          // // });
+
+
+          // CriarDiretorio.processar($cordovaFile, res1);
+          // console.log(res1);
+
+
+
+          db.transaction(function(transaction) {
+            var executeQuery = ("UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?");
+            transaction.executeSql(executeQuery, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM],
+              //On Success
+              function(tx, result) {
+                console.log('Fez o UPDATE');
+                console.log('Vai pegar todo o DB com o SQLite');
+                  // console.log(tx + ' ' + result);
+
+                  $cordovaSQLite.execute(db, 'SELECT * FROM bem')
+                    .then(function(res) {
+
+                        ////  ACHOU O LOCAL E PEGOU O PRIMEIRO
+                        console.log('Resultado do SQLITE: ' + res.rows);
+
+                        var dataset = res.rows;
+
+                        var dataCollected = [];
+                        var bem = {};
+                        var len = res.rows.length, i;
+                        for (i = 0; i < len; i++) {
+                          // console.log('Bem: ' + res.rows.item(i).DESC_BEM);
+                          var item = dataset.item(i);
+                          bem[i] = item;
+                          dataCollected.push(bem[i]);
+                          //console.log(dataCollected.length);
+                        }
+
+                          console.log('Bem foi encontrado.');
+                          CriarDiretorio.processar($cordovaFile, dataCollected);
+
+                        }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+                        PopUps.erroConsultar("Bens não alocados!");
+                      });
+
+
+
+
+              },
+              function(error) {
+                console.log('Erro :' + error);
+              });
+          });
 
 
 
@@ -131,6 +183,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
 
+        }
 
 
 
@@ -140,41 +193,39 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
 
-
-
-// ////// >>>>>>>>>>>>>>>>>>> MÉTODO DE LER TODOS OS ARQUIVOS MENOS O ALVO E DEPOIS COLOCAR ELE NA RESPOSTA JÁ EDITADO
-//
-//           // buscaArquivos.checarArquivo($cordovaFile);
-//           //// .then(function(success) {
-//           // var arquivo = Scopes.getArquivo();
-//
-//             //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-//              $cordovaSQLite.execute(db, 'SELECT * FROM bem WHERE CHAPA !== ? ',[bem.CHAPA])
-//               .then(function(res) {
-//                 // ACHOU
-//                 bem.COD_LOCAL = dados.COD_LOCAL;
-//                 res.push(bem);
-//
-//                 // console.log('Primeiro de res ' + res[1].CHAPA);
-//                 console.log('Primeiro de res ' + res.rows.item(0).CHAPA);
-//
-//                 if (window.cordova) { //Só entra por device
-//                   CriarDiretorio.processar($cordovaFile, res);
-//                 }
-//
-//               }).catch(function(err) { // NÃO ENCONTROU O bem
-//
-//                 console.log(err);
-//                 PopUps.erroConsultar("Bem não encontrado!");
-//               });
-//
-//             }
-
+        // ////// >>>>>>>>>>>>>>>>>>> MÉTODO DE LER TODOS OS ARQUIVOS MENOS O ALVO E DEPOIS COLOCAR ELE NA RESPOSTA JÁ EDITADO
+        //
+        //           // buscaArquivos.checarArquivo($cordovaFile);
+        //           //// .then(function(success) {
+        //           // var arquivo = Scopes.getArquivo();
+        //
+        //             //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+        //              $cordovaSQLite.execute(db, 'SELECT * FROM bem WHERE CHAPA !== ? ',[bem.CHAPA])
+        //               .then(function(res) {
+        //                 // ACHOU
+        //                 bem.COD_LOCAL = dados.COD_LOCAL;
+        //                 res.push(bem);
+        //
+        //                 // console.log('Primeiro de res ' + res[1].CHAPA);
+        //                 console.log('Primeiro de res ' + res.rows.item(0).CHAPA);
+        //
+        //                 if (window.cordova) { //Só entra por device
+        //                   CriarDiretorio.processar($cordovaFile, res);
+        //                 }
+        //
+        //               }).catch(function(err) { // NÃO ENCONTROU O bem
+        //
+        //                 console.log(err);
+        //                 PopUps.erroConsultar("Bem não encontrado!");
+        //               });
+        //
+        //             }
 
 
 
 
 
+        ///////////// ------------------------
         //   } else {
         //     if (arquivo === "xslx") {
         //       dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
@@ -289,6 +340,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         //
         //
 
+        ///////////// ---------------
 
       };
 
@@ -303,7 +355,7 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
       $scope.openModal = function() {
 
-        if ($scope.selectlocal !== undefined){ //sempre aparecem undefined? (NÃO PEGA)
+        if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
           $scope.modalCtrl.$setPristine(); //Esse não é uma função
           $scope.selectlocalradio.$setPristine();
         }
@@ -363,5 +415,5 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   /*****************************************************************************/
 
-        console.log("Passou uma vez no editarProdutoCtrl.");
+  console.log("Passou uma vez no editarProdutoCtrl.");
 });

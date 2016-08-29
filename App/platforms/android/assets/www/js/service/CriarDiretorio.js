@@ -12,7 +12,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
       console.log(res);
       dados = FormatarCsv.JSONToCSVConvertor(res, true);
-      console.log(dados);
+      //console.log(dados);
 
       $cordovaFile.createDir(cordova.file.externalRootDirectory, "Queiroz Galvão", false)
           .then(function(success) {
@@ -46,7 +46,8 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
                                                                   console.log('log: Escreveu num arquivo vazio dentro do /files');
                                                                   PopUps.produtoSalvo('Bem salvo com sucesso!');
-                                                                  $scope.bemEncontrado = null;
+                                                                  // $scope.bemEncontrado = null;
+                                                                  
                                                                   $state.go('app.consultarProduto');
                                                                   //alert("Criou o Arquivo");
 
@@ -152,7 +153,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
                                        console.log('log: Escreveu no arquivo vazio');
                                        PopUps.produtoSalvo('Bem salvo com sucesso!');
-                                       $scope.bemEncontrado = null;
+                                      // $scope.bemEncontrado = null;
                                        $state.go('app.consultarProduto');
 
                                       }, function(error) {

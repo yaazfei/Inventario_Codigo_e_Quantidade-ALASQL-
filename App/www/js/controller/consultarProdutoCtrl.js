@@ -7,6 +7,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
       $scope.dados = Scopes.getLocal();
       console.log($scope.dados);
 
+
       $scope.fecharApp = function() {
         console.log('Apertou o fechar');
         PopUps.showConfirm();
@@ -22,9 +23,11 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
       $scope.editarBem = function(bem, dados) {
         // alert('Entrou no editarBem');
 
+
         //// Para zerar o local se tiver voltado do EditarProduto
         local = undefined;
         $scope.local = undefined;
+        $scope.bemEncontrado = undefined;
 
         // if (local !== undefined || local !== ""){
         //     local = null;
@@ -44,7 +47,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
             console.log('Vai fazer o SQLITE');
             // var dir = "files/Lista_de_Locais.xlsx";
             // alasql.promise('SELECT DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, bem.COD_LOCAL])
-            $cordovaSQLite.execute(db, 'SELECT * FROM local WHERE COD_LOCAL == ? ', [dados.COD_LOCAL])
+            $cordovaSQLite.execute(db, 'SELECT * FROM local WHERE COD_LOCAL == ? ', [bem.COD_LOCAL])
               .then(function(res) {
 
                 // ACHOU O LOCAL E PEGOU O PRIMEIRO
@@ -149,7 +152,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
             .then(function(res) {
 
                 ////  ACHOU O LOCAL E PEGOU O PRIMEIRO
-                console.log('Resultado do SQLITE: ' + res.rows.item(0) + ' ' + res.rows + ' ' + res.row + ' ' + res.rows.itens + ' ' + res.rows.item);
+                console.log('Resultado do SQLITE: ' + res.rows);
 
 
                 //var testeJson = res.rows.asJSON();
@@ -159,6 +162,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                 var bem = {};
                 var len = res.rows.length, i;
                 for (i = 0; i < len; i++) {
+                  console.log('Bem: ' + res.rows.item(i).DESC_BEM);
                   //alert(results.rows.item(i).text);
 
 
@@ -169,7 +173,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                   // container.objects.push(container["object" + i]);
 
                   dataCollected.push(bem[i]);
-                  console.log(dataCollected.length);
+                  //console.log(dataCollected.length);
                 }
 
                   $scope.bemEncontrado = dataCollected;

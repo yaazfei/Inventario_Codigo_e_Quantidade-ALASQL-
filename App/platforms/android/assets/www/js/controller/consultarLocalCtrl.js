@@ -17,11 +17,11 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-/*/*************************************************************************************************************/
+  /*/*************************************************************************************************************/
 
-//////////////////////////////////////////////////
-////// BUSCAR O CÓDIGO DO LOCAL SELECIONADO //////
-/////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+  ////// BUSCAR O CÓDIGO DO LOCAL SELECIONADO //////
+  /////////////////////////////////////////////////
 
   $scope.buscaLocal = function(dados) {
 
@@ -39,53 +39,72 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
       // var dir = "files/Lista_de_Locais.xlsx";
       //alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
 
-if (window.cordova) { //Só entra por device
-      $cordovaSQLite.execute(db, 'SELECT * FROM local WHERE COD_LOCAL == ? ',[dados.COD_LOCAL])
-        .then(function(res) {
+      if (window.cordova) { //Só entra por device
+        $cordovaSQLite.execute(db, 'SELECT * FROM local WHERE COD_LOCAL == ? ', [dados.COD_LOCAL])
+          .then(function(res) {
 
-          // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          console.log('Encontrou o local com o SQLITE');
-
-          // console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-          // Scopes.setLocal(res[0]);
-
-          console.log('Resultado do SQLITE: ' +   res.rows.item(0) + ' ' +   res.rows.item(0).COD_LOCAL + ' ' + res.rows.item(0).DESC_LOCAL);
-          Scopes.setLocal(res.rows.item(0));
-
-          console.log('saiu do SQLITE');
-          $state.go('app.consultarProduto');
-
-
-        }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-
-          PopUps.erroConsultar("Local não encontrado!");
-        });
+            // ACHOU O LOCAL E PEGOU O PRIMEIRO
+            console.log('Encontrou o local com o SQLITE');
 
 
 
-
-      } else {  // TESTE PARA BROWSER
-
-         console.log (" >>>>>>>>>>   Não está em device. Vai testar com o arquivo interno e com > ALaSQL < ");
-
-         var dir = "files/Lista_de_Locais.xlsx";
-         alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
-           .then(function(res) {
-
-             // ACHOU O LOCAL E PEGOU O PRIMEIRO
-             console.log('Encontrou o local com o ALASQL');
-
-             console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-             Scopes.setLocal(res[0]);
-
-             console.log('saiu do alaSQL');
-             $state.go('app.consultarProduto');
+            // var dataset = res.rows;
+            // var dataCollected = [];
+            // var bem = {};
+            // //var len = res.rows.length, i;
+            // bem[0] = dataset.item(0);
+            // dataCollected.push(bem[0]);
+            //
+            //
+            //
+            //
+            // console.log('Resultado do SQLITE: ' + dataCollected);
+            // Scopes.setLocal(dataCollected);
 
 
-           }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
-             PopUps.erroConsultar("Local não encontrado!");
-           });
+
+
+            // console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+            // Scopes.setLocal(res[0]);
+
+            console.log('Resultado do SQLITE: ' +   res.rows.item(0) + ' ' +   res.rows.item(0).COD_LOCAL + ' ' + res.rows.item(0).DESC_LOCAL);
+            Scopes.setLocal(res.rows.item(0));
+
+            console.log('saiu do SQLITE');
+            $state.go('app.consultarProduto');
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+            PopUps.erroConsultar("Local não encontrado!");
+          });
+
+
+
+
+      } else { // TESTE PARA BROWSER
+
+        console.log(" >>>>>>>>>>   Não está em device. Vai testar com o arquivo interno e com > ALaSQL < ");
+
+        var dir = "files/Lista_de_Locais.xlsx";
+        alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
+          .then(function(res) {
+
+            // ACHOU O LOCAL E PEGOU O PRIMEIRO
+            console.log('Encontrou o local com o ALASQL');
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+            Scopes.setLocal(res[0]);
+
+            console.log('saiu do alaSQL');
+            $state.go('app.consultarProduto');
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+            PopUps.erroConsultar("Local não encontrado!");
+          });
 
       }
     }

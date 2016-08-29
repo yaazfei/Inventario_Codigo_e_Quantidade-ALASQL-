@@ -47,10 +47,93 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
         $cordovaSQLite.execute(db, 'CREATE TABLE local ("COD_LOCAL" TEXT PRIMARY KEY, "DESC_LOCAL" STRING)');
         $cordovaSQLite.execute(db, 'CREATE TABLE bem ( "COD_BEM" TEXT,  "DESC_BEM" STRING, "CHAPA" TEXT, "COD_LOCAL" TEXT)');
 
+
+
+        //
+        // var dir = "files/Lista_de_Locais.xlsx";
+        //
+        // alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
+        //   .then(function(res) {
+        //
+        //     console.log('Encontrou o local com o alaSQL');
+        //     try {
+        //       for (i = 0; i < res.length; i++) {
+        //         console.log(res[i]);
+        //         var query = "INSERT INTO local (COD_LOCAL, DESC_LOCAL) VALUES (?, ? )  ";
+        //         $cordovaSQLite.execute(db, query, [res[i].COD_LOCAL, res[i].DESC_LOCAL]);
+        //       }
+        //     } catch (err) {
+        //       console.log('err1' + err);
+        //     }
+        //
+        //   })
+        //   .catch(function(err) {
+        //     console.log('erro: ' + err);
+        //   });
+        //
+        // var dir2 = "files/Lista_de_Bens.xlsx";
+        //
+        // alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL FROM xlsx(?,{headers:true})\ ', [dir2])
+        //   .then(function(res) {
+        //
+        //     console.log('Encontrou o bem com o alaSQL');
+        //     try {
+        //       for (i = 0; i < res.length; i++) {
+        //         //console.log(res[i]);
+        //         var query = "INSERT INTO bem (COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL) VALUES (?, ?, ?, ? ) ";
+        //         $cordovaSQLite.execute(db, query, [res[i].COD_BEM, res[i].DESC_BEM, res[i].CHAPA, res[i].COD_LOCAL]);
+        //       }
+        //     } catch (err) {
+        //       console.log('err1' + err);
+        //     }
+        //   })
+        //   .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
+        //     console.log('erro: ' + err);
+        //   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////// ***************************** MÉTODO CHECANDO SE EXISTE ARQUIVO NA PASTA
+
+        ///// >>>>>>  (SEMPRE VAI PEGAR A LISTA DE LOCAIS DO XLSX)
+
+        var dir = "files/Lista_de_Locais.xlsx";
+
+        alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
+          .then(function(res) {
+
+            console.log('Encontrou os locais com o alaSQL');
+            try {
+              for (i = 0; i < res.length; i++) {
+                console.log(res[i]);
+                var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
+                $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
+              }
+            } catch (err) {
+              console.log('Erro SQLite: ' + err);
+            }
+
+          })
+          .catch(function(err) {
+            console.log('Erro ALASQL: ' + err);
+          });
+
+
+
         //DEVE CHECAR SE HÁ ARQUIVO NA PASTA ANTES
 
-        buscaArquivos.checarArquivo($cordovaFile); //NÃO FUNCIONA POIS ESTÁ ASYNC
-
+        //buscaArquivos.checarArquivo($cordovaFile); //NÃO FUNCIONA POIS ESTÁ ASYNC
         //var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
         var arquivo = "nd"; //Teste
 
@@ -66,15 +149,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
               try {
                 for (i = 0; i < res.length; i++) {
                   //console.log(res[i]);
-                  var query = "INSERT INTO bem (COD_BEM, DESC_BEM, CHAPA, COD_LOCAL) VALUES ('?', '?', '?', '?') ";
-                  $cordovaSQLite.execute(db, query, [res[i].COD_BEM, res[i].DESC_BEM, res[i].CHAPA, res[i].COD_LOCAL]);
+                  var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
+                  $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
                 }
               } catch (err) {
-                console.log('err1' + err);
+                console.log('Erro SQLite: ' + err);
               }
             })
             .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
-              console.log('erro: ' + err);
+              console.log('Erro ALASQL: ' + err);
             });
 
 
@@ -93,36 +176,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
                   $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
                 }
               } catch (err) {
-                console.log('err1' + err);
+                console.log('Erro SQLite: ' + err);
               }
 
             })
             .catch(function(err) {
-              console.log('erro: ' + err);
+              console.log('Erro ALASQL: ' + err);
             });
 
-        } /////// >>>>>>>>>>>>>> TERMINOU O IF (SEMPRE VAI PEGAR A LISTA DE LOCAIS DO XLSX)
+        } /////// >>>>>>>>>>>>>> TERMINOU O IF
 
-        var dir = "files/Lista_de_Locais.xlsx";
-
-        alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
-          .then(function(res) {
-
-            console.log('Encontrou os locais com o alaSQL');
-            try {
-              for (i = 0; i < res.length; i++) {
-                console.log(res[i]);
-                var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
-                $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
-              }
-            } catch (err) {
-              console.log('err1' + err);
-            }
-
-          })
-          .catch(function(err) {
-            console.log('erro: ' + err);
-          });
+        
 
       });
 
@@ -143,7 +207,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     //                   console.log('erro: '+ err) ;
     //         });
 
-  });
+});
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
