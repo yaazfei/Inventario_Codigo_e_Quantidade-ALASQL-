@@ -102,8 +102,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
-
-
 //////// ***************************** MÉTODO CHECANDO SE EXISTE ARQUIVO NA PASTA
 
         ///// >>>>>>  (SEMPRE VAI PEGAR A LISTA DE LOCAIS DO XLSX)
@@ -133,9 +131,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
         //DEVE CHECAR SE HÁ ARQUIVO NA PASTA ANTES
 
-        //buscaArquivos.checarArquivo($cordovaFile); //NÃO FUNCIONA POIS ESTÁ ASYNC
-        //var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
-        var arquivo = "nd"; //Teste
+      //   buscaArquivos.checarArquivo($cordovaFile).success(function() {
+      //  //NÃO FUNCIONA POIS ESTÁ ASYNC
+       //
+       //
+      //   var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
+
+
+
+              var promise = buscaArquivos.checarArquivo($cordovaFile);
+              promise.then(function(response){
+
+                console.log ("Precisa chegar aqui depois de ter COPIADO o arquivo");
+                var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
+                console.log ("Resultado: Achou");
+
+
+
+        //var arquivo = "nd"; //Teste
 
 
         if (arquivo === "nd") { ///// >>>>>>>>>>>>>>>>>>>>>>>> SE NÃO HOUVER ARQUIVO NA PASTA
@@ -186,13 +199,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
         } /////// >>>>>>>>>>>>>> TERMINOU O IF
 
-        
+
+      // }, function(err) {
+      //     console.log(err);
+      //   });
 
       });
 
       // db = $cordovaSQLite.openDB({name: "Yapp.db", location:"default"}); //device
       // db =  window.sqlitePlugin.openDatabase({name: "Yapp.db", location:'default'});
       //  $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Produtos (id INTEGER PRIMARY KEY, nome TEXT, quantidade STRING)");
+
+
+
+
+    }, function(reason){ /////// >>>>>>>>>>>>>> FIM DO PROMISSE ASYNC
+    console.log(reason);
+    });
+
+
+
+
     } else {
       console.log('window.cordova NOT available');
     }

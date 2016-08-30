@@ -14,6 +14,16 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
 
       };
 
+$scope.zerarVar = function(){
+console.log('Entrou no zeraVar');
+
+  
+  //// Para zerar o local se tiver voltado do EditarProduto
+  local = undefined;
+  $scope.local = undefined;
+  $scope.bemEncontrado = undefined;
+};
+
 
 
       /////////////////////////////
@@ -24,10 +34,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         // alert('Entrou no editarBem');
 
 
-        //// Para zerar o local se tiver voltado do EditarProduto
-        local = undefined;
-        $scope.local = undefined;
-        $scope.bemEncontrado = undefined;
+
 
         // if (local !== undefined || local !== ""){
         //     local = null;
@@ -162,7 +169,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                 var bem = {};
                 var len = res.rows.length, i;
                 for (i = 0; i < len; i++) {
-                  console.log('Bem: ' + res.rows.item(i).DESC_BEM);
+                  console.log('Bem'+ i + ': ' + res.rows.item(i).DESC_BEM);
                   //alert(results.rows.item(i).text);
 
 

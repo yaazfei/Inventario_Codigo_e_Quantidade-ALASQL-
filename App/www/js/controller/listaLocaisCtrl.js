@@ -609,13 +609,33 @@ COD_LOCAL: "000053",
  DESC_LOCAL: "Blau Local"
 };
 
-   buscaArquivos.checarArquivo($cordovaFile);
+$scope.teste6();
+
+console.log('NÃO ERA PRA PASSAR AQUI ANTES DO PROMISSE');
+};
 
 
-setTimeout(function() {
+$scope.teste6 = function(res) {
+
+  var promise = buscaArquivos.checarArquivo($cordovaFile);
+  promise.then(function(response){
+
+  // buscaArquivos.checarArquivo($cordovaFile).then(function() {
+  //  //NÃO FUNCIONA POIS ESTÁ ASYNC
+  // }, function(err) {
+  //     console.log ("Erro: ");
+  //     console.log(err);
+  //   });
+
+    var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
+    console.log ("Resultado: Achou");
+
+  }, function(reason){
+  console.log(reason);
+  });
 
 
-
+};
 
 // setTimeout(function() {
 //
@@ -644,38 +664,43 @@ setTimeout(function() {
 //
 // }, 2000);
 
-dir = "files/Lista_de_Bens.csv";
-alasql.promise('SELECT * FROM csv(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
-.then(function(res){
 
 
-//ACHOU O LOCAL E PEGOU O PRIMEIRO
-console.log('Resultado do ALQSQL: ' + res[0]);
-$scope.bemEncontrado = res;
-console.log('Bem foi encontrado.');
-
-//Para atualizar a lista
-$scope.$apply(function() {
-$scope.bemEncontrado = res;
-});
-
-// $state.go('app.consultarProdutoCtrl');
-// $scope.$broadcast('scroll.refreshComplete');
-
-}).catch(function(err) { // NÃO ENCONTROU O LOCAL
-
-PopUps.erroConsultar("Bem não encontrado!");
-});
-
-}, 2000);
-
-};
 
 
-$scope.teste5 = function(){
 
-
-};
+// dir = "files/Lista_de_Bens.csv";
+// alasql.promise('SELECT * FROM csv(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+// .then(function(res){
+//
+//
+// //ACHOU O LOCAL E PEGOU O PRIMEIRO
+// console.log('Resultado do ALQSQL: ' + res[0]);
+// $scope.bemEncontrado = res;
+// console.log('Bem foi encontrado.');
+//
+// //Para atualizar a lista
+// $scope.$apply(function() {
+// $scope.bemEncontrado = res;
+// });
+//
+// // $state.go('app.consultarProdutoCtrl');
+// // $scope.$broadcast('scroll.refreshComplete');
+//
+// }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+//
+// PopUps.erroConsultar("Bem não encontrado!");
+// });
+//
+// }, 2000);
+//
+// };
+//
+//
+// $scope.teste5 = function(){
+//
+//
+// };
 
 
 
