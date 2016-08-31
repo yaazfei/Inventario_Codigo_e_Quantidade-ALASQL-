@@ -39,9 +39,6 @@
         },
         "cordova-plugin-file-opener2": {
             "PACKAGE_NAME": "com.ionicframework.myaoo100386"
-        },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.ionicframework.myaoo100386"
         }
     },
     "dependent_plugins": {}

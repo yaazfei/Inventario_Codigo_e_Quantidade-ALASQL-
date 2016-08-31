@@ -41,7 +41,7 @@
         <label class="item item input">
           <p>Código do Bem:</p>
           <input type="text" autofocus="true" placeholder="Informe o Bem"
-           style="text-transform: uppercase" ng-model="bem.CHAPA" required autofocus>
+           style="text-transform: uppercase" ng-model="bem.COD_BEM" required autofocus>
         </label>
 
         </br>
@@ -58,7 +58,7 @@
 
 
   </br></br>
-    <a ng-repeat="bem in bemEncontrado" type="item-text-wrap"
+    <a ng-repeat="bem in bemEncontrado | filter:search track by $index" type="item-text-wrap"
      class="item" item="bem" ng-click="editarBem(bem, dados)">
       <h4>{{bem.CHAPA}} <i class="ion-alert item-note"
          style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL">

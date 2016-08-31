@@ -276,7 +276,7 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -339,45 +339,36 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
   //////////****** CONTROLLER DA PÁGINA SEM LISTA (INCOMPLETO)
 
-$scope.buscaBem = function(bem) {
+  $scope.buscaBem = function(bem) { //funcionando
 
 
-    // localCod = teste.COD_LOCAL;
-    bemCod = bem.COD_BEM;
-    alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA == ?', [bemCod])
-      .then(function(res) {
+    //dir = "files/Lista_de_Bens.xlsx";
+    //dir = "/Android/data/com.ionicframework.myaoo100386/Lista_de_Bens.csv";
+    $scope.teste4();
 
-          // $scope.teste4();
-          //
-          // var arquivoLido = Scopes.getArquivo();
-          console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
-          Scopes.setBem(res[0]);
-          $scope.bemEncontrado = res;
-          // $scope.bem = res[0];
+    var arquivoLido = Scopes.getArquivo();
 
-    //dir = FormatarCsv.CSV2JSON(arquivoLido);
+    if (arquivoLido != "nd") {
+
+    dir = FormatarCsv.CSV2JSON(arquivoLido);
 
     // var dir = JSON.parse(arquivoLido);
-    //console.log(dir);
+    console.log(dir);
 
-    // alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [dir, bem.COD_BEM])
-    //   .then(function(res) {
-    //
-    //     //// ACHOU O LOCAL E PEGOU O PRIMEIRO
-    //         //alert('Encontrou o Bem com o alaSQL');
-    //
-    //         console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
-    //         Scopes.setBem(res[0]);
-    //         $scope.bemEncontrado = res;
+    alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+      .then(function(res) {
+
+        //// ACHOU O LOCAL E PEGOU O PRIMEIRO
+            //alert('Encontrou o Bem com o alaSQL');
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+            Scopes.setBem(res[0]);
+            $scope.bemEncontrado = res;
             // $scope.bem = res[0];
- if (window.cordova) { //Só entra por device
 
-//CriarDiretorio.processar($cordovaFile, dados);
-//alert("Passou do CriarDiretorio.processar");
- }
 
-            // $scope.hideBem = false;
-            // //return $scope.hideBem;
+            $scope.hideBem = false;
+            //return $scope.hideBem;
 
 
             console.log('Bem foi encontrado.');
@@ -389,38 +380,38 @@ $scope.buscaBem = function(bem) {
         PopUps.erroConsultar("Bem não encontrado!");
       });
 
-    // }else{ //Se arquivoLido = "nd"
-    //
-    //
-    // dir = "js/Lista_de_Bens.xlsx";
-    // alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
-    //   .then(function(res) {
-    //
-    //     //// ACHOU O LOCAL E PEGOU O PRIMEIRO
-    //         //alert('Encontrou o Bem com o alaSQL');
-    //
-    //         console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
-    //         Scopes.setBem(res[0]);
-    //         $scope.bemEncontrado = res;
-    //         // $scope.bem = res[0];
-    //
-    //
-    //         $scope.hideBem = false;
-    //         //return $scope.hideBem;
-    //
-    //
-    //         console.log('Bem foi encontrado.');
-    //         $state.go('app.listaLocais');
-    //
-    //
-    //   }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-    //
-    //     PopUps.erroConsultar("Bem não encontrado!");
-    //   });
-    //
-    // }
-    //
-    //
+    }else{ //Se arquivoLido = "nd"
+
+
+    dir = "js/Lista_de_Bens.xlsx";
+    alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
+      .then(function(res) {
+
+        //// ACHOU O LOCAL E PEGOU O PRIMEIRO
+            //alert('Encontrou o Bem com o alaSQL');
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+            Scopes.setBem(res[0]);
+            $scope.bemEncontrado = res;
+            // $scope.bem = res[0];
+
+
+            $scope.hideBem = false;
+            //return $scope.hideBem;
+
+
+            console.log('Bem foi encontrado.');
+            $state.go('app.listaLocais');
+
+
+      }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+        PopUps.erroConsultar("Bem não encontrado!");
+      });
+
+    }
+
+
 
 
     // // localCod = teste.COD_LOCAL;
@@ -535,10 +526,8 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-    // console.log("CAMINHO DO APP :" + window.location.pathname); //>>>  /android_asset/www/index.html
-    // console.log(cordova.file.dataDirectory); //>>>  file:///data/data/com.ionicframework.myaoo100386/files/
-
-//alert("CAMINHO DO APP :" + window.location.pathname); //"/android_asset/www/index.html"
+    console.log("CAMINHO DO APP :" + window.location.pathname); //>>>  /android_asset/www/index.html
+    console.log(cordova.file.dataDirectory); //>>>  file:///data/data/com.ionicframework.myaoo100386/files/
 
     // dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
     dir = "/storage/sdcard0/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
@@ -597,45 +586,10 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
 
 $scope.teste4 = function(res) {
 
-bem = {
-COD_BEM: "000000023",
-DESC_BEM: "Blau blau",
-CHAPA: "000180",
-COD_LOCAL: "000093"
-};
-
-dados = {
-COD_LOCAL: "000053",
- DESC_LOCAL: "Blau Local"
-};
-
-$scope.teste6();
-
-console.log('NÃO ERA PRA PASSAR AQUI ANTES DO PROMISSE');
-};
+buscaArquivos.checarArquivo($cordovaFile);
 
 
-$scope.teste6 = function(res) {
 
-  var promise = buscaArquivos.checarArquivo($cordovaFile);
-  promise.then(function(response){
-
-  // buscaArquivos.checarArquivo($cordovaFile).then(function() {
-  //  //NÃO FUNCIONA POIS ESTÁ ASYNC
-  // }, function(err) {
-  //     console.log ("Erro: ");
-  //     console.log(err);
-  //   });
-
-    var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
-    console.log ("Resultado: Achou");
-
-  }, function(reason){
-  console.log(reason);
-  });
-
-
-};
 
 // setTimeout(function() {
 //
@@ -664,43 +618,15 @@ $scope.teste6 = function(res) {
 //
 // }, 2000);
 
+};
 
 
 
 
+$scope.teste5 = function(){
 
-// dir = "files/Lista_de_Bens.csv";
-// alasql.promise('SELECT * FROM csv(?,{headers:true})\ WHERE CHAPA == ?', [dir, bem.COD_BEM])
-// .then(function(res){
-//
-//
-// //ACHOU O LOCAL E PEGOU O PRIMEIRO
-// console.log('Resultado do ALQSQL: ' + res[0]);
-// $scope.bemEncontrado = res;
-// console.log('Bem foi encontrado.');
-//
-// //Para atualizar a lista
-// $scope.$apply(function() {
-// $scope.bemEncontrado = res;
-// });
-//
-// // $state.go('app.consultarProdutoCtrl');
-// // $scope.$broadcast('scroll.refreshComplete');
-//
-// }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-//
-// PopUps.erroConsultar("Bem não encontrado!");
-// });
-//
-// }, 2000);
-//
-// };
-//
-//
-// $scope.teste5 = function(){
-//
-//
-// };
+
+};
 
 
 

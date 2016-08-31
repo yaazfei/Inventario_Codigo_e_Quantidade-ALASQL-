@@ -325,14 +325,6 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.fileOpener2"
         ]
-    },
-    {
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "pluginId": "cordova-sqlite-storage",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -348,8 +340,7 @@ module.exports.metadata =
     "cordova-plugin-camera": "1.2.0",
     "phonegap-plugin-barcodescanner": "4.0.1",
     "cordova-plugin-contacts": "2.0.1",
-    "cordova-plugin-file-opener2": "2.0.2",
-    "cordova-sqlite-storage": "1.4.7"
+    "cordova-plugin-file-opener2": "2.0.2"
 }
 // BOTTOM OF METADATA
 });

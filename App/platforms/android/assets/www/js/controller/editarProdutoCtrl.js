@@ -1,10 +1,9 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $cordovaSQLite, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
   console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
-
 
 
   // listarLocais();
@@ -23,6 +22,8 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
 
+
+
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
 
@@ -36,9 +37,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.dados = Scopes.getLocal();
       dados = Scopes.getLocal();
 
-      // $scope.teste1 = function(i) {
-      //   console.log('teste1 : ' + i);
-      // };
+      $scope.teste1 = function(i) {
+        console.log('teste1 : ' + i);
+      };
 
 
       $scope.localSelecionado = function(local) {
@@ -49,21 +50,14 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       };
 
 
-      $scope.clearInput = function(local) { //// >>>>>>>>>>>>>>>>>>>>>>>>> NÃO FUNCIONA
+      $scope.clearInput = function(input, form) { // NÃO FUNCIONA
         console.log('Entrou no clearSearch');
 
-        // search.local.$setPristine();
-        // $scope.search.local.$setPristine();
-
-        $scope.local = null;
-        local = null;
-        $scope.localModificado = false;
-
-        // if ($scope.searchLocal !== undefined){
-        //   $scope.searchLocal.$setPristine();
-        // }
-
-        //$state.go('app.editarProduto');
+        // console.log (buscaLocalForm + $scope.buscaLocalForm);
+        // console.log (search + $scope.search);
+        // $scope.form.$setPristine();
+        $scope.input = "";
+        input = "";
       };
 
 
@@ -91,256 +85,146 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
         if (window.cordova) { //Só entra por device
 
+          buscaArquivos.checarArquivo($cordovaFile);
+          // .then(function(success) {
+          var arquivo = Scopes.getArquivo();
 
-          ////// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MÉTODO DE UPDATE COM O SQLITE
-
-          // FUNCIONANDO(?), MAS ESTÁ ASYNC
-          // db.transaction(function(tx) {
-          //
-          //   var query = "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?";
-          //
-          //   tx.executeSql(query, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM], function(tx, res1) {
-          //       console.log("COD_LOCAL editado de res1: " + res1.COD_LOCAL);
-          //       console.log("CHAPA e COD_BEM do bem editado: " + res1.CHAPA + ' ' + res1.COD_BEM);
-          //     },
-          //     function(tx, error) {
-          //       console.log('UPDATE error: ' + error.message);
-          //     });
-          // }, function(error) {
-          //   console.log('transaction error: ' + error.message);
-          // }, function() {
-          //   console.log('transaction ok');
-          //
-          //   console.log(tx + ' ' + res1);
-          //   CriarDiretorio.processar($cordovaFile, res1);
-          // });
+          if (arquivo === "csv") {
+            dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.csv";
 
 
+            alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+              .then(function(res) {
+                // ACHOU
+                bem.COD_LOCAL = dados.COD_LOCAL;
+                res.push(bem);
 
+                console.log('Primeiro de res ' + res[1].CHAPA);
 
-          //
-          // // textField.addEventListener('return',function(e)
-          // // {
-          // // db.execute("UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?", dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM);
-          // $cordovaSQLite.execute(db, "UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?", dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM);
-          // // });
+                if (window.cordova) { //Só entra por device
+                  CriarDiretorio.processar($cordovaFile, res);
+                }
 
+              }).catch(function(err) { // NÃO ENCONTROU O bem
 
-          // CriarDiretorio.processar($cordovaFile, res1);
-          // console.log(res1);
-
-
-
-          db.transaction(function(transaction) {
-            var executeQuery = ("UPDATE bem SET COD_LOCAL = ? WHERE CHAPA = ? AND COD_BEM = ?");
-            transaction.executeSql(executeQuery, [dados.COD_LOCAL, bem.CHAPA, bem.COD_BEM],
-              //On Success
-              function(tx, result) {
-                console.log('Fez o UPDATE');
-                console.log('Vai pegar todo o DB com o SQLite');
-                  // console.log(tx + ' ' + result);
-
-                  $cordovaSQLite.execute(db, 'SELECT * FROM bem')
-                    .then(function(res) {
-
-                        ////  ACHOU O LOCAL E PEGOU O PRIMEIRO
-                        console.log('Resultado do SQLITE: ' + res.rows);
-
-                        var dataset = res.rows;
-
-                        var dataCollected = [];
-                        var bem = {};
-                        var len = res.rows.length, i;
-                        for (i = 0; i < len; i++) {
-                          // console.log('Bem: ' + res.rows.item(i).DESC_BEM);
-                          var item = dataset.item(i);
-                          bem[i] = item;
-                          dataCollected.push(bem[i]);
-                          //console.log(dataCollected.length);
-                        }
-
-                          console.log('Bem foi encontrado.');
-                          CriarDiretorio.processar($cordovaFile, dataCollected);
-
-                        }).catch(function(err) { // NÃO ENCONTROU O LOCAL
-                        PopUps.erroConsultar("Bens não alocados!");
-                      });
-
-
-
-
-              },
-              function(error) {
-                console.log('Erro :' + error);
+                console.log(err);
+                PopUps.erroConsultar("Bem não encontrado!");
               });
-          });
+
+          } else {
+            if (arquivo === "xslx") {
+              dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
+
+
+              alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                .then(function(res) {
+                  // ACHOU
+                  bem.COD_LOCAL = dados.COD_LOCAL;
+                  res.push(bem);
+
+                  console.log('Primeiro de res ' + res[1].CHAPA);
+
+                  if (window.cordova) { //Só entra por device
+                    CriarDiretorio.processar($cordovaFile, res);
+                  }
+
+                }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                  console.log(err);
+                  PopUps.erroConsultar("Bem não encontrado!");
+                });
 
 
 
+            } else {
+              if (arquivo === "xls") {
+                dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xls";
+
+
+                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                  .then(function(res) {
+                    // ACHOU
+                    bem.COD_LOCAL = dados.COD_LOCAL;
+                    res.push(bem);
+
+                    console.log('Primeiro de res ' + res[1].CHAPA);
+
+                    if (window.cordova) { //Só entra por device
+                      CriarDiretorio.processar($cordovaFile, res);
+                    }
+
+                  }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                    console.log(err);
+                    PopUps.erroConsultar("Bem não encontrado!");
+                  });
+
+
+              } else {
+                dir = "files/Lista_de_Bens.xlsx";
+
+
+                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+                  .then(function(res) {
+                    // ACHOU
+                    bem.COD_LOCAL = dados.COD_LOCAL;
+                    res.push(bem);
+
+                    console.log('Primeiro de res ' + res[1].CHAPA);
+
+                    if (window.cordova) { //Só entra por device
+                      CriarDiretorio.processar($cordovaFile, res);
+                    }
+
+                  }).catch(function(err) { // NÃO ENCONTROU O bem
+
+                    console.log(err);
+                    PopUps.erroConsultar("Bem não encontrado!");
+                  });
+
+
+              }
+            }
+          }
+        // }, function(error) {
+        //   console.log("Não fez o checkArquivo" + error);
+        // });
+
+
+        } else {
+          // Se não estiver no device
+
+          console.log("Não está no device então pegou o arquivo dentro do app");
+
+          dir = "files/Lista_de_Bens.xlsx";
+          alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+            .then(function(res) {
+              // ACHOU
+              //console.log('Encontrou com o ALQSQL: ' + res);
+
+              bem.COD_LOCAL = dados.COD_LOCAL;
+              res.push(bem);
+
+              console.log('Primeiro de res ' + res[1].CHAPA);
+
+              //// A conversão já está no CriarDiretorio
+              // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
+              // console.log(resConvertida);
+
+              if (window.cordova) { //Só entra por device
+                CriarDiretorio.processar($cordovaFile, res);
+              }
+              console.log("Não está no device então não salvou.");
+
+            }).catch(function(err) { // NÃO ENCONTROU O bem
+              console.log(err);
+              PopUps.erroConsultar("Bem não encontrado!");
+            });
+
+          }//Se não estiver no device
 
 
 
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-        // ////// >>>>>>>>>>>>>>>>>>> MÉTODO DE LER TODOS OS ARQUIVOS MENOS O ALVO E DEPOIS COLOCAR ELE NA RESPOSTA JÁ EDITADO
-        //
-        //           // buscaArquivos.checarArquivo($cordovaFile);
-        //           //// .then(function(success) {
-        //           // var arquivo = Scopes.getArquivo();
-        //
-        //             //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        //              $cordovaSQLite.execute(db, 'SELECT * FROM bem WHERE CHAPA !== ? ',[bem.CHAPA])
-        //               .then(function(res) {
-        //                 // ACHOU
-        //                 bem.COD_LOCAL = dados.COD_LOCAL;
-        //                 res.push(bem);
-        //
-        //                 // console.log('Primeiro de res ' + res[1].CHAPA);
-        //                 console.log('Primeiro de res ' + res.rows.item(0).CHAPA);
-        //
-        //                 if (window.cordova) { //Só entra por device
-        //                   CriarDiretorio.processar($cordovaFile, res);
-        //                 }
-        //
-        //               }).catch(function(err) { // NÃO ENCONTROU O bem
-        //
-        //                 console.log(err);
-        //                 PopUps.erroConsultar("Bem não encontrado!");
-        //               });
-        //
-        //             }
-
-
-
-
-
-        ///////////// ------------------------
-        //   } else {
-        //     if (arquivo === "xslx") {
-        //       dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
-        //
-        //
-        //       alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        //         .then(function(res) {
-        //           // ACHOU
-        //           bem.COD_LOCAL = dados.COD_LOCAL;
-        //           res.push(bem);
-        //
-        //           console.log('Primeiro de res ' + res[1].CHAPA);
-        //
-        //           if (window.cordova) { //Só entra por device
-        //             CriarDiretorio.processar($cordovaFile, res);
-        //           }
-        //
-        //         }).catch(function(err) { // NÃO ENCONTROU O bem
-        //
-        //           console.log(err);
-        //           PopUps.erroConsultar("Bem não encontrado!");
-        //         });
-        //
-        //
-        //
-        //     } else {
-        //       if (arquivo === "xls") {
-        //         dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xls";
-        //
-        //
-        //         alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        //           .then(function(res) {
-        //             // ACHOU
-        //             bem.COD_LOCAL = dados.COD_LOCAL;
-        //             res.push(bem);
-        //
-        //             console.log('Primeiro de res ' + res[1].CHAPA);
-        //
-        //             if (window.cordova) { //Só entra por device
-        //               CriarDiretorio.processar($cordovaFile, res);
-        //             }
-        //
-        //           }).catch(function(err) { // NÃO ENCONTROU O bem
-        //
-        //             console.log(err);
-        //             PopUps.erroConsultar("Bem não encontrado!");
-        //           });
-        //
-        //
-        //       } else {
-        //         dir = "files/Lista_de_Bens.xlsx";
-        //
-        //
-        //         alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        //           .then(function(res) {
-        //             // ACHOU
-        //             bem.COD_LOCAL = dados.COD_LOCAL;
-        //             res.push(bem);
-        //
-        //             console.log('Primeiro de res ' + res[1].CHAPA);
-        //
-        //             if (window.cordova) { //Só entra por device
-        //               CriarDiretorio.processar($cordovaFile, res);
-        //             }
-        //
-        //           }).catch(function(err) { // NÃO ENCONTROU O bem
-        //
-        //             console.log(err);
-        //             PopUps.erroConsultar("Bem não encontrado!");
-        //           });
-        //
-        //
-        //       }
-        //     }
-        //   }
-        // // }, function(error) {
-        // //   console.log("Não fez o checkArquivo" + error);
-        // // });
-        //
-        //
-        // } else {
-        //   // Se não estiver no device
-        //
-        //   console.log("Não está no device então pegou o arquivo dentro do app");
-        //
-        //   dir = "files/Lista_de_Bens.xlsx";
-        //   alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        //     .then(function(res) {
-        //       // ACHOU
-        //       //console.log('Encontrou com o ALQSQL: ' + res);
-        //
-        //       bem.COD_LOCAL = dados.COD_LOCAL;
-        //       res.push(bem);
-        //
-        //       console.log('Primeiro de res ' + res[1].CHAPA);
-        //
-        //       //// A conversão já está no CriarDiretorio
-        //       // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
-        //       // console.log(resConvertida);
-        //
-        //       if (window.cordova) { //Só entra por device
-        //         CriarDiretorio.processar($cordovaFile, res);
-        //       }
-        //       console.log("Não está no device então não salvou.");
-        //
-        //     }).catch(function(err) { // NÃO ENCONTROU O bem
-        //       console.log(err);
-        //       PopUps.erroConsultar("Bem não encontrado!");
-        //     });
-        //
-        //   }//Se não estiver no device
-        //
-        //
-
-        ///////////// ---------------
 
       };
 
@@ -354,13 +238,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
       $scope.openModal = function() {
-
-        if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
-          $scope.modalCtrl.$setPristine(); //Esse não é uma função
-          $scope.selectlocalradio.$setPristine();
-        }
-
-        //$scope.localModificado = null;
         $scope.modalCtrl.show();
       };
 
@@ -415,5 +292,5 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   /*****************************************************************************/
 
-  console.log("Passou uma vez no editarProdutoCtrl.");
+
 });

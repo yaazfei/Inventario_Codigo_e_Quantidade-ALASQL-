@@ -12,7 +12,7 @@
           <i class="icon ion-ios7-search placeholder-icon"></i>
 
           <input type="search" name="searchLocal" placeholder="Informe o Local" ng-model="search.local" style="text-transform: uppercase" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" required>
-            <!-- <button ng-if="search.data.length" class="button button-clear" ng-click="clearInput(search.data)">X</button> -->
+            <button ng-if="search.data.length" class="button button-clear" ng-click="clearInput(search.data)">X</button>
           </input>
         </div>
         <!-- <input class="button button-clear" type="reset" value="X"  ng-click="clearInput(search.data); $scope.search.data.$setPristine()"/> -->
@@ -23,10 +23,10 @@
     <!-- </form> -->
       </br>
 
-      <form name="buscaLocalForm">
-      <ion-list ng-style="{'line-height': '250px'}" name="selectlocal" ion-scroll>
 
-        <ion-radio ng-repeat="local in locais | filter:search.local" ng-model="selectlocalradio" name="selectlocalradio" type="item-text-wrap" class="item item-button-right" ng-click="localSelecionado(local)">
+      <ion-list ng-style="{'line-height': '250px'}" ion-scroll>
+
+        <ion-radio ng-repeat="local in locais | filter:search.local" type="item-text-wrap" class="item item-button-right" ng-click="localSelecionado(local)">
           <h4>{{local.COD_LOCAL}}</h4>
               <p>{{local.DESC_LOCAL}}</p>
 
@@ -34,7 +34,6 @@
             </ion-radio>
 
           </ion-list>
-              </form>
 
 
         </ion-content>

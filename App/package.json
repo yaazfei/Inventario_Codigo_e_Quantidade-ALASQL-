@@ -1,6 +1,6 @@
 {
-  "name": "Invenario Yapp",
-  "version": "1.1.1",
+  "name": "Queiroz Galvao: Inventario Yapp",
+  "version": "1.5.0",
   "description": "ConsultaProdutoYapp: An Ionic project",
   "dependencies": {
     "alasql": "^0.2.7",

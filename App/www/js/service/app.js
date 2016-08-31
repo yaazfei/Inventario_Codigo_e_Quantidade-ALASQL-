@@ -14,105 +14,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
-
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    if (window.cordova) {
+
+
+    /*/ ***********  LER DO ARQUIVO E ARMAZENAR EM UMA VARIÁVEL ********* /*/
+
+
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+    // var tabelasJaCriadas = false;
+
+    if (window.cordova) { //Mas já não está dentro de um window.cordova?
       console.log('window.cordova is available');
-      var tabelasJaCriadas = false;
+
+
+      var promise = buscaArquivos.checarArquivo($cordovaFile);
+      promise.then(function(response) {
+
+        console.log("Precisa chegar aqui depois de ter COPIADO o arquivo");
+        var arquivo = Scopes.getArquivo();
+        console.log("Resultado: Achou");
 
 
 
-      if (window.cordova) { //Mas já não está dentro de um window.cordova?
-        db = $cordovaSQLite.openDB({
-          name: 'QueirozGalvao.db',
-          location: 2,
-          createFromLocation: 1
-        }); //device
-        //db = window.openDatabase("QueirozGalvao.db", '1', 'QueirozGalvao', 1024 * 1024 * 100); // browser
-      } else {
-        db = window.openDatabase("QueirozGalvao.db", '1', 'QueirozGalvao', 1024 * 1024 * 100); // browser
-      }
-
-      // $cordovaSQLite.execute(db, 'select * from local', null).then(function(res) {
-      //   console.log('Não deu erro de table no exists: ' + res);
-      // }).catch(function(err) {
-      //   console.log('erro de table no exists' + err);
-
-        console.log('Testando refazer sempre as tabelas');
-        tabelasJaCriadas = true;
-
-        $cordovaSQLite.execute(db, 'CREATE TABLE local ("COD_LOCAL" STRING PRIMARY KEY, "DESC_LOCAL" STRING)');
-        $cordovaSQLite.execute(db, 'CREATE TABLE bem ("COD_BEM" STRING,  "DESC_BEM" STRING, "CHAPA" STRING, "COD_LOCAL" STRING)');
-
-
-
-        //
-        // var dir = "files/Lista_de_Locais.xlsx";
-        //
-        // alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
-        //   .then(function(res) {
-        //
-        //     console.log('Encontrou o local com o alaSQL');
-        //     try {
-        //       for (i = 0; i < res.length; i++) {
-        //         console.log(res[i]);
-        //         var query = "INSERT INTO local (COD_LOCAL, DESC_LOCAL) VALUES (?, ? )  ";
-        //         $cordovaSQLite.execute(db, query, [res[i].COD_LOCAL, res[i].DESC_LOCAL]);
-        //       }
-        //     } catch (err) {
-        //       console.log('err1' + err);
-        //     }
-        //
-        //   })
-        //   .catch(function(err) {
-        //     console.log('erro: ' + err);
-        //   });
-        //
-        // var dir2 = "files/Lista_de_Bens.xlsx";
-        //
-        // alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL FROM xlsx(?,{headers:true})\ ', [dir2])
-        //   .then(function(res) {
-        //
-        //     console.log('Encontrou o bem com o alaSQL');
-        //     try {
-        //       for (i = 0; i < res.length; i++) {
-        //         //console.log(res[i]);
-        //         var query = "INSERT INTO bem (COD_BEM, DESC_BEM, CHAPA,  COD_LOCAL) VALUES (?, ?, ?, ? ) ";
-        //         $cordovaSQLite.execute(db, query, [res[i].COD_BEM, res[i].DESC_BEM, res[i].CHAPA, res[i].COD_LOCAL]);
-        //       }
-        //     } catch (err) {
-        //       console.log('err1' + err);
-        //     }
-        //   })
-        //   .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
-        //     console.log('erro: ' + err);
-        //   });
-
-
-
-
-
-
-
-        var promise = buscaArquivos.checarArquivo($cordovaFile);
-        promise.then(function(response){
-
-          console.log ("Precisa chegar aqui depois de ter COPIADO o arquivo");
-          var arquivo = Scopes.getArquivo();
-          console.log ("Resultado: Achou");
-
-
-
-
-
-//////// ***************************** MÉTODO CHECANDO SE EXISTE ARQUIVO NA PASTA
-
-        ///// >>>>>>  (SEMPRE VAI PEGAR A LISTA DE LOCAIS DO XLSX)
+        //////// ************ MÉTODO CHECANDO SE EXISTE ARQUIVO NA PASTA
 
         var dir = "files/Lista_de_Locais.xlsx";
 
@@ -120,37 +51,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
           .then(function(res) {
 
             console.log('Encontrou os locais com o alaSQL');
-            try {
-              for (i = 0; i < res.length; i++) {
-                //console.log(res[i]);
-                var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
-                $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
-              }
-            } catch (err) {
-              console.log('Erro SQLite: ' + err);
-            }
+            console.log('Primeiro de res ' + res[0].COD_LOCAL + res[0].DESC_LOCAL);
+            Scopes.setArquivoLocais(res);
+
+
+            // try {
+            //   for (i = 0; i < res.length; i++) {
+            //     //console.log(res[i]);
+            //     var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
+            //     $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
+            //   }
+            // } catch (err) {
+            //   console.log('Erro SQLite: ' + err);
+            // }
 
           })
           .catch(function(err) {
             console.log('Erro ALASQL: ' + err);
           });
-
-
-
-        //DEVE CHECAR SE HÁ ARQUIVO NA PASTA ANTES
-
-      //   buscaArquivos.checarArquivo($cordovaFile).success(function() {
-      //  //NÃO FUNCIONA POIS ESTÁ ASYNC
-       //
-       //
-      //   var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
-
-
-
-
-
-
-        //var arquivo = "nd"; //Teste
 
 
         if (arquivo === "nd") { ///// >>>>>>>>>>>>>>>>>>>>>>>> SE NÃO HOUVER ARQUIVO NA PASTA
@@ -161,88 +79,98 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
             .then(function(res) {
 
               console.log('Encontrou os bens com o alaSQL');
-              try {
-                for (i = 0; i < res.length; i++) {
-                  //console.log(res[i]);
-                  var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
-                  $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
-                }
-              } catch (err) {
-                console.log('Erro SQLite: ' + err);
-              }
+
+              console.log('Primeiro de res ' + res[0].CHAPA + res[0].DESC_BEM);
+              Scopes.setArquivo(res);
+
+              // try {
+              //   for (i = 0; i < res.length; i++) {
+              //     //console.log(res[i]);
+              //     var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
+              //     $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
+              //   }
+              // } catch (err) {
+              //   console.log('Erro SQLite: ' + err);
+              // }
             })
             .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
               console.log('Erro ALASQL: ' + err);
             });
 
 
-        } else { /////// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SE HOUVER ARQUIVO NA PASTA
-
-          var dirArquivo = arquivo;
-
-          alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA, COD_LOCAL FROM ?', [dirArquivo])
-            .then(function(res) {
-
-              console.log('Encontrou os bens com o alaSQL');
-              try {
-                for (i = 0; i < res.length; i++) {
-                  //console.log(res[i]);
-                  var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
-                  $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
-                }
-              } catch (err) {
-                console.log('Erro SQLite: ' + err);
-              }
-            })
-            .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
-              console.log('Erro ALASQL: ' + err);
-            });
-
-        } /////// >>>>>>>>>>>>>> TERMINOU O IF
+        }
 
 
-      // }, function(err) {
-      //     console.log(err);
-      //   });
-
-
-
-
-      // }); /// ESTE É DO 'Não deu erro de table no exists: '
-
-
-
-
-      // db = $cordovaSQLite.openDB({name: "Yapp.db", location:"default"}); //device
-      // db =  window.sqlitePlugin.openDatabase({name: "Yapp.db", location:'default'});
-      //  $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Produtos (id INTEGER PRIMARY KEY, nome TEXT, quantidade STRING)");
-
-
-
-
-    }, function(reason){ /////// >>>>>>>>>>>>>> FIM DO PROMISSE ASYNC
-    console.log(reason);
-    });
-
-
+      }, function(reason) { /////// >>>>>>>>>>>>>> FIM DO PROMISSE ASYNC
+        console.log(reason);
+      });
 
 
     } else {
       console.log('window.cordova NOT available');
+      console.log(" >>>>>>>>>>   Não está em device. Vai acessar com o arquivo interno XSLX. ");
+
+
+      var dir = "files/Lista_de_Locais.xlsx";
+
+      alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ ', [dir])
+        .then(function(res) {
+
+          console.log('Encontrou os locais com o alaSQL');
+          console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+          Scopes.setArquivoLocais(res);
+
+
+          // try {
+          //   for (i = 0; i < res.length; i++) {
+          //     //console.log(res[i]);
+          //     var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
+          //     $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
+          //   }
+          // } catch (err) {
+          //   console.log('Erro SQLite: ' + err);
+          // }
+
+        })
+        .catch(function(err) {
+          console.log('Erro ALASQL: ' + err);
+        });
+
+
+
+      var dir2 = "files/Lista_de_Bens.xlsx";
+
+      alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA, COD_LOCAL FROM xlsx(?,{headers:true})\ ', [dir2])
+        .then(function(res) {
+
+          console.log('Encontrou os bens com o alaSQL');
+
+          console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+          Scopes.setArquivo(res);
+
+          // try {
+          //   for (i = 0; i < res.length; i++) {
+          //     //console.log(res[i]);
+          //     var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
+          //     $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
+          //   }
+          // } catch (err) {
+          //   console.log('Erro SQLite: ' + err);
+          // }
+        })
+        .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
+          console.log('Erro ALASQL: ' + err);
+        });
     }
 
 
 
-    // alasql.promise("SELECT * FROM local  where COD_LOCAL = '000053' ")
-    //         .then(function(res) {
-    //           console.log('encontrou o local '+ res);
-    //         })
-    //         .catch(function(err) {
-    //                   console.log('erro: '+ err) ;
-    //         });
-
-});
+  });
 })
+
+
+
+
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
