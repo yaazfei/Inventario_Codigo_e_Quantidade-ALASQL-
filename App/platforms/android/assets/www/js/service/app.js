@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanitize'])
 
-.run(function($ionicPlatform, $cordovaSQLite) {
+.run(function($ionicPlatform, $cordovaSQLite, buscaArquivos, $cordovaFile, Scopes) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -38,14 +38,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
         db = window.openDatabase("QueirozGalvao.db", '1', 'QueirozGalvao', 1024 * 1024 * 100); // browser
       }
 
-      $cordovaSQLite.execute(db, 'select * from local', null).then(function(res) {
-        console.log('Não deu erro de table no exists' + res);
-      }).catch(function(err) {
-        console.log('erro de table no exists' + err);
+      // $cordovaSQLite.execute(db, 'select * from local', null).then(function(res) {
+      //   console.log('Não deu erro de table no exists: ' + res);
+      // }).catch(function(err) {
+      //   console.log('erro de table no exists' + err);
+
+        console.log('Testando refazer sempre as tabelas');
         tabelasJaCriadas = true;
 
-        $cordovaSQLite.execute(db, 'CREATE TABLE local ("COD_LOCAL" TEXT PRIMARY KEY, "DESC_LOCAL" STRING)');
-        $cordovaSQLite.execute(db, 'CREATE TABLE bem ( "COD_BEM" TEXT,  "DESC_BEM" STRING, "CHAPA" TEXT, "COD_LOCAL" TEXT)');
+        $cordovaSQLite.execute(db, 'CREATE TABLE local ("COD_LOCAL" STRING PRIMARY KEY, "DESC_LOCAL" STRING)');
+        $cordovaSQLite.execute(db, 'CREATE TABLE bem ("COD_BEM" STRING,  "DESC_BEM" STRING, "CHAPA" STRING, "COD_LOCAL" STRING)');
 
 
 
@@ -97,6 +99,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
+        var promise = buscaArquivos.checarArquivo($cordovaFile);
+        promise.then(function(response){
+
+          console.log ("Precisa chegar aqui depois de ter COPIADO o arquivo");
+          var arquivo = Scopes.getArquivo();
+          console.log ("Resultado: Achou");
 
 
 
@@ -114,7 +122,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
             console.log('Encontrou os locais com o alaSQL');
             try {
               for (i = 0; i < res.length; i++) {
-                console.log(res[i]);
+                //console.log(res[i]);
                 var query = "INSERT INTO local ('COD_LOCAL', 'DESC_LOCAL') VALUES ('?', '?' )  ";
                 $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
               }
@@ -139,12 +147,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
-              var promise = buscaArquivos.checarArquivo($cordovaFile);
-              promise.then(function(response){
-
-                console.log ("Precisa chegar aqui depois de ter COPIADO o arquivo");
-                var arquivo = Scopes.getArquivo();  //// COMENTADO PARA TESTE, ATÉ CONSERTAR O ASYNC
-                console.log ("Resultado: Achou");
 
 
 
@@ -178,22 +180,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
           var dirArquivo = arquivo;
 
-          alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM ?', [dirArquivo])
+          alasql.promise('SELECT COD_BEM, DESC_BEM, CHAPA, COD_LOCAL FROM ?', [dirArquivo])
             .then(function(res) {
 
-              console.log('Encontrou os locais com o alaSQL');
+              console.log('Encontrou os bens com o alaSQL');
               try {
                 for (i = 0; i < res.length; i++) {
-                  console.log(res[i]);
-                  var query = "INSERT INTO local (COD_LOCAL, DESC_LOCAL) VALUES ('?', '?' )  ";
-                  $cordovaSQLite.execute(db, query, '[res[i].COD_LOCAL', 'res[i].DESC_LOCAL]');
+                  //console.log(res[i]);
+                  var query = "INSERT INTO bem ('COD_BEM', 'DESC_BEM', 'CHAPA', 'COD_LOCAL') VALUES ('?', '?', '?', '?') ";
+                  $cordovaSQLite.execute(db, query, ['res[i].COD_BEM', 'res[i].DESC_BEM', 'res[i].CHAPA', 'res[i].COD_LOCAL']);
                 }
               } catch (err) {
                 console.log('Erro SQLite: ' + err);
               }
-
             })
-            .catch(function(err) {
+            .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
               console.log('Erro ALASQL: ' + err);
             });
 
@@ -204,7 +205,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
       //     console.log(err);
       //   });
 
-      });
+
+
+
+      // }); /// ESTE É DO 'Não deu erro de table no exists: '
+
+
+
 
       // db = $cordovaSQLite.openDB({name: "Yapp.db", location:"default"}); //device
       // db =  window.sqlitePlugin.openDatabase({name: "Yapp.db", location:'default'});

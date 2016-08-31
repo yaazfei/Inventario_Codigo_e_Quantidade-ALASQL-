@@ -276,7 +276,7 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
