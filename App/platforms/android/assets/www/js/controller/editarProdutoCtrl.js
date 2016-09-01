@@ -8,8 +8,10 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
   // listarLocais();
 
-  var dir = "files/Lista_de_Locais.xlsx";
-  alasql.promise('SELECT * FROM xlsx(?,{headers:true})', [dir])
+  // var dir = "files/Lista_de_Locais.xlsx";
+  var arquivoLocais = Scopes.getArquivoLocais();
+  // alasql.promise('SELECT * FROM xlsx(?,{headers:true})', [dir])
+  alasql.promise('SELECT * FROM ?', [arquivoLocais])
     .then(function(res) {
 
       // ACHOU
@@ -22,24 +24,16 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 
 
-
-
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
 
-      // var local;
 
 
-      $scope.bem = Scopes.getBem();
       var bem = Scopes.getBem();
-      //console.log('Bem: ' + Bem);
+      $scope.bem = bem;
 
-      $scope.dados = Scopes.getLocal();
-      dados = Scopes.getLocal();
-
-      $scope.teste1 = function(i) {
-        console.log('teste1 : ' + i);
-      };
+      var dados = Scopes.getLocal();
+      $scope.dados = dados;
 
 
       $scope.localSelecionado = function(local) {
@@ -53,11 +47,10 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       $scope.clearInput = function(input, form) { // NÃO FUNCIONA
         console.log('Entrou no clearSearch');
 
-        // console.log (buscaLocalForm + $scope.buscaLocalForm);
-        // console.log (search + $scope.search);
-        // $scope.form.$setPristine();
-        $scope.input = "";
-        input = "";
+        $scope.local = null;
+        local = null;
+        $scope.localModificado = false;
+
       };
 
 
@@ -66,9 +59,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       /////////////////////////////////////
       //// ESCREVER PRODUTO INVÁLIDO /////
       ////////////////////////////////////
-
-      /*/ EDITADO (ESTÁ COPIANDO TODOS OS DADOS EXCETO O ESCOLHIDO E REESCREVENDO UM ARQUIVO INTEIRO) /*/
-
 
       $scope.escreverProdutoEditado = function() {
 
@@ -83,152 +73,39 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
         }
 
-        if (window.cordova) { //Só entra por device
+        // if (window.cordova) { //Só entra por device
 
-          buscaArquivos.checarArquivo($cordovaFile);
-          // .then(function(success) {
-          var arquivo = Scopes.getArquivo();
+        var arquivoBens = Scopes.getArquivo();
 
-          if (arquivo === "csv") {
-            dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.csv";
+        //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+        alasql.promise('SELECT * FROM ? \ WHERE (COD_BEM !== ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
+          .then(function(res) {
+            // ACHOU
+            bem.COD_LOCAL = dados.COD_LOCAL;
+            res.push(bem);
 
+            console.log('Primeiro de res ' + res[0].CHAPA);
+            // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
 
-            alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-              .then(function(res) {
-                // ACHOU
-                bem.COD_LOCAL = dados.COD_LOCAL;
-                res.push(bem);
-
-                console.log('Primeiro de res ' + res[1].CHAPA);
-
-                if (window.cordova) { //Só entra por device
-                  CriarDiretorio.processar($cordovaFile, res);
-                }
-
-              }).catch(function(err) { // NÃO ENCONTROU O bem
-
-                console.log(err);
-                PopUps.erroConsultar("Bem não encontrado!");
-              });
-
-          } else {
-            if (arquivo === "xslx") {
-              dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xlsx";
-
-
-              alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-                .then(function(res) {
-                  // ACHOU
-                  bem.COD_LOCAL = dados.COD_LOCAL;
-                  res.push(bem);
-
-                  console.log('Primeiro de res ' + res[1].CHAPA);
-
-                  if (window.cordova) { //Só entra por device
-                    CriarDiretorio.processar($cordovaFile, res);
-                  }
-
-                }).catch(function(err) { // NÃO ENCONTROU O bem
-
-                  console.log(err);
-                  PopUps.erroConsultar("Bem não encontrado!");
-                });
-
-
-
-            } else {
-              if (arquivo === "xls") {
-                dir = "<sdcard>/Queiroz Galvão/Lista_de_Bens.xls";
-
-
-                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-                  .then(function(res) {
-                    // ACHOU
-                    bem.COD_LOCAL = dados.COD_LOCAL;
-                    res.push(bem);
-
-                    console.log('Primeiro de res ' + res[1].CHAPA);
-
-                    if (window.cordova) { //Só entra por device
-                      CriarDiretorio.processar($cordovaFile, res);
-                    }
-
-                  }).catch(function(err) { // NÃO ENCONTROU O bem
-
-                    console.log(err);
-                    PopUps.erroConsultar("Bem não encontrado!");
-                  });
-
-
-              } else {
-                dir = "files/Lista_de_Bens.xlsx";
-
-
-                alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-                  .then(function(res) {
-                    // ACHOU
-                    bem.COD_LOCAL = dados.COD_LOCAL;
-                    res.push(bem);
-
-                    console.log('Primeiro de res ' + res[1].CHAPA);
-
-                    if (window.cordova) { //Só entra por device
-                      CriarDiretorio.processar($cordovaFile, res);
-                    }
-
-                  }).catch(function(err) { // NÃO ENCONTROU O bem
-
-                    console.log(err);
-                    PopUps.erroConsultar("Bem não encontrado!");
-                  });
-
-
-              }
+            if (window.cordova) { //Só entra por device
+              CriarDiretorio.processar($cordovaFile, res);
             }
-          }
-        // }, function(error) {
-        //   console.log("Não fez o checkArquivo" + error);
-        // });
+
+            console.log('Se estiver no Browser, não vai escrever no arquivo.');
 
 
-        } else {
-          // Se não estiver no device
+          }).catch(function(err) { // NÃO ENCONTROU O bem
 
-          console.log("Não está no device então pegou o arquivo dentro do app");
-
-          dir = "files/Lista_de_Bens.xlsx";
-          alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-            .then(function(res) {
-              // ACHOU
-              //console.log('Encontrou com o ALQSQL: ' + res);
-
-              bem.COD_LOCAL = dados.COD_LOCAL;
-              res.push(bem);
-
-              console.log('Primeiro de res ' + res[1].CHAPA);
-
-              //// A conversão já está no CriarDiretorio
-              // resConvertida = FormatarCsv.JSONToCSVConvertor(res, true);
-              // console.log(resConvertida);
-
-              if (window.cordova) { //Só entra por device
-                CriarDiretorio.processar($cordovaFile, res);
-              }
-              console.log("Não está no device então não salvou.");
-
-            }).catch(function(err) { // NÃO ENCONTROU O bem
-              console.log(err);
-              PopUps.erroConsultar("Bem não encontrado!");
-            });
-
-          }//Se não estiver no device
-
-
-
+            console.log(err);
+            PopUps.erroConsultar("Erro ao salvar bem!");
+          });
 
       };
 
       /*****************************************************************************/
+
+
+
 
       //////////////////////////
       //// MODAL DE LOCAL /////
@@ -236,8 +113,13 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
       ////Funcionando
 
-
       $scope.openModal = function() {
+
+        if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
+          $scope.modalCtrl.$setPristine(); //Esse não é uma função
+          $scope.selectlocalradio.$setPristine();
+        }
+
         $scope.modalCtrl.show();
       };
 
@@ -271,23 +153,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
       PopUps.erroConsultar("Bens não encontrados!");
     });
-
-
-  /*****************************************************************************/
-  /*/ LISTA EM JSON  (NÃO ESTÁ EM USO) /*/
-
-
-  /////////////////////////////////// Funcionando, modo melhor?
-  // function listarLocais() {
-  //   var promisse;
-  //   $scope.locais = [];
-  //   promisse = $http.get('js/locais.json');
-  //   promisse.then(function(response) {
-  //     $scope.locais = response.data;
-  //     var locais = $scope.locais;
-  //     console.log('$scope.locais: ' + $scope.locais);
-  //   });
-  // }
 
 
   /*****************************************************************************/

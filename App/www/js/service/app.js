@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanitize'])
 
-.run(function($ionicPlatform, $cordovaSQLite, buscaArquivos, $cordovaFile, Scopes) {
+.run(function($ionicPlatform, $cordovaSQLite, buscaArquivos, $cordovaFile, Scopes, PopUps) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
           .then(function(res) {
 
             console.log('Encontrou os locais com o alaSQL');
-            console.log('Primeiro de res ' + res[0].COD_LOCAL + res[0].DESC_LOCAL);
+            console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
             Scopes.setArquivoLocais(res);
 
 
@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
               console.log('Encontrou os bens com o alaSQL');
 
-              console.log('Primeiro de res ' + res[0].CHAPA + res[0].DESC_BEM);
+              console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
               Scopes.setArquivo(res);
 
               // try {
@@ -95,9 +95,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
             })
             .catch(function(err) { // NÃƒO ENCONTROU O LOCAL
               console.log('Erro ALASQL: ' + err);
+              PopUps.erroConsultar();
             });
-
-
         }
 
 

@@ -1,4 +1,4 @@
-angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, $q) {
+angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, $q, FormatarCsv) {
 
 
 this.checarArquivo = function($cordovaFile) {
@@ -20,7 +20,8 @@ this.checarArquivo = function($cordovaFile) {
 
 
                    console.log("Leu o arquivo CSV");
-                   Scopes.setArquivo(success);
+                   dados = FormatarCsv.csvTojs(sucess);
+                   Scopes.setArquivo(dados);
                    console.log("Copiou o arquivo CSV");
                    defer.resolve(success);
 
@@ -28,6 +29,7 @@ this.checarArquivo = function($cordovaFile) {
 
                    console.log ( "Não leu o arquivo CSV: " + error);
                    defer.reject(error);
+                   //defer.resolve(error);
 
                  });
 
@@ -66,7 +68,8 @@ this.checarArquivo = function($cordovaFile) {
                      .then(function (success) {
 
                        console.log("Leu o arquivo XLSX");
-                       Scopes.setArquivo(success);
+                       dados = FormatarCsv.csvTojs(sucess);
+                       Scopes.setArquivo(dados);
                        console.log("Copiou o arquivo XLSX");
                        defer.resolve(success);
 
@@ -75,6 +78,7 @@ this.checarArquivo = function($cordovaFile) {
 
                        console.log ( "Não leu o arquivo XLSX: " + error);
                        defer.reject(error);
+                      //  defer.resolve(error);
 
                      });
 
@@ -95,7 +99,8 @@ this.checarArquivo = function($cordovaFile) {
                          .then(function (success) {
 
                            console.log("Leu o arquivo XLS");
-                           Scopes.setArquivo(success);
+                           dados = FormatarCsv.csvTojs(sucess);
+                           Scopes.setArquivo(dados);
                            console.log("Copiou o arquivo XLX");
                            defer.resolve(success);
 
@@ -105,6 +110,7 @@ this.checarArquivo = function($cordovaFile) {
 
                            console.log ( "Não leu o arquivo XLS: " + error);
                            defer.reject(error);
+                          //  defer.resolve(error);
 
                          });
 
@@ -116,7 +122,7 @@ this.checarArquivo = function($cordovaFile) {
                     Scopes.setArquivo("nd");
                     console.log('log: Não encontrou o arquivo .xls');
                     console.log('log: Não encontrou nenhum arquivo. Vai pegar o arquivo interno.' + error);
-                    defer.reject(error);
+                    defer.resolve(error);
 
                   });
 
@@ -129,7 +135,7 @@ this.checarArquivo = function($cordovaFile) {
 
         console.log('log: Não encontrou o diretório. Vai pegar o arquivo interno.' + error);
         Scopes.setArquivo("nd");
-        defer.reject(error);
+        defer.resolve(error);
 
       });
 

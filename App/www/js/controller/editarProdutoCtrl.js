@@ -78,38 +78,40 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         var arquivoBens = Scopes.getArquivo();
 
         //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
+        alasql.promise('SELECT * FROM ? \ WHERE (COD_BEM !== ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
           .then(function(res) {
             // ACHOU
             bem.COD_LOCAL = dados.COD_LOCAL;
             res.push(bem);
 
-            console.log('Primeiro de res ' + res[1].CHAPA);
+            console.log('Primeiro de res ' + res[0].CHAPA);
             // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
 
             if (window.cordova) { //Só entra por device
               CriarDiretorio.processar($cordovaFile, res);
             }
 
-            console.log('Não está no device então não vai escrever no arquivo.');
+            console.log('Se estiver no Browser, não vai escrever no arquivo.');
 
 
           }).catch(function(err) { // NÃO ENCONTROU O bem
 
             console.log(err);
-            PopUps.erroConsultar("Não conseguiu salvar o bem editado!");
+            PopUps.erroConsultar("Erro ao salvar bem!");
           });
 
       };
 
       /*****************************************************************************/
 
+
+
+
       //////////////////////////
       //// MODAL DE LOCAL /////
       /////////////////////////
 
       ////Funcionando
-
 
       $scope.openModal = function() {
 

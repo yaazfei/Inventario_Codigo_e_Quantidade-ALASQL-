@@ -55,12 +55,12 @@
     <splash density="port-xhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/logo-nimal.png" />
-    <name>Inventario Queiroz Galvao</name>
+    <name>Queiroz Galvao Inventario</name>
     <description>
       Aplicativo desenvolvido por Yasmin Feitosa
     </description>
     <author email="feitosa.y@gmail.com" href="starter.pe.hu">
-      Yasmin Feitosa
+      Yasmin de Lima Feitosa
     </author>
     <content src="index.html" />
     <access origin="*" />

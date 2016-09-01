@@ -31,8 +31,6 @@
 
 
 
-
-
     <form name="FormBuscaBem" novalidate>
 
 
@@ -40,8 +38,7 @@
         </br>
         <label class="item item input">
           <p>Código do Bem:</p>
-          <input type="text" autofocus="true" placeholder="Informe o Bem"
-           style="text-transform: uppercase" ng-model="bem.CHAPA" required autofocus>
+          <input type="text" autofocus="autofocus" placeholder="Informe o Bem" autofocus style="text-transform: uppercase" ng-model="bem.CHAPA" required >
         </label>
 
         </br>
@@ -52,8 +49,6 @@
         </div>
       </div>
     </form>
-
-
 
 
 
@@ -77,65 +72,8 @@
 
 
 
-
-
-
-
-
-
   </ion-content>
   </ion-view>
 
 
-
-
-
-  <!-- /*****************************************************************************/ -->
-
-  <!-- LISTA COM UL E IL (SEM ION-LIST)  ESTÁ FUNCIONANDO MAS A LISTA É EXTENSA DEMAIS (LENTO).-->
-
-
-  <!-- <ion-header-bar class="bar-subheader bar-stable">
-    <label class="item-text-wrap">
-      <div class="text-center" style="font-size: 13px; font-weight:bold; text-transform: uppercase">
-        CÓDIGO: {{dados.COD_LOCAL}} </br>
-        LOCAL: {{dados.DESC_LOCAL}}
-      </div>
-    </label>
-  </ion-header-bar>
-
-
-
-
-  <ion-content class="padding has-header has-subheader">
-    <div class="bar item-input-inset">
-      <label class="item-input-wrapper">
-        <input type="search" autofocus="true" placeholder="Informe o Bem" ng-model="search" style="text-transform: uppercase" required>
-      </label>
-      <input class="button button-clear" type="reset" value="X" />
-    </div>
-    </br> -->
-
-
-
-
-
-  <!-- <ul class="list">
-      <a ng-repeat="bem in bens | filter:search" type="item-text-wrap" class="item" item="bem" ng-click="editarBem(bem)">
-        <h4>{{bem.CHAPA}} <i class="ion-alert item-note" style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL"></i> </h4>
-        <p>{{bem.DESC_BEM}}</p>
-        <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
-        <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
-          <h4 style="color:red; padding: 0px 15px 1px 0px">
-            O local informado diverge do cadastro.
-          </h4>
-        </div>
-
-      </a>
-    </ul> -->
-
-
-
-    <!-- </ion-content>
-  </ion-view> -->
   <!-- /*****************************************************************************/ -->

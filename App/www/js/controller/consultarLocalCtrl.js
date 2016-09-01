@@ -15,9 +15,6 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-
-
-
 /*/*************************************************************************************************************/
 
 //////////////////////////////////////////////////
@@ -62,75 +59,6 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-
-
-
-
-
-
-  /*/*************************************************************************************************************/
-  //////// **************************************** LISTA PELO ALASQL (DANDO DUAS VOLTAS)
-
-
-  // function listarLocais(dados) {
-  //
-  //
-  //   // ESTÁ DANDO DUAS VOLTAS NO CONTROLLER (MELHORAR)
-  //   localCod = dados.COD_LOCAL;
-  //    alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod],function(data){
-  //
-  //                 console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
-  //                 console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
-  //                 Scopes.setLocal(data[0]);
-  //
-  //             });
-  //
-  //   }
-
-
-  ////// TESTE PARA NÃO DAR DUAS VOLTAS (NÃO FUNCIONANDO)
-
-
-  // var promisse;
-  // localCod = dados.COD_LOCAL;
-  // // $scope.locais = [];
-  //  promisse = alasql('select COD_LOCAL, DESC_LOCAL from xlsx("js/Lista_de_Locais.xlsx",{headers:true})\ WHERE COD_LOCAL == ?' , [localCod]);
-  //  promisse.then(function(response) {
-  //    var data = response.data;
-  //   //  var locais = $scope.locais;
-  //   //console.log('$scope.locais: ' + $scope.locais);
-  //
-  //   //console.log('Dados: ' + dados.COD_LOCAL + ' ' + dados.DESC_LOCAL);
-  //   console.log('Data do ALQSQL: ' + data[0] + ' ' + data[0].COD_LOCAL + ' ' + data[0].DESC_LOCAL);
-  //   Scopes.setLocal(data[0]);
-  //
-  // });
-  //
-  // }
-
-
-
-
-
-
-
-  //////// ************************************************ LISTA EM JSON
-  // function listarLocais() {
-  //   var promisse;
-  //   $scope.locais = [];
-  //   promisse = $http.get('js/locais.json');
-  //   promisse.then(function(response) {
-  //     $scope.locais = response.data;
-  //     var locais = $scope.locais;
-  //     console.log('$scope.locais: ' + $scope.locais);
-  // });
-
-
-  // }
-
-
-  /*/*************************************************************************************************************/
-
-
+/*/****************************************************************************************/
 
 });

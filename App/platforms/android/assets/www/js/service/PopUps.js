@@ -17,7 +17,7 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   this.erroEscrever = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Erro',
-      template: 'Não foi possivel salvar o veículo.'
+      template: 'Não foi possivel salvar o produto.'
     });
   };
 

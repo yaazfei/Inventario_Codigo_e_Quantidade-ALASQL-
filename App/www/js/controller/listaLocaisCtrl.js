@@ -514,10 +514,9 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
   $scope.teste2 = function() { //TESTE PARA CRIAR UM NOVO ARQUIVO COM O OBJETO EDITADO SEM USAR UPDATE, DELETE E INSERT DO ALASQL
 
     bem = {
-      COD_BEM: "000000023",
-      DESC_BEM: "Blau blau",
-      CHAPA: "0000000062",
-      COD_LOCAL: "000093"
+      COD_BEM: "0000000295",
+
+      CHAPA: "00518",
     };
 
 
@@ -526,27 +525,44 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
       DESC_LOCAL: "Blau Local"
     };
 
-    console.log("CAMINHO DO APP :" + window.location.pathname); //>>>  /android_asset/www/index.html
-    console.log(cordova.file.dataDirectory); //>>>  file:///data/data/com.ionicframework.myaoo100386/files/
+    var arquivoBens = Scopes.getArquivo();
+    //arquivoBens = FormatarCsv.csvTojs(arquivoBens);
+    alasql.promise('SELECT * FROM ? \ WHERE (CHAPA !== ? AND COD_BEM !== ?)', [arquivoBens, bem.CHAPA, bem.COD_BEM])
+    .then(function(res) {
 
-    // dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
-    dir = "/storage/sdcard0/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
+        console.log('Resultados encontrados: ' + res.length);
+        $scope.bemEncontrado = res;
+        console.log('Bem foi encontrado.');
 
+      }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
-    // ('SELECT * \
-    //     FROM (SELECT a, ROWNUM() AS r FROM one)\
-    //     WHERE r BETWEEN 55 AND 60');
-        // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
-      alasql.promise('select * FROM CSV(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-      .then(function(res) {
-        // ACHOU
-        console.log('Encontrou com o ALQSQL: ' + res);
-        //res = angular.merge({}, bem);
-        res.push(bem);
+        PopUps.erroConsultar("Bem não encontrado!");
+      });
 
 
-        res = FormatarCsv.JSONToCSVConvertor(res, true);
-        console.log(res);
+
+
+    // console.log("CAMINHO DO APP :" + window.location.pathname); //>>>  /android_asset/www/index.html
+    // console.log(cordova.file.dataDirectory); //>>>  file:///data/data/com.ionicframework.myaoo100386/files/
+    //
+    // // dir = "externalRootDirectory/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
+    // dir = "/storage/sdcard0/Queiroz Galvão/Lista_de_Bens.csv"; //Não funciona
+    //
+    //
+    // // ('SELECT * \
+    // //     FROM (SELECT a, ROWNUM() AS r FROM one)\
+    // //     WHERE r BETWEEN 55 AND 60');
+    //     // alasql.promise('SELECT * FROM (SELECT ROWNUM() AS linha FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA]))
+    //   alasql.promise('select * FROM CSV(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+    //   .then(function(res) {
+    //     // ACHOU
+    //     console.log('Encontrou com o ALQSQL: ' + res);
+    //     //res = angular.merge({}, bem);
+    //     res.push(bem);
+    //
+    //
+    //     res = FormatarCsv.JSONToCSVConvertor(res, true);
+    //     console.log(res);
 
 
 
@@ -570,15 +586,16 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
         //   PopUps.erroConsultar("Bens não encontrados!");
         // });
 
-
-
-
-
-      }).catch(function(err) { // NÃO ENCONTROU O bem
-
-        console.log(err);
-        PopUps.erroConsultar("Bens não encontrados!");
-      });
+  //
+  //
+  //
+  //
+  //     }).catch(function(err) { // NÃO ENCONTROU O bem
+  //
+  //       console.log(err);
+  //       PopUps.erroConsultar("Bens não encontrados!");
+  //     });
+  //
 
   };
 
@@ -586,9 +603,40 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
 
 $scope.teste4 = function(res) {
 
-buscaArquivos.checarArquivo($cordovaFile);
+  bem = {
+    CHAPA: "00518"
+  };
+
+  dados = {
+    COD_LOCAL: "000053",
+    DESC_LOCAL: "Blau Local"
+  };
 
 
+  var arquivoBens = Scopes.getArquivo();
+  dados = FormatarCsv.csvTojs(arquivoBens);
+  // alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
+  alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [dados, bem.CHAPA])
+  .then(function(res) {
+
+      console.log('Resultados encontrados: ' + res.length);
+      $scope.bemEncontrado = res;
+      console.log('Bem foi encontrado.');
+
+    }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+      PopUps.erroConsultar("Bem não encontrado!");
+    });
+
+
+
+
+
+
+
+
+
+// buscaArquivos.checarArquivo($cordovaFile);
 
 
 // setTimeout(function() {
