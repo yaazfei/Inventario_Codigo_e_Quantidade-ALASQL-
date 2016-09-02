@@ -20,7 +20,7 @@ this.checarArquivo = function($cordovaFile) {
 
 
                    console.log("Leu o arquivo CSV");
-                   dados = FormatarCsv.csvTojs(sucess);
+                   dados = FormatarCsv.csvTojs(success);
                    Scopes.setArquivo(dados);
                    console.log("Copiou o arquivo CSV");
                    defer.resolve(success);
@@ -68,7 +68,7 @@ this.checarArquivo = function($cordovaFile) {
                      .then(function (success) {
 
                        console.log("Leu o arquivo XLSX");
-                       dados = FormatarCsv.csvTojs(sucess);
+                       dados = FormatarCsv.csvTojs(success);
                        Scopes.setArquivo(dados);
                        console.log("Copiou o arquivo XLSX");
                        defer.resolve(success);
@@ -99,7 +99,7 @@ this.checarArquivo = function($cordovaFile) {
                          .then(function (success) {
 
                            console.log("Leu o arquivo XLS");
-                           dados = FormatarCsv.csvTojs(sucess);
+                           dados = FormatarCsv.csvTojs(success);
                            Scopes.setArquivo(dados);
                            console.log("Copiou o arquivo XLX");
                            defer.resolve(success);

@@ -527,16 +527,47 @@ alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHER
 
     var arquivoBens = Scopes.getArquivo();
     //arquivoBens = FormatarCsv.csvTojs(arquivoBens);
-    alasql.promise('SELECT * FROM ? \ WHERE (CHAPA !== ? AND COD_BEM !== ?)', [arquivoBens, bem.CHAPA, bem.COD_BEM])
-    .then(function(res) {
+    alasql.promise('SELECT * FROM ? WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
+    .then(function(res2) {
 
-        console.log('Resultados encontrados: ' + res.length);
-        $scope.bemEncontrado = res;
-        console.log('Bem foi encontrado.');
+        console.log('Resultados encontrados: ' + res2.length);
+        // if (res2.length > 1){
+        //   resultadosParecidos = res2;
+        // }
+
+        alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
+        .then(function(res) {
+            console.log('Resultados encontrados: ' + res.length);
+            bem.COD_LOCAL = dados.COD_LOCAL;
+            res.push(bem);
+            $scope.bemEncontrado = res;
+
+          if (res2.length > 1){
+            alasql.promise('SELECT * FROM ? WHERE COD_BEM !== ?', [res2, bem.COD_BEM])
+            .then(function(restantes) {
+
+                console.log('Resultados encontrados: ' + res.length);
+                //res.push(restantes);
+                var resTotal = res.concat(restantes);
+                $scope.bemEncontrado = resTotal;
+                console.log('Bem foi encontrado.');
+
+              }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+                console.log(err);
+              });
+            }
+
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+
+            console.log(err);
+          });
+
 
       }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
-        PopUps.erroConsultar("Bem não encontrado!");
+        console.log(err);
       });
 
 

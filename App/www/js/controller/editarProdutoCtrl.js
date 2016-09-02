@@ -73,38 +73,92 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           console.log('Novo local não foi preenchido. Será atualizado para o local atual.');
         }
 
-        // if (window.cordova) { //Só entra por device
 
+        //////// WHIT GAMBI (GUARDA TODOS COM A MESMA CHAPA DEPOIS ADICIONA JUNTO COM O PUSH DO BEM)
         var arquivoBens = Scopes.getArquivo();
+        alasql.promise('SELECT * FROM ? WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
+          .then(function(chapasIguais) {
+            //Encontrou todos com a mesma chapa
+            console.log('Resultados encontrados: ' + chapasIguais.length);
 
-        //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-        alasql.promise('SELECT * FROM ? \ WHERE (COD_BEM !== ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
-          .then(function(res) {
-            // ACHOU
-            bem.COD_LOCAL = dados.COD_LOCAL;
-            res.push(bem);
-
-            console.log('Primeiro de res ' + res[0].CHAPA);
-            // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
-
-            if (window.cordova) { //Só entra por device
-              CriarDiretorio.processar($cordovaFile, res);
-            }
-
-            console.log('Se estiver no Browser, não vai escrever no arquivo.');
+            alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
+              .then(function(res) {
+                //Selecionou todos os que possuem Chapas diferentes do bem escolhido (e consequentemente dos que tem chapasIguais a ele)
+                console.log('Resultados encontrados: ' + res.length);
+                bem.COD_LOCAL = dados.COD_LOCAL;
+                res.push(bem); //Já colocou o Bem editado nos Bens
 
 
-          }).catch(function(err) { // NÃO ENCONTROU O bem
+                if (chapasIguais.length > 1) { //Caso tenha mais de um com a mesma CHAPA
 
+                  alasql.promise('SELECT * FROM ? WHERE COD_BEM !== ?', [chapasIguais, bem.COD_BEM])
+                    .then(function(restantes) {
+                      //Seleciona todos os chapasIguais menos o que já foi adicionado no push (baseado no seu COD_BEM)
+                      console.log('Resultados encontrados: ' + res.length);
+                      var resTotal = res.concat(restantes); //Colocou os bens que ficaram de fora na variável de Bens.
+                      console.log('Bens foram anexados.');
+                      // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
+
+                      if (window.cordova) { //Só entra por device
+                        CriarDiretorio.processar($cordovaFile, resTotal);
+                      }
+
+                      console.log('Se estiver no Browser, não vai escrever no arquivo.');
+
+                    }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+                      console.log(err);
+                    });
+
+                } else { //Caso não tenha mais de um com a mesma CHAPA
+
+                  console.log('Bem foi anexado.');
+
+                  if (window.cordova) { //Só entra por device
+                    CriarDiretorio.processar($cordovaFile, res);
+                  }
+
+                  console.log('Se estiver no Browser, não vai escrever no arquivo.');
+                }
+
+              }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+                console.log(err);
+              });
+
+          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
             console.log(err);
-            PopUps.erroConsultar("Erro ao salvar bem!");
           });
 
+
+      //////////// WHITHOUT GAMBI (NÃO ELIMINA SÓ UM, MAS OS DOIS COM A MESMA CHAPA)
+
+      //   //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+      //   alasql.promise('SELECT * FROM ? \ IFF (COD_BEM <> ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
+      //     .then(function(res) {
+      //       // ACHOU
+      //       bem.COD_LOCAL = dados.COD_LOCAL;
+      //       res.push(bem);
+      //
+      //       console.log('Primeiro de res ' + res[0].CHAPA);
+      //       // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
+      //
+      //       if (window.cordova) { //Só entra por device
+      //         CriarDiretorio.processar($cordovaFile, res);
+      //       }
+      //
+      //       console.log('Se estiver no Browser, não vai escrever no arquivo.');
+      //
+      //
+      //     }).catch(function(err) { // NÃO ENCONTROU O bem
+      //
+      //       console.log(err);
+      //       PopUps.erroConsultar("Erro ao salvar bem!");
+      //     });
+      //
+      // };
+
+
       };
-
       /*****************************************************************************/
-
-
 
 
       //////////////////////////
