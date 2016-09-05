@@ -86,8 +86,13 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                   .then(function(res) {
 
                     console.log('Resultados encontrados: ' + res.length);
-                    $scope.bemEncontrado = res;
-                    console.log('Bem foi encontrado.');
+                    if (res.length < 1){
+                      PopUps.erroConsultar("Bem não encontrado!");
+                    } else {
+                      $scope.bemEncontrado = res;
+                      console.log('Bem foi encontrado.');
+                    }
+
 
                     //Para atualizar a lista
                     $scope.$apply(function() {

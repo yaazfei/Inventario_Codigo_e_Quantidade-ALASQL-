@@ -31,7 +31,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
     // alert('Entrou no editarBem');
 
     if (bem.COD_LOCAL !== undefined && bem.COD_LOCAL === dados.COD_LOCAL) {
-      ////Faz nada se o local não for encontrado, só cai no catch (gambiarra)
+      ////Faz nada se o local não for encontrado, só cai no catch (Gambi)
     } else {
       console.log('Entrou no editarBem, vai fazer o alaSQL');
 
@@ -56,7 +56,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
 
-          console.log("COD_LOCAL do BEM não estava cadastrado! Gambiarra no try/cath");
+          console.log("COD_LOCAL do BEM não estava cadastrado! Gambi on try/cath");
           dados.DESC_LOCAL_DO_BEM = "LOCAL NÃO CADASTRADO";
           Scopes.setLocal(dados);
           Scopes.setBem(bem);
@@ -86,8 +86,13 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                   .then(function(res) {
 
                     console.log('Resultados encontrados: ' + res.length);
-                    $scope.bemEncontrado = res;
-                    console.log('Bem foi encontrado.');
+                    if (res.length < 1){
+                      PopUps.erroConsultar("Bem não encontrado!");
+                    } else {
+                      $scope.bemEncontrado = res;
+                      console.log('Bem foi encontrado.');
+                    }
+
 
                     //Para atualizar a lista
                     $scope.$apply(function() {

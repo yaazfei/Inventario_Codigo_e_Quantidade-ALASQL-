@@ -2,6 +2,9 @@ angular.module("starter").service('Scopes', function() {
 
   var localSelecionado;
   var bemSelecionado;
+  var arquivoSelecionado;
+  var arquivoSelecionadoLocais;
+
 
 
   return {

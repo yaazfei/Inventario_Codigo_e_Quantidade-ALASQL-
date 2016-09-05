@@ -15,11 +15,11 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-/*/*************************************************************************************************************/
+  /*/*************************************************************************************************************/
 
-//////////////////////////////////////////////////
-////// BUSCAR O CÓDIGO DO LOCAL SELECIONADO //////
-/////////////////////////////////////////////////
+  //////////////////////////////////////////////////
+  ////// BUSCAR O CÓDIGO DO LOCAL SELECIONADO //////
+  /////////////////////////////////////////////////
 
   $scope.buscaLocal = function(dados) {
 
@@ -35,18 +35,26 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
       // PROMISSE ASYNC?
       var arquivoLocais = Scopes.getArquivoLocais();
 
-    //  alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
+      //  alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM xlsx(?,{headers:true})\ WHERE COD_LOCAL == ?', [dir, dados.COD_LOCAL])
       alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM ? WHERE COD_LOCAL == ?', [arquivoLocais, dados.COD_LOCAL])
         .then(function(res) {
 
           // ACHOU O LOCAL E PEGOU O PRIMEIRO
-          console.log('Encontrou o local com o alaSQL');
-          console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
-          Scopes.setLocal(res[0]);
+          console.log('Encontrou o local com o alaSQL: ' + res.length);
+          if (res.length < 1) {
+
+            PopUps.erroConsultar("Local não encontrado!");
+
+          } else {
+
+            console.log('Resultado do ALQSQL: ' + res[0] + ' ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+            Scopes.setLocal(res[0]);
+
+            console.log('saiu do alaSQL');
+            $state.go('app.consultarProduto');
+          }
 
 
-          console.log('saiu do alaSQL');
-          $state.go('app.consultarProduto');
 
         }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
@@ -59,6 +67,6 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
 
 
-/*/****************************************************************************************/
+  /*/****************************************************************************************/
 
 });

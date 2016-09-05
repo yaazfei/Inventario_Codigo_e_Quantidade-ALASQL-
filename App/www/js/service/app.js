@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     }
     // var tabelasJaCriadas = false;
 
-    if (window.cordova) { //Mas já não está dentro de um window.cordova?
+    if (window.cordova) {
       console.log('window.cordova is available');
 
 
@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
           .then(function(res) {
 
             console.log('Encontrou os locais com o alaSQL');
-            console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+            //console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
             Scopes.setArquivoLocais(res);
 
 
@@ -80,7 +80,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
               console.log('Encontrou os bens com o alaSQL');
 
-              console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+              //console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
               Scopes.setArquivo(res);
 
               // try {
@@ -116,7 +116,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
         .then(function(res) {
 
           console.log('Encontrou os locais com o alaSQL');
-          console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
+          //console.log('Primeiro de res ' + res[0].COD_LOCAL + ' ' + res[0].DESC_LOCAL);
           Scopes.setArquivoLocais(res);
 
 
@@ -144,7 +144,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
           console.log('Encontrou os bens com o alaSQL');
 
-          console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
+          //console.log('Primeiro de res ' + res[0].CHAPA + ' ' + res[0].DESC_BEM);
           Scopes.setArquivo(res);
 
           // try {
@@ -212,12 +212,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
     }
   })
 
-  .state('app.cadastrarProduto', {
-    url: '/cadastrarProduto',
+  .state('app.info', {
+    url: '/info',
     views: {
       'menuContent': {
-        templateUrl: 'templates/cadastrarProduto.html',
-        controller: 'cadastrarProdutoCtrl'
+        templateUrl: 'templates/informacoes.html',
+        //controller: 'cadastrarProdutoCtrl'
       }
     }
   })
@@ -261,19 +261,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
         controller: 'editarProdutoCtrl'
       }
     }
-  })
-
-
-  .state('app.infoProduto', {
-    url: '/infoProduto',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/infoProduto.html',
-        controller: 'validarProdutoCtrl'
-
-      }
-    }
   });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/consultarLocal');
 });

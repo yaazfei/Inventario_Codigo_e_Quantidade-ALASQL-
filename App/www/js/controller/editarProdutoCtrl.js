@@ -81,6 +81,12 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
             //Encontrou todos com a mesma chapa
             console.log('Resultados encontrados: ' + chapasIguais.length);
 
+            if (chapasIguais.length < 1){
+              
+              PopUps.erroConsultar("Não foi possível salvar o Bem!");
+            }else{
+
+
             alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
               .then(function(res) {
                 //Selecionou todos os que possuem Chapas diferentes do bem escolhido (e consequentemente dos que tem chapasIguais a ele)
@@ -105,8 +111,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
                       console.log('Se estiver no Browser, não vai escrever no arquivo.');
 
-                    }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+                    }).catch(function(err) { // NÃO ENCONTROU O BEM
                       console.log(err);
+                      PopUps.erroConsultar("Não foi possível salvar o Bem!");
                     });
 
                 } else { //Caso não tenha mais de um com a mesma CHAPA
@@ -120,12 +127,16 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
                   console.log('Se estiver no Browser, não vai escrever no arquivo.');
                 }
 
-              }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+              }).catch(function(err) { // NÃO ENCONTROU O BEM
                 console.log(err);
+                PopUps.erroConsultar("Não foi possível salvar o Bem!");
               });
 
-          }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+            }
+
+          }).catch(function(err) { // NÃO ENCONTROU O BEM
             console.log(err);
+            PopUps.erroConsultar("Não foi possível salvar o Bem!");
           });
 
 
