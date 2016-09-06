@@ -167,8 +167,82 @@ $scope.testeCriaArquivo = function (){
 
   var arquivoBens = Scopes.getArquivo();
 
-  
-  buscaArquivos.checarArquivo($cordovaFile);
+  //
+  // buscaArquivos.checarArquivo($cordovaFile);
+
+
+  // dados = FormatarCsv.csvTojs(arquivoBens);
+
+  //dir = "/Teste1/Lista_de_Bens.xlsx";
+  // dir = "/storage/emulated/0/Teste1/Lista_de_Bens.xlsx";
+  // alasql.promise('SELECT * FROM xlsx(?,{headers:true}) \ WHERE CHAPA == ?', [dir, bem.CHAPA])
+  // .then(function(res) {
+  //
+  //     console.log('Resultados encontrados: ' + res.length);
+  //     $scope.bemEncontrado = res;
+  //     console.log('Bem foi encontrado.');
+  //
+  //   }).catch(function(err) { // NÃO ENCONTROU O LOCAL
+  //
+  //     PopUps.erroConsultar("Bem não encontrado!");
+  //   });
+
+
+//dir = "/storage/emulated/0/Teste1/Lista_de_Bens.xlsx";
+dir = "files/Lista_de_Bens.xlsx";
+
+
+handleFile(dir);
+function handleFile(e) {
+  var files = e;
+  var i,f;
+  for (i = 0, f = files[i]; i != files.length; ++i) {
+    var reader = new FileReader();
+    var name = f.name;
+    reader.onload = function(e) {
+      var data = e.target.result;
+
+      var workbook = XLSX.read(data, {type: 'binary'});
+
+      /* DO SOMETHING WITH workbook HERE */
+    };
+    reader.readAsBinaryString(f);
+  }
+}
+input_dom_element.addEventListener('change', handleFile, false);
+
+
+
+
+
+
+
+/* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
+var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+
+var wbout = XLSX.write(workbook,wopts);
+
+function s2ab(s) {
+  var buf = new ArrayBuffer(s.length);
+  var view = new Uint8Array(buf);
+  for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+  return buf;
+}
+
+/* the saveAs call downloads a file on the local machine */
+saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx");
+
+
+
+console.log(workbook);
+
+
+
+
+
+
+
+
 
 
 

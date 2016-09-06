@@ -62,26 +62,31 @@ this.checarArquivo = function($cordovaFile) {
                 console.log('log: Achou o arquivo .xlsx');
 
 
-                // function readFile(fileEntry) {
-                //     fileEntry.file(function (file) {
-                //         var reader = new FileReader();
-                //
-                //         reader.onloadend = function() {
-                //             console.log("Successful file read: " + this.result);
-                //             displayFileData(fileEntry.fullPath + ": " + this.result);
-                //         };
-                //
-                //         reader.readAsText(file);
-                //
-                //     }, error);
-                // }
-
-                readFile(cordova.file.externalRootDirectory+"Queiroz Galvão/Lista_de_Bens.xlsx");
-
 
                 //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
                 $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
                      .then(function (success) {
+
+
+                         // 
+                        //  function readFile(fileEntry) {
+                        //      fileEntry.file(function (file) {
+                        //          var reader = new FileReader();
+                         //
+                        //          reader.onloadend = function() {
+                        //              console.log("Successful file read: " + this.result);
+                        //              displayFileData(fileEntry.fullPath + ": " + this.result);
+                        //          };
+                         //
+                        //          reader.readAsText(file);
+                         //
+                        //      }, onErrorReadFile);
+                        //  }
+                         //
+                        //  readFile(success);
+
+
+
 
                        console.log("Leu o arquivo XLSX");
                        dados = FormatarCsv.csvTojs(success);
