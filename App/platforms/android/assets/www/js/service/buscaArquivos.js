@@ -1,8 +1,8 @@
 angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes, PopUps, $state, $q, FormatarCsv) {
 
 
-this.checarArquivo = function($cordovaFile) {
-      var defer = $q.defer();
+  this.checarArquivo = function($cordovaFile) {
+    var defer = $q.defer();
 
     $cordovaFile.checkDir(cordova.file.externalRootDirectory, "Queiroz Galvão")
       .then(function(success) {
@@ -16,22 +16,22 @@ this.checarArquivo = function($cordovaFile) {
 
             //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
             $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv")
-                 .then(function (success) {
+              .then(function(success) {
 
 
-                   console.log("Leu o arquivo CSV");
-                   dados = FormatarCsv.csvTojs(success);
-                   Scopes.setArquivo(dados);
-                   console.log("Copiou o arquivo CSV");
-                   defer.resolve(success);
+                console.log("Leu o arquivo CSV");
+                dados = FormatarCsv.csvTojs(success);
+                Scopes.setArquivo(dados);
+                console.log("Copiou o arquivo CSV");
+                defer.resolve(success);
 
-                 }, function (error) {
+              }, function(error) {
 
-                   console.log ( "Não leu o arquivo CSV: " + error);
-                   defer.reject(error);
-                   //defer.resolve(error);
+                console.log("Não leu o arquivo CSV: " + error);
+                defer.reject(error);
+                //defer.resolve(error);
 
-                 });
+              });
 
 
             // //MELHOR COPIAR? PRA ONDE?
@@ -64,45 +64,60 @@ this.checarArquivo = function($cordovaFile) {
 
 
                 //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
-                $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
-                     .then(function (success) {
+                // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
+                //      .then(function (success) {
+
+                //dir = "files/Lista_de_Bens.xlsx";
+
+                console.log('log: Vai pegar o .xlsx do SDCARD');
+                dir = "/storage/emulated/0/Queiroz Galvão/Lista_de_Bens.xlsx";
+
+                var url = dir;
+                var oReq = new XMLHttpRequest();
+                oReq.open("GET", url, true);
+                oReq.responseType = "arraybuffer";
+
+                oReq.onload = function(e) {
+                  var arraybuffer = oReq.response;
+
+                  /* convert data to binary string */
+                  var data = new Uint8Array(arraybuffer);
+                  var arr = new Array();
+                  for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                  var bstr = arr.join("");
+
+                  /* Call XLSX */
+                  var workbook = XLSX.read(bstr, {
+                    type: "binary"
+                  });
+
+                  /* DO SOMETHING WITH workbook HERE */
+
+                  function to_json(workbook) {
+                    var result = {};
+                    workbook.SheetNames.forEach(function(sheetName) {
+                      var roa = XLS.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                      if (roa.length > 0) {
+                        result[sheetName] = roa;
+                      }
+                    });
+                    console.log(result);
 
 
-                         // 
-                        //  function readFile(fileEntry) {
-                        //      fileEntry.file(function (file) {
-                        //          var reader = new FileReader();
-                         //
-                        //          reader.onloadend = function() {
-                        //              console.log("Successful file read: " + this.result);
-                        //              displayFileData(fileEntry.fullPath + ": " + this.result);
-                        //          };
-                         //
-                        //          reader.readAsText(file);
-                         //
-                        //      }, onErrorReadFile);
-                        //  }
-                         //
-                        //  readFile(success);
+                    //////////// ARMAZENAR O ARQUIVO NO SCOPES
+                    console.log("Leu o arquivo XLSX");
+                    //dados = FormatarCsv.csvTojs(success);
+                    Scopes.setArquivo(result);
+                    console.log("Copiou o arquivo XLSX");
+                    defer.resolve(success);
 
 
+                    return result;
+                  }
+                  to_json(workbook);
 
-
-                       console.log("Leu o arquivo XLSX");
-                       dados = FormatarCsv.csvTojs(success);
-                       Scopes.setArquivo(dados);
-                       console.log("Copiou o arquivo XLSX");
-                       defer.resolve(success);
-
-
-                     }, function (error) {
-
-                       console.log ( "Não leu o arquivo XLSX: " + error);
-                       defer.reject(error);
-                      //  defer.resolve(error);
-
-                     });
-
+                };
+                oReq.send();
 
 
 
@@ -115,28 +130,73 @@ this.checarArquivo = function($cordovaFile) {
                     console.log('log: Achou o arquivo .xls');
 
 
-                    //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
-                    $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xls")
-                         .then(function (success) {
-
-                           console.log("Leu o arquivo XLS");
-                           dados = FormatarCsv.csvTojs(success);
-                           Scopes.setArquivo(dados);
-                           console.log("Copiou o arquivo XLX");
-                           defer.resolve(success);
+                    // //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
+                    // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xls")
+                    //      .then(function (success) {
 
 
 
-                         }, function (error) {
+                    console.log('log: Vai pegar o .xls do SDCARD');
+                    dir = "/storage/emulated/0/Queiroz Galvão/Lista_de_Bens.xls";
 
-                           console.log ( "Não leu o arquivo XLS: " + error);
-                           defer.reject(error);
-                          //  defer.resolve(error);
+                    var url = dir;
+                    var oReq = new XMLHttpRequest();
+                    oReq.open("GET", url, true);
+                    oReq.responseType = "arraybuffer";
 
-                         });
+                    oReq.onload = function(e) {
+                      var arraybuffer = oReq.response;
+
+                      /* convert data to binary string */
+                      var data = new Uint8Array(arraybuffer);
+                      var arr = new Array();
+                      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                      var bstr = arr.join("");
+
+                      /* Call XLSX */
+                      var workbook = XLS.read(bstr, {
+                        type: "binary"
+                      });
+
+                      /* DO SOMETHING WITH workbook HERE */
+
+                      function to_json(workbook) {
+                        var result = {};
+                        workbook.SheetNames.forEach(function(sheetName) {
+                          var roa = XLS.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                          if (roa.length > 0) {
+                            result[sheetName] = roa;
+                          }
+                        });
+                        console.log(result);
+
+
+                        //////////// ARMAZENAR O ARQUIVO NO SCOPES
+                        console.log("Leu o arquivo XLS");
+                        //dados = FormatarCsv.csvTojs(success);
+                        Scopes.setArquivo(result);
+                        console.log("Copiou o arquivo XLX");
+                        defer.resolve(success);
+
+
+                        return result;
+                      }
+                      to_json(workbook);
+
+                    };
+                    oReq.send();
 
 
 
+
+
+                    //  }, function (error) {
+                    //
+                    //    console.log ( "Não leu o arquivo XLS: " + error);
+                    //    defer.reject(error);
+                    //   //  defer.resolve(error);
+                    //
+                    //  });
 
 
                   }, function(error) {
@@ -161,7 +221,7 @@ this.checarArquivo = function($cordovaFile) {
       });
 
 
-return defer.promise;
+    return defer.promise;
   };
 
 

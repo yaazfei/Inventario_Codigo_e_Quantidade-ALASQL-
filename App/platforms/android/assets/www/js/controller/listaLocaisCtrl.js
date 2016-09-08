@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $q, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -189,68 +189,138 @@ $scope.testeCriaArquivo = function (){
 
 
 //dir = "/storage/emulated/0/Teste1/Lista_de_Bens.xlsx";
-dir = "files/Lista_de_Bens.xlsx";
 
-
-handleFile(dir);
-function handleFile(e) {
-  var files = e;
-  var i,f;
-  for (i = 0, f = files[i]; i != files.length; ++i) {
-    var reader = new FileReader();
-    var name = f.name;
-    reader.onload = function(e) {
-      var data = e.target.result;
-
-      var workbook = XLSX.read(data, {type: 'binary'});
-
-      /* DO SOMETHING WITH workbook HERE */
-    };
-    reader.readAsBinaryString(f);
-  }
-}
-input_dom_element.addEventListener('change', handleFile, false);
+  // ******************************************************************************* //
 
 
 
 
-
-
-
-/* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
-var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
-
-var wbout = XLSX.write(workbook,wopts);
-
-function s2ab(s) {
-  var buf = new ArrayBuffer(s.length);
-  var view = new Uint8Array(buf);
-  for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-  return buf;
-}
-
-/* the saveAs call downloads a file on the local machine */
-saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx");
-
-
-
-console.log(workbook);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// handleFile(dir);
+// function handleFile(e) {
+//   var files = e;
+//   var i,f;
+//   for (i = 0, f = files[i]; i != files.length; ++i) {
+//     var reader = new FileReader();
+//     var name = f.name;
+//     reader.onload = function(e) {
+//       var data = e.target.result;
+//
+//       var workbook = XLSX.read(data, {type: 'binary'});
+//
+//       /* DO SOMETHING WITH workbook HERE */
+//     };
+//     reader.readAsBinaryString(f);
+//   }
+// }
+// input_dom_element.addEventListener('change', handleFile, false);
 //
 //
+//
+//
+//
+//
+//
+// /* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
+// var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
+//
+// var wbout = XLSX.write(workbook,wopts);
+//
+// function s2ab(s) {
+//   var buf = new ArrayBuffer(s.length);
+//   var view = new Uint8Array(buf);
+//   for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+//   return buf;
+// }
+//
+// /* the saveAs call downloads a file on the local machine */
+// saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx");
+//
+//
+//
+// console.log(workbook);
+  // ******************************************************************************* //
+
+//dir = "files/Lista_de_Bens.xlsx";
+dir = "/storage/emulated/0/Teste1/Lista_de_Bens.xlsx";
+
+
+
+  var url = dir;
+  var oReq = new XMLHttpRequest();
+  oReq.open("GET", url, true);
+  oReq.responseType = "arraybuffer";
+
+  oReq.onload = function(e) {
+    var arraybuffer = oReq.response;
+
+    /* convert data to binary string */
+    var data = new Uint8Array(arraybuffer);
+    var arr = new Array();
+    for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+    var bstr = arr.join("");
+
+    /* Call XLSX */
+    var workbook = XLSX.read(bstr, {type:"binary"});
+
+    /* DO SOMETHING WITH workbook HERE */
+
+    function to_json(workbook) {
+      var result = {};
+      workbook.SheetNames.forEach(function(sheetName) {
+        var roa = XLS.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        if(roa.length > 0){
+          result[sheetName] = roa;
+        }
+      });
+
+      console.log(result);
+      return result;
+
+    }
+    to_json(workbook);
+
+  };
+  oReq.send();
+
+
+
+
+
+
+
+// ******************************************************************************* //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// ******************************************************************************* //
+
+
 // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
 // .then(function(res) {
 //   // ACHOU
@@ -345,6 +415,22 @@ console.log(workbook);
 
 
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
