@@ -82,7 +82,6 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
             console.log('Resultados encontrados: ' + chapasIguais.length);
 
             if (chapasIguais.length < 1){
-              
               PopUps.erroConsultar("Não foi possível salvar o Bem!");
             }else{
 
@@ -91,7 +90,8 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
               .then(function(res) {
                 //Selecionou todos os que possuem Chapas diferentes do bem escolhido (e consequentemente dos que tem chapasIguais a ele)
                 console.log('Resultados encontrados: ' + res.length);
-                bem.COD_LOCAL = dados.COD_LOCAL;
+                novoLocal = dados.COD_LOCAL;
+                bem.COD_LOCAL = novoLocal;
                 res.push(bem); //Já colocou o Bem editado nos Bens
 
 

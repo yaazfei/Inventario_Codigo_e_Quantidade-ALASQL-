@@ -100,18 +100,19 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                       if (roa.length > 0) {
                         result[sheetName] = roa;
                       }
+
+                      //////////// ARMAZENAR O ARQUIVO NO SCOPES
+                      console.log("Leu o arquivo XLSX");
+                      //dados = FormatarCsv.csvTojs(success);
+                      Scopes.setArquivo(roa);
+                      Scopes.setArquivoXLSX(result);
+                      console.log("Copiou o arquivo XLSX");
+                      defer.resolve(success);
+
+
+
                     });
                     console.log(result);
-
-
-                    //////////// ARMAZENAR O ARQUIVO NO SCOPES
-                    console.log("Leu o arquivo XLSX");
-                    //dados = FormatarCsv.csvTojs(success);
-                    Scopes.setArquivo(result);
-                    console.log("Copiou o arquivo XLSX");
-                    defer.resolve(success);
-
-
                     return result;
                   }
                   to_json(workbook);
@@ -167,17 +168,18 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                           if (roa.length > 0) {
                             result[sheetName] = roa;
                           }
+
+
+
+                          //////////// ARMAZENAR O ARQUIVO NO SCOPES (e um em modo XLSX)
+                          console.log("Leu o arquivo XLS");
+                          //dados = FormatarCsv.csvTojs(success);
+                          Scopes.setArquivo(roa);
+                          Scopes.setArquivoXLSX(result);
+                          console.log("Copiou o arquivo XLX");
+                          defer.resolve(success);
+
                         });
-                        console.log(result);
-
-
-                        //////////// ARMAZENAR O ARQUIVO NO SCOPES
-                        console.log("Leu o arquivo XLS");
-                        //dados = FormatarCsv.csvTojs(success);
-                        Scopes.setArquivo(result);
-                        console.log("Copiou o arquivo XLX");
-                        defer.resolve(success);
-
 
                         return result;
                       }

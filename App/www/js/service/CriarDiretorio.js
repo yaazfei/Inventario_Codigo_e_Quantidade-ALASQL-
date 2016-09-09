@@ -42,7 +42,6 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
         $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv", (dados), true)
           .then(function(success) {
-
             console.log('log: Escreveu no arquivo vazio');
             //$scope.bemEncontrado = null;
             Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO AQUI, DEPOIS DE SALVAR NO ARQUIVO

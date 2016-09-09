@@ -34,7 +34,7 @@ angular.module("starter").service('Scopes', function() {
     },
 
 
-    ///////   Salvando os arquivos em formato xlsx  //////
+    ///////   Salvando os arquivos em formato xlsx  (Para o futuro)//////
 
     getArquivoXLSX: function() {
       return arquivoSelecionadoXLSX;

@@ -33,6 +33,24 @@ angular.module("starter").service('Scopes', function() {
       arquivoSelecionadoLocais = value;
     },
 
+
+    ///////   Salvando os arquivos em formato xlsx  (Para o futuro)//////
+
+    getArquivoXLSX: function() {
+      return arquivoSelecionadoXLSX;
+    },
+    setArquivoXLSX: function(xlsxFormat) {
+      arquivoSelecionadoXLSX = xlsxFormat;
+    },
+    getArquivoLocaisXLSX: function() {
+      return arquivoSelecionadoLocaisXLSX;
+    },
+    setArquivoLocaisXLSX: function(xlsxFormat) {
+      arquivoSelecionadoLocaisXLSX = xlsxFormat;
+    },
+
+    /////////////////////////////////////////////////////
+
     blankItem: function($scope) {
       console.log("Entrou no zerarVariáveis");
       var local = "";

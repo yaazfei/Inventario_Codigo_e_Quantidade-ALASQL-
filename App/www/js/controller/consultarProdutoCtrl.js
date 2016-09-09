@@ -83,20 +83,23 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                 var arquivoBens = Scopes.getArquivo();
                 // alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
                 alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
-                  .then(function(res) {
+                  .then(function(res1) {
 
-                    console.log('Resultados encontrados: ' + res.length);
-                    if (res.length < 1){
+                    console.log('Resultados encontrados: ' + res1.length);
+
+                    if (res1.length < 1){
                       PopUps.erroConsultar("Bem não encontrado!");
                     } else {
-                      $scope.bemEncontrado = res;
+                      $scope.bemEncontrado = res1;
                       console.log('Bem foi encontrado.');
+                      console.log(res1[0].COD_BEM, res1[0].CHAPA, res1[0].COD_LOCAL, res1[0].DESC_BEM);
                     }
 
 
                     //Para atualizar a lista
                     $scope.$apply(function() {
-                      $scope.bemEncontrado = res;
+                      $scope.bemEncontrado = res1;
+
                     });
 
 
