@@ -85,13 +85,28 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                 alasql.promise('SELECT * FROM ? \ WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
                   .then(function(res1) {
 
+
                     console.log('Resultados encontrados: ' + res1.length);
+
 
                     if (res1.length < 1){
                       PopUps.erroConsultar("Bem não encontrado!");
                     } else {
+
+                      var res1 = JSON.parse(JSON.stringify(res1));
+                      console.log(JSON.stringify(res1, null, 2));
+                      console.log(Object.keys(res1));
+                      console.log(JSON.stringify(res1));
+                      console.log(res1.hasOwnProperty('COD_BEM'));
+                      console.log(res1.hasOwnProperty('COD_LOCAL'));
+
+                      // var x = JSON.parse(JSON.stringify(res1));
+
+
+                      //res1 = JSON.parse(JSON.stringify(res1));
                       $scope.bemEncontrado = res1;
                       console.log('Bem foi encontrado.');
+                      //console.log(res1);
                       console.log(res1[0].COD_BEM, res1[0].CHAPA, res1[0].COD_LOCAL, res1[0].DESC_BEM);
                     }
 

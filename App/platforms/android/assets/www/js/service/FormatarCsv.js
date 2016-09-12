@@ -168,10 +168,12 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
           row += index + ';';
         }
 
-        row = row.slice(0, -1);
+        row = row.slice(0, -1);  //Tira o último ; do header
 
         //append Label row with line break
-        CSV += row + '\r\n';
+        // CSV += row + '\r\n';
+        CSV += row;
+        CSV += '\r\n';
       }
 
 
@@ -188,7 +190,7 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
         row.slice(0, row.length - 1);
 
         //add a line break after each row
-        CSV += row + '\r\n';
+        CSV += row + '\n';
       }
 
 
