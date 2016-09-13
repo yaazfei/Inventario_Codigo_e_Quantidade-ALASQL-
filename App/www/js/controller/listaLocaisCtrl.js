@@ -148,32 +148,40 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
     var arquivoBens = Scopes.getArquivo();
 
-    /*/**********************/ // Escrevendo XLSX com o js-xlsx
-    var writeXLSX = function(workbook) {
-      /* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
-      var wopts = {
-        bookType: 'xlsx',
-        bookSST: false,
-        type: 'binary'
-      };
 
-      var wbout = XLSX.write(workbook, wopts);
-      //console.log(wbout);
-      CriarDiretorio.processar($cordovaFile, wbout);
-
-      function s2ab(s) {
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    CriarDiretorio.processar($cordovaFile, arquivoBens);
 
 
-        console.log(buf);
-        return buf;
-      }
-      /* the saveAs call downloads a file on the local machine */
-      // saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx")
 
-    };
+    //
+    // /*/**********************/ // Escrevendo XLSX com o js-xlsx
+    //
+    //
+    // var writeXLSX = function(workbook) {
+    //   /* bookType can be 'xlsx' or 'xlsm' or 'xlsb' */
+    //   var wopts = {
+    //     bookType: 'xlsx',
+    //     bookSST: false,
+    //     type: 'binary'
+    //   };
+    //
+    //   var wbout = XLSX.write(workbook, wopts);
+    //   //console.log(wbout);
+    //   CriarDiretorio.processar($cordovaFile, wbout);
+    //
+    //   function s2ab(s) {
+    //     var buf = new ArrayBuffer(s.length);
+    //     var view = new Uint8Array(buf);
+    //     for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    //
+    //
+    //     console.log(buf);
+    //     return buf;
+    //   }
+    //   /* the saveAs call downloads a file on the local machine */
+    //   // saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx")
+    //
+    // };
 
 
 

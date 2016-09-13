@@ -12,13 +12,14 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
     dados = FormatarCsv.JSONToCSVConvertor(res, true);
     // console.log(dados);
+    console.log('Header: ' + dados.header);
 
     $cordovaFile.createDir(cordova.file.externalRootDirectory, "Queiroz Galvão", false)
       .then(function(success) {
         console.log('log: Criou o diretorio vazio');
 
         // $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv" , (dados), true)
-        $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv", (dados), true)
+        $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv", (dados.header + "%0D" + dados.CSV), true)
           .then(function(success) {
             console.log('log: Escreveu/Reescreveu o arquivo .csv');
             //$scope.bemEncontrado = null;
@@ -40,7 +41,7 @@ angular.module("starter").service('CriarDiretorio', function($cordovaFile, Forma
 
         console.log('log: Não criou o diretorio');
 
-        $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv", (dados), true)
+        $cordovaFile.writeFile(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv", (dados.header + "%0D" + dados.CSV), true)
           .then(function(success) {
             console.log('log: Escreveu no arquivo vazio');
             //$scope.bemEncontrado = null;

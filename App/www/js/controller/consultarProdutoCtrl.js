@@ -1,4 +1,4 @@
-angular.module('starter').controller('consultarProdutoCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $location, Scopes, PopUps, CriarDiretorio, buscaArquivos) {
+angular.module('starter').controller('consultarProdutoCtrl', function($scope, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $location, Scopes, PopUps, CriarDiretorio, buscaArquivos, FormatarCsv) {
 
   console.log('Entrou no controller de Consultar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -89,16 +89,30 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
                     console.log('Resultados encontrados: ' + res1.length);
 
 
+
                     if (res1.length < 1){
                       PopUps.erroConsultar("Bem não encontrado!");
                     } else {
 
-                      var res1 = JSON.parse(JSON.stringify(res1));
                       console.log(JSON.stringify(res1, null, 2));
                       console.log(Object.keys(res1));
                       console.log(JSON.stringify(res1));
                       console.log(res1.hasOwnProperty('COD_BEM'));
                       console.log(res1.hasOwnProperty('COD_LOCAL'));
+
+
+
+                      // var res1novo = [];
+                      // for(var i = 0; i < res1.length; ++i)
+                      //     res1novo[i] = res1[i].replace(/(\r\n|\n|\r)/gm,"");
+                      ///// res1novo = FormatarCsv.iterateObject(res1);
+                      //
+                      // console.log(JSON.stringify(res1novo, null, 2));
+                      // console.log(Object.keys(res1novo));
+                      // console.log(JSON.stringify(res1novo));
+
+
+
 
                       // var x = JSON.parse(JSON.stringify(res1));
 

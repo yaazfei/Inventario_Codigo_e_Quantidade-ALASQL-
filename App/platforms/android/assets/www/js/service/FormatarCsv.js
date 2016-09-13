@@ -61,8 +61,6 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
   };
 
 
-
-
     // this.CSVToArray = function(strData, strDelimiter) {
     //   //function CSVToArray(strData, strDelimiter) {
     //
@@ -146,12 +144,13 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
 
 
 
-    // function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+
     this.JSONToCSVConvertor = function(JSONData, ShowLabel) {
 
       //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
       var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
       var CSV = '';
+      var header = '';
 
       // //Set Report title in first row or line
       // CSV += ReportTitle + '\r\n\n';
@@ -172,8 +171,8 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
 
         //append Label row with line break
         // CSV += row + '\r\n';
-        CSV += row;
-        CSV += '\r\n';
+        header += row;
+        //CSV += "\r\n";
       }
 
 
@@ -190,24 +189,56 @@ angular.module("starter").service('FormatarCsv', function($cordovaFile, $cordova
         row.slice(0, row.length - 1);
 
         //add a line break after each row
-        CSV += row + '\n';
+        CSV += row + "\r\n";
       }
 
 
-      if (CSV === '') {
+      if (CSV === '' || header === '') {
         alert("Invalid data");
         return;
       }
-      return CSV;
-
+      return{
+       "CSV": CSV,
+       "header": header
+    };
     };
 
 
+///////****************************************************************************************************//
 
 
+    // //function iterateObject(obj) {
+    // this.iterateObject = function(obj) {
+    //   var value = '', header = '';
+    //           for (name in obj) {
+    //             if (obj.hasOwnProperty(name)) {
+    //               if (isObject(obj[name])) {
+    //                 var out = this.iterateObject(obj[name]);
+    //                 value += out.value;
+    //                 header += out.header;
+    //               } else {
+    //                 value += removeNewLine(obj[name]) + '; ';
+    //                 header += name + '; ';
+    //               }
+    //             }
+    //           }
+    //   // value =+ value;
+    //   newborn =+ value;
+    //
+    //   return {
+    //     "newborn": newborn
+    //     // "value":value,
+    //     // "header":header
+    //   };
+    // }
+    // function isObject(obj) {
+    //   return (typeof obj === 'object');
+    // }
+    // function removeNewLine(item) {
+    //   return item.toString().replace(/(\r\n|\n|\r)/gm,"");
+    // }
 
-    ///////****************************************************************************************************//
 
-  }
-
+///////****************************************************************************************************//
+}
 );
