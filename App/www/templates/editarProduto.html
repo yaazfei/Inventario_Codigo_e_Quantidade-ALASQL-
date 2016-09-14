@@ -13,11 +13,8 @@
   </ion-header-bar> -->
 
 
-
   <ion-content class="padding has-header">
-
     <form name="editarProdutoForm" padding>
-
 
       <div class="list list-inset item-text-wrap">
 
@@ -25,9 +22,9 @@
           <a style="float:right; text-align:left;">{{bem.COD_BEM}}</a>
           <br/>
         </div>
+
         <div class="item">
           <b>Descrição: </b>
-
           <br/>
           <br/>
           <p style="text-align:right; align:justify; margin-left:30%">{{bem.DESC_BEM}}</p>
@@ -39,8 +36,6 @@
 
         <div class="item"><b>Local: </b>
           <a style="float:right; text-align:left;">{{bem.COD_LOCAL}}</a>
-
-          <!-- Ao fazer a busca, colocar para aparecer também a DESCRIÇÃO do local -->
           <br/>
           <br/>
           <p style="text-align:right; align:justify; margin-left:30%">{{dados.DESC_LOCAL_DO_BEM}}</p>
@@ -51,15 +46,11 @@
 
         <div class="item"><b>Local atual: </b>
           <a style="float:right; text-align:left;">{{dados.COD_LOCAL}}</a>
-
-
           <br/>
           <br/>
           <p style="text-align:right; align:justify; margin-left:30%">{{dados.DESC_LOCAL}}</p>
         </div>
       </div>
-
-
 
       <!-- <div class="list list-inset item-text-wrap" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
 
@@ -71,7 +62,6 @@
         </div>
       </div> -->
 
-
       <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
         <div class="col col -50"><b>Novo local:</b></div>
         <div class="col col -50 button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click="clearInput()"><i class="ion-close"></i></div>
@@ -82,9 +72,7 @@
           <input ng-focus="openModal()" name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
           <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
         </div>
-
       </div>
-
 
       <button class="button button-block button-dark" ng-click="escreverProdutoEditado()">Salvar</button>
 
@@ -96,37 +84,6 @@
         </div>
       </div>
 
-      <!-- <div padding>
-        <div class="item item-input item-floating-label" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
-          <input ng-focus="clearInput()" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" placeholder="Usar local atual"></input>
-        </div>
-      </div> -->
-
-
-
-      <!-- BOTÃO TRANSPARENTE QUE VIRA AZUL QUANDO CONFIRMADO -->
-      <!-- <div class="row" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
-        <div><b>Novo local:</b></div>
-        <div class="col button-clear" style="text-align:right;" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL" ng-click="clearInput()"><i class="ion-close"></i></div>
-      </div>
-
-      <div class="list" padding>
-        <div class="item item-input item-floating-label" ng-show="editarProdutoForm.novoLocal.value !== local.COD_LOCAL">
-          <input ng-focus="openModal()" name="novoLocal" type="text" style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px" ng-model="local.COD_LOCAL" placeholder="Selecionar novo local"></input>
-          <p style="text-transform: uppercase; text-align:center; color:#0090c4; padding: 0px 15px 0px 15px">{{local.DESC_LOCAL}}</p>
-        </div>
-
-      </div>
--->
-
-
     </form>
-
-
-
-
-
-
   </ion-content>
-
 </ion-view>

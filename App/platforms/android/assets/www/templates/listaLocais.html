@@ -1,4 +1,3 @@
-
 <ion-view view-title="Consultar Bem">
 
   <ion-nav-buttons side="right">
@@ -8,11 +7,9 @@
     </div>
   </ion-nav-buttons>
 
-
   <!-- /*****************************************************************************/ -->
 
   <ion-content class="padding has-header">
-
     <div class="card">
 
       <div class="item item-divider">
@@ -28,74 +25,65 @@
 
 
     <form name="FormBuscaBemTeste" novalidate>
-
-
       <div class="list" id="DivFormTeste">
         </br>
+
         <label class="item item input">
           <p>Código do Bem:</p>
-          <input type="text" autofocus="true" placeholder="Informe o Bem" autofocus
-           style="text-transform: uppercase" ng-model="bem.COD_BEM" required>
+          <input type="text" autofocus="true" placeholder="Informe o Bem" autofocus style="text-transform: uppercase" ng-model="bem.COD_BEM" required>
         </label>
-
         </br>
+
         <div class="button-bar">
           <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar" />
           <input class="button button-positive" type="reset" value="Limpar" />
           <input class="button button-balanced" ng-click="buscaBem(bem)" type="reset" value="Buscar" />
         </div>
+
       </div>
     </form>
+    </br>
+    </br>
 
 
-
-
-
-  </br></br>
-    <a ng-repeat="bem in bemEncontrado | filter:search track by $index"
-     type="item-text-wrap"
-     class="item" item="bem" ng-click="editarBem(bem, teste)">
+    <a ng-repeat="bem in bemEncontrado | filter:search track by $index" type="item-text-wrap" class="item" item="bem" ng-click="editarBem(bem, teste)">
       <h4>{{bem.CHAPA}} <i class="ion-alert item-note"
          style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
        </i> </h4>
       <p>{{bem.DESC_BEM}}</p>
-
-
       <p>CÓDIGO DO LOCAL: {{bem.COD_LOCAL}}</p>
 
-
-
       <div ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
-
         <h4 style="color:red; padding: 0px 15px 1px 0px">
           O local informado diverge do cadastro.
         </h4>
       </div>
-</a>
+    </a>
 
 
-<div class="button-bar">
+    <div class="button-bar">
 
-    <input class="button button-balanced" ng-click="teste4()" type="reset" value="TESTE 4" />
-    <input class="button button-dark" ng-click="teste3()" type="reset" value="TESTE3" />
-</div>
+      <input class="button button-balanced" ng-click="teste4()" type="reset" value="TESTE 4" />
+      <input class="button button-dark" ng-click="teste3()" type="reset" value="TESTE3" />
 
-<div class="button-bar">
-    <input class="button button-assertive" ng-click="testeCriaArquivo()" type="reset" value="Cria Arquivo" />
-  <input class="button button-positive" ng-click="teste2()" type="reset" value="TESTE 2" />
+    </div>
 
-</div>
+    <div class="button-bar">
 
+      <input class="button button-assertive" ng-click="testeCriaArquivo()" type="reset" value="Cria Arquivo" />
+      <input class="button button-positive" ng-click="teste2()" type="reset" value="TESTE 2" />
 
-</br></br>
-<div>
+    </div>
+    </br>
+    </br>
 
-        <button class="button button-full button-positive" ng-click="openXLSX()">
-          Open PDF File
-        </button>
+    <div>
 
-</div>
+      <button class="button button-full button-positive" ng-click="openXLSX()">
+        Open PDF File
+      </button>
 
+    </div>
 
 
   </ion-content>

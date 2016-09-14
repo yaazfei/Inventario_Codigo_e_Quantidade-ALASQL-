@@ -242,34 +242,8 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     oReq.send();
 
 
-
-
     /// ******************************************************************************* //
 
-
-    // alasql.promise('SELECT * FROM xlsx("js/Lista_de_Bens.xlsx",{headers:true})\ WHERE CHAPA !== ?', [bem.CHAPA])
-    // .then(function(res) {
-    //   // ACHOU
-    //   console.log('Encontrou com o ALQSQL: ' + res);
-    //
-    //
-    //
-    //
-    //  if (window.cordova) { //Só entra por device
-    //     CriarDiretorio.processar($cordovaFile, res);
-    //     //alert("Passou do CriarDiretorio.processar");
-    // }
-    //
-    //     $scope.teste3(res);
-    //
-    //
-    //
-    //
-    // }).catch(function(err) { // NÃO ENCONTROU O bem
-    //
-    //   PopUps.erroConsultar("Bens não encontrados!");
-    // });
-    //
 
   };
 

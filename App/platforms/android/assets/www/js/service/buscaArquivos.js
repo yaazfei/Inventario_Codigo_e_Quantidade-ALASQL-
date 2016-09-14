@@ -18,7 +18,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
             $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.csv")
               .then(function(success) {
 
-
                 console.log("Leu o arquivo CSV");
                 dados = FormatarCsv.csvTojs(success);
                 Scopes.setArquivo(dados);
@@ -51,17 +50,12 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
             //   });
 
 
-
-
           }, function(error) {
             console.log('log: Não achou o arquivo .csv, vai procurar por outro');
-
 
             $cordovaFile.checkFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.xlsx")
               .then(function(success) {
                 console.log('log: Achou o arquivo .xlsx');
-
-
 
                 //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
                 // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
@@ -109,8 +103,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                       console.log("Copiou o arquivo XLSX");
                       defer.resolve(success);
 
-
-
                     });
                     console.log(result);
                     return result;
@@ -134,7 +126,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     // //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
                     // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xls")
                     //      .then(function (success) {
-
 
 
                     console.log('log: Vai pegar o .xls do SDCARD');
@@ -169,8 +160,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                             result[sheetName] = roa;
                           }
 
-
-
                           //////////// ARMAZENAR O ARQUIVO NO SCOPES (e um em modo XLSX)
                           console.log("Leu o arquivo XLS");
                           //dados = FormatarCsv.csvTojs(success);
@@ -178,7 +167,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                           Scopes.setArquivoXLSX(result);
                           console.log("Copiou o arquivo XLX");
                           defer.resolve(success);
-
                         });
 
                         return result;
@@ -188,10 +176,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     };
                     oReq.send();
 
-
-
-
-
                     //  }, function (error) {
                     //
                     //    console.log ( "Não leu o arquivo XLS: " + error);
@@ -200,7 +184,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     //
                     //  });
 
-
                   }, function(error) {
                     Scopes.setArquivo("nd");
                     console.log('log: Não encontrou o arquivo .xls');
@@ -208,9 +191,7 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     defer.resolve(error);
 
                   });
-
               });
-
           });
 
 
@@ -221,7 +202,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
         defer.resolve(error);
 
       });
-
 
     return defer.promise;
   };

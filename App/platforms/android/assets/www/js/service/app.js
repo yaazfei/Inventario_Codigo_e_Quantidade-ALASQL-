@@ -23,7 +23,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
     /*/ ***********  LER DO ARQUIVO E ARMAZENAR EM UMA VARIÁVEL ********* /*/
 
-
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
@@ -166,7 +165,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
   });
 })
-
 
 
 

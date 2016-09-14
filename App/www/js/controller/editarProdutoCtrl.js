@@ -1,14 +1,10 @@
-angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('editarProdutoCtrl', function($scope, $state, $cordovaFile, $ionicPopup, $ionicModal, $http, $timeout, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos, $ionicLoading) {
 
 
   console.log('Entrou no controller de Editar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
   console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
-
-  // listarLocais();
-
-  // var dir = "files/Lista_de_Locais.xlsx";
   var arquivoLocais = Scopes.getArquivoLocais();
   // alasql.promise('SELECT * FROM xlsx(?,{headers:true})', [dir])
   alasql.promise('SELECT * FROM ?', [arquivoLocais])
@@ -17,17 +13,16 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       // ACHOU
       console.log('Encontrou com o ALQSQL: ' + res[0]);
 
+      res = FormatarCsv.toString(res); // Verificar se existem line breaks antes de ler suas propriedades
+
       $scope.locais = res;
       //var bens = $scope.bens; //Precisa disso?
       console.log('locais foi preenchido.');
       $scope.localModificado = false;
 
 
-
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
-
-
 
       var bem = Scopes.getBem();
       $scope.bem = bem;
@@ -79,59 +74,71 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         alasql.promise('SELECT * FROM ? WHERE CHAPA == ?', [arquivoBens, bem.CHAPA])
           .then(function(chapasIguais) {
             //Encontrou todos com a mesma chapa
+
+            console.log(JSON.stringify(chapasIguais));
+            chapasIguais = FormatarCsv.toString(chapasIguais); // Verificar se existem line breaks antes de ler suas propriedades
+            console.log(JSON.stringify(chapasIguais));
+
             console.log('Resultados encontrados: ' + chapasIguais.length);
 
-            if (chapasIguais.length < 1){
+            if (chapasIguais.length < 1) {
               PopUps.erroConsultar("Não foi possível salvar o Bem!");
-            }else{
+            } else {
 
 
-            alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
-              .then(function(res) {
-                //Selecionou todos os que possuem Chapas diferentes do bem escolhido (e consequentemente dos que tem chapasIguais a ele)
-                console.log('Resultados encontrados: ' + res.length);
-                novoLocal = dados.COD_LOCAL;
-                bem.COD_LOCAL = novoLocal;
-                res.push(bem); //Já colocou o Bem editado nos Bens
+              alasql.promise('SELECT * FROM ? WHERE CHAPA !== ?', [arquivoBens, bem.CHAPA])
+                .then(function(res) {
+                  //Selecionou todos os que possuem Chapas diferentes do bem escolhido (e consequentemente dos que tem chapasIguais a ele)
+
+                  res = FormatarCsv.toString(res); // Verificar se existem line breaks antes de ler suas propriedades
 
 
-                if (chapasIguais.length > 1) { //Caso tenha mais de um com a mesma CHAPA
+                  console.log('Resultados encontrados: ' + res.length);
+                  novoLocal = dados.COD_LOCAL;
+                  bem.COD_LOCAL = novoLocal;
+                  res.push(bem); //Já colocou o Bem editado nos Bens
 
-                  alasql.promise('SELECT * FROM ? WHERE COD_BEM !== ?', [chapasIguais, bem.COD_BEM])
-                    .then(function(restantes) {
-                      //Seleciona todos os chapasIguais menos o que já foi adicionado no push (baseado no seu COD_BEM)
-                      console.log('Resultados encontrados: ' + res.length);
-                      var resTotal = res.concat(restantes); //Colocou os bens que ficaram de fora na variável de Bens.
-                      console.log('Bens foram anexados.');
-                      // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
 
-                      if (window.cordova) { //Só entra por device
-                        CriarDiretorio.processar($cordovaFile, resTotal);
-                      }
+                  if (chapasIguais.length > 1) { //Caso tenha mais de um com a mesma CHAPA
 
-                      console.log('Se estiver no Browser, não vai escrever no arquivo.');
+                    alasql.promise('SELECT * FROM ? WHERE COD_BEM !== ?', [chapasIguais, bem.COD_BEM])
+                      .then(function(restantes) {
+                        //Seleciona todos os chapasIguais menos o que já foi adicionado no push (baseado no seu COD_BEM)
 
-                    }).catch(function(err) { // NÃO ENCONTROU O BEM
-                      console.log(err);
-                      PopUps.erroConsultar("Não foi possível salvar o Bem!");
-                    });
+                        console.log(JSON.stringify(restantes)); // Não precisa verificar pois o chapasIguais já foi verificado
 
-                } else { //Caso não tenha mais de um com a mesma CHAPA
 
-                  console.log('Bem foi anexado.');
+                        console.log('Resultados encontrados: ' + res.length);
+                        var resTotal = res.concat(restantes); //Colocou os bens que ficaram de fora na variável de Bens.
+                        console.log('Bens foram anexados.');
+                        // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
 
-                  if (window.cordova) { //Só entra por device
-                    CriarDiretorio.processar($cordovaFile, res);
+                        if (window.cordova) { //Só entra por device
+                          CriarDiretorio.processar($cordovaFile, resTotal);
+                        }
+
+                        console.log('Se estiver no Browser, não vai escrever no arquivo.');
+
+                      }).catch(function(err) { // NÃO ENCONTROU O BEM
+                        console.log(err);
+                        PopUps.erroConsultar("Não foi possível salvar o Bem!");
+                      });
+
+                  } else { //Caso não tenha mais de um com a mesma CHAPA
+
+                    console.log('Bem foi anexado.');
+
+                    if (window.cordova) { //Só entra por device
+                      CriarDiretorio.processar($cordovaFile, res);
+                    }
+
+                    console.log('Se estiver no Browser, não vai escrever no arquivo.');
                   }
 
-                  console.log('Se estiver no Browser, não vai escrever no arquivo.');
-                }
-
-              }).catch(function(err) { // NÃO ENCONTROU O BEM
-                console.log(err);
-                PopUps.erroConsultar("Não foi possível salvar o Bem!");
-              });
-
+                }).catch(function(err) { // NÃO ENCONTROU O BEM
+                  console.log(err);
+                  PopUps.erroConsultar("Não foi possível salvar o Bem!");
+                });
             }
 
           }).catch(function(err) { // NÃO ENCONTROU O BEM
@@ -140,33 +147,32 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           });
 
 
-      //////////// WHITHOUT GAMBI (NÃO ELIMINA SÓ UM, MAS OS DOIS COM A MESMA CHAPA)
+        //////////// WHITHOUT GAMBI (NÃO ELIMINA SÓ UM, MAS OS DOIS COM A MESMA CHAPA)
 
-      //   //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
-      //   alasql.promise('SELECT * FROM ? \ IFF (COD_BEM <> ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
-      //     .then(function(res) {
-      //       // ACHOU
-      //       bem.COD_LOCAL = dados.COD_LOCAL;
-      //       res.push(bem);
-      //
-      //       console.log('Primeiro de res ' + res[0].CHAPA);
-      //       // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
-      //
-      //       if (window.cordova) { //Só entra por device
-      //         CriarDiretorio.processar($cordovaFile, res);
-      //       }
-      //
-      //       console.log('Se estiver no Browser, não vai escrever no arquivo.');
-      //
-      //
-      //     }).catch(function(err) { // NÃO ENCONTROU O bem
-      //
-      //       console.log(err);
-      //       PopUps.erroConsultar("Erro ao salvar bem!");
-      //     });
-      //
-      // };
-
+        //   //alasql.promise('SELECT * FROM xlsx(?,{headers:true})\ WHERE CHAPA !== ?', [dir, bem.CHAPA])
+        //   alasql.promise('SELECT * FROM ? \ IFF (COD_BEM <> ? AND CHAPA !== ?)', [arquivoBens, bem.COD_BEM, bem.CHAPA])
+        //     .then(function(res) {
+        //       // ACHOU
+        //       bem.COD_LOCAL = dados.COD_LOCAL;
+        //       res.push(bem);
+        //
+        //       console.log('Primeiro de res ' + res[0].CHAPA);
+        //       // Scopes.setArquivo(res); //MELHOR DEIXAR PRA FAZER ISSO DEPOIS DE SALVAR NO ARQUIVO
+        //
+        //       if (window.cordova) { //Só entra por device
+        //         CriarDiretorio.processar($cordovaFile, res);
+        //       }
+        //
+        //       console.log('Se estiver no Browser, não vai escrever no arquivo.');
+        //
+        //
+        //     }).catch(function(err) { // NÃO ENCONTROU O bem
+        //
+        //       console.log(err);
+        //       PopUps.erroConsultar("Erro ao salvar bem!");
+        //     });
+        //
+        // };
 
       };
       /*****************************************************************************/
@@ -176,21 +182,41 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       //// MODAL DE LOCAL /////
       /////////////////////////
 
+
+$scope.openModal = function() {
+
+   $scope.abrirModal();
+};
+
+
       ////Funcionando
+        $scope.abrirModal = function() {
 
-      $scope.openModal = function() {
+        // $ionicLoading.show({ // SPINNER DE LOADING
+        //     content: 'Loading',
+        //     animation: 'fade-in',
+        //     showBackdrop: true,
+        //     maxWidth: 200,
+        //     showDelay: 0
+        //   });
+        //
+        // $ionicLoading.hide(); // FECHAR SPINNER DE LOADING
 
-        if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
-          $scope.modalCtrl.$setPristine(); //Esse não é uma função
-          $scope.selectlocalradio.$setPristine();
-        }
+
+
+        // if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
+        //   $scope.modalCtrl.$setPristine(); //Esse não é uma função
+        //   $scope.selectlocalradio.$setPristine();
+        // }
 
         $scope.modalCtrl.show();
+
       };
 
 
       $ionicModal.fromTemplateUrl('templates/modalLocais.html', function(modal) {
         $scope.modalCtrl = modal;
+
       }, {
         scope: $scope,
         animation: 'slide-in-up', //'slide-left-right', 'slide-in-up', 'slide-right-left'

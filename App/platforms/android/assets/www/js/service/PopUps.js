@@ -8,10 +8,6 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
       title: 'Sucesso',
       template: msg
     });
-    // alertPopup.then(function(res) {
-    //   $state.go('app.consultarProduto');
-    //
-    // });
   };
 
   this.erroEscrever = function() {

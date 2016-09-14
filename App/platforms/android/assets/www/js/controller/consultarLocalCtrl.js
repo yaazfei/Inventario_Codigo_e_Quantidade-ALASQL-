@@ -12,9 +12,6 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   };
 
-
-
-
   /*/*************************************************************************************************************/
 
   //////////////////////////////////////////////////
@@ -39,6 +36,8 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
       alasql.promise('SELECT COD_LOCAL, DESC_LOCAL FROM ? WHERE COD_LOCAL == ?', [arquivoLocais, dados.COD_LOCAL])
         .then(function(res) {
 
+          res = FormatarCsv.toString(res); // Verificar se existem line breaks antes de ler suas propriedades
+
           // ACHOU O LOCAL E PEGOU O PRIMEIRO
           console.log('Encontrou o local com o alaSQL: ' + res.length);
           if (res.length < 1) {
@@ -55,17 +54,12 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
           }
 
 
-
         }).catch(function(err) { // NÃO ENCONTROU O LOCAL
 
           PopUps.erroConsultar("Local não encontrado!");
         });
-
-
     }
   };
-
-
 
   /*/****************************************************************************************/
 

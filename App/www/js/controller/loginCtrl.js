@@ -1,4 +1,3 @@
-//
 // Sobre autentificação= https://devdactic.com/user-auth-angularjs-ionic/
 
 
@@ -19,7 +18,7 @@ angular.module('starter').controller('loginCtrl', function($scope, $ionicModal, 
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope,
     animation: 'slide-in-up'
-    
+
   }).then(function(modal) {
     $scope.modal = modal;
   });
