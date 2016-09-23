@@ -22,6 +22,43 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   };
 
 
+
+  $scope.form = {};
+  $scope.produto = {};
+
+  $scope.setForm = function (form) {
+    // console.log(" Entrou no setForm ******************************");
+
+      $scope.form.NovoProduto = form;
+      $scope.form.Master = form;
+      console.log ($scope.form.NovoProduto);
+  };
+
+
+  $scope.deixarPristine = function () {
+
+      console.log("Entrou no Pristine");
+
+      document.getElementById("form.BuscaBem").reset();
+      document.getElementById("f_1").value = "";
+      $scope.Bem = undefined;
+      Bem = undefined;
+
+      $scope.form.BuscaBem = $scope.form.Master;
+      $scope.form.BuscaBem.$setPristine();
+
+      setTimeout(function ()
+      {
+        document.getElementById("f_1").focus();
+        console.log("entrou no setTimeout");
+      }, 100);
+
+};
+
+
+
+
+
   /////////////////////////////
   ////// ESCOLHER UM BEM /////
   ////////////////////////////
@@ -56,6 +93,11 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
           Scopes.setBem(bem);
           console.log('Local: ' + dados);
 
+          document.getElementById("form.BuscaBem").reset();
+          document.getElementById("f_1").value = "";
+          $scope.form.BuscaBem = $scope.form.Master;
+          $scope.form.BuscaBem.$setPristine();
+
           $state.go('app.editarProduto');
 
         }).catch(function(err) { // NÃO ENCONTROU O LOCAL
@@ -66,6 +108,11 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
           Scopes.setBem(bem);
           console.log('Local: ' + dados);
           console.log('Bem: ' + bem);
+
+          document.getElementById("form.BuscaBem").reset();
+          document.getElementById("f_1").value = "";
+          $scope.form.BuscaBem = $scope.form.Master;
+          $scope.form.BuscaBem.$setPristine();
 
           $state.go('app.editarProduto');
 
@@ -80,6 +127,14 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
   /////////////////////////////////////
 
   $scope.buscaBem = function(bem) {
+
+    ////// WITH GAMBI
+    if (bem === undefined || bem.CHAPA === "" || bem.CHAPA === undefined ||
+    $scope.form.BuscaBem.$pristine || $scope.form.BuscaBem.chapaBem.$pristine) {
+      PopUps.erroConsultar("Insira os dados corretamente!");
+
+    } else {
+
 
     var arquivoBens = Scopes.getArquivo();
 
@@ -115,6 +170,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $s
         PopUps.erroConsultar("Bem não encontrado!");
       });
 
+    }
   };
 
   // console.log("Passou uma vez. Esperando o alaSQL. ");

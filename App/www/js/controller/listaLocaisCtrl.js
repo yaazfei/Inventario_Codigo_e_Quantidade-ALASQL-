@@ -61,7 +61,7 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
 
 
     //dir = "files/Lista_de_Bens.xlsx";
-    //dir = "/Android/data/com.ionicframework.myaoo100386/Lista_de_Bens.csv";
+    //dir = "/Android/data/com.ionicframework.myaoo100387/Lista_de_Bens.csv";
     $scope.teste4();
 
     var arquivoLido = Scopes.getArquivo();

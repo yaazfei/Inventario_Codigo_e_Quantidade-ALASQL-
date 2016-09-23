@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.ionicframework.myaoo100386;
+package com.ionicframework.myaoo100387;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

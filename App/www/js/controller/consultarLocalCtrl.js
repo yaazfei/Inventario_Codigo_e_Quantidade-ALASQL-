@@ -12,6 +12,50 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   };
 
+  $scope.form = {};
+  $scope.produto = {};
+
+  $scope.setForm = function (form) {
+    // console.log(" Entrou no setForm ******************************");
+
+      $scope.form.NovoProduto = form;
+      $scope.form.Master = form;
+      console.log ($scope.form.NovoProduto);
+  };
+
+
+
+
+
+  $scope.deixarPristine = function () {
+
+      console.log("teste");
+
+      document.getElementById("form.BuscaLocal").reset();
+      document.getElementById("f_1").value = "";
+      $scope.local = undefined;
+      local = undefined;
+
+      $scope.form.BuscaLocal = $scope.form.Master;
+      $scope.form.BuscaLocal.$setPristine();
+
+      setTimeout(function ()
+      {
+        document.getElementById("f_1").focus();
+        console.log("entrou no setTimeout");
+      }, 100);
+
+};
+
+
+
+
+
+
+
+
+
+
   /*/*************************************************************************************************************/
 
   //////////////////////////////////////////////////
@@ -20,8 +64,11 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
 
   $scope.buscaLocal = function(dados) {
 
-    if (dados === undefined || dados === "") {
-      PopUps.erroBranco();
+    ////// WITH GAMBI
+    if (dados === undefined || dados.COD_LOCAL === "" || dados.COD_LOCAL === undefined ||
+    $scope.form.BuscaLocal.$pristine || $scope.form.BuscaLocal.codLocalDados.$pristine) {
+      PopUps.erroConsultar("Insira os dados corretamente!");
+
 
     } else {
 
@@ -50,6 +97,12 @@ angular.module('starter').controller('consultarLocalCtrl', function($scope, $sta
             Scopes.setLocal(res[0]);
 
             console.log('saiu do alaSQL');
+
+            document.getElementById("form.BuscaLocal").reset();
+            document.getElementById("f_1").value = "";
+            $scope.form.BuscaLocal = $scope.form.Master;
+            $scope.form.BuscaLocal.$setPristine();
+
             $state.go('app.consultarProduto');
           }
 

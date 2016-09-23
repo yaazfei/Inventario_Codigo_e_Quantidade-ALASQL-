@@ -75,9 +75,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           .then(function(chapasIguais) {
             //Encontrou todos com a mesma chapa
 
-            console.log(JSON.stringify(chapasIguais));
+            console.log(JSON.stringify("Antes:" + chapasIguais));
             chapasIguais = FormatarCsv.toString(chapasIguais); // Verificar se existem line breaks antes de ler suas propriedades
-            console.log(JSON.stringify(chapasIguais));
+            console.log(JSON.stringify("Depois:" + chapasIguais));
 
             console.log('Resultados encontrados: ' + chapasIguais.length);
 

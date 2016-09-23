@@ -36,10 +36,10 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
             // //MELHOR COPIAR? PRA ONDE?
             // $cordovaFile.copyFile(cordova.file.externalRootDirectory, "Queiroz Galvão/Lista_de_Bens.csv", cordova.file.externalApplicationStorageDirectory, "Lista_de_Bens.csv")
             //   .then(function(success) {
-            //     console.log('Copiou o arquivo .csv para o /Android/data/com.ionicframework.myaoo100386/');
+            //     console.log('Copiou o arquivo .csv para o /Android/data/com.ionicframework.myaoo100387/');
             //
-            //     // dir = /Android/data/com.ionicframework.myaoo100386/
-            //     //dir = "file:///data/data/com.ionicframework.myaoo100386/files/";   //ESSE APARENTEMENTE FUNCIONA, SÓ QUE NADA É COPIADO PARA LÁ.
+            //     // dir = /Android/data/com.ionicframework.myaoo100387/
+            //     //dir = "file:///data/data/com.ionicframework.myaoo100387/files/";   //ESSE APARENTEMENTE FUNCIONA, SÓ QUE NADA É COPIADO PARA LÁ.
             //     //Scopes.setArquivo("csv");
             //     //dir = "/android_asset/www/files/Lista_de_Bens.csv";
             //
@@ -57,11 +57,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
               .then(function(success) {
                 console.log('log: Achou o arquivo .xlsx');
 
-                //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
-                // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xlsx")
-                //      .then(function (success) {
-
-                //dir = "files/Lista_de_Bens.xlsx";
 
                 console.log('log: Vai pegar o .xlsx do SDCARD');
                 dir = "/storage/emulated/0/Queiroz Galvão/Lista_de_Bens.xlsx";
@@ -123,10 +118,6 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     console.log('log: Achou o arquivo .xls');
 
 
-                    // //SÓ LÊ O ARQUIVO E COLOCA EM UMA VARIÁVEL
-                    // $cordovaFile.readAsText(cordova.file.externalRootDirectory + "Queiroz Galvão", "Lista_de_Bens.xls")
-                    //      .then(function (success) {
-
 
                     console.log('log: Vai pegar o .xls do SDCARD');
                     dir = "/storage/emulated/0/Queiroz Galvão/Lista_de_Bens.xls";
@@ -176,35 +167,26 @@ angular.module("starter").service('buscaArquivos', function($cordovaFile, Scopes
                     };
                     oReq.send();
 
-                    //  }, function (error) {
-                    //
-                    //    console.log ( "Não leu o arquivo XLS: " + error);
-                    //    defer.reject(error);
-                    //   //  defer.resolve(error);
-                    //
-                    //  });
+
 
                   }, function(error) {
                     Scopes.setArquivo("nd");
                     console.log('log: Não encontrou o arquivo .xls');
                     console.log('log: Não encontrou nenhum arquivo. Vai pegar o arquivo interno.' + error);
                     defer.resolve(error);
-
                   });
-              });
-          });
 
+              });
+            });
 
       }, function(error) { // Não achou o diretório
 
         console.log('log: Não encontrou o diretório. Vai pegar o arquivo interno.' + error);
         Scopes.setArquivo("nd");
         defer.resolve(error);
-
       });
 
     return defer.promise;
-  };
 
-
+};
 });

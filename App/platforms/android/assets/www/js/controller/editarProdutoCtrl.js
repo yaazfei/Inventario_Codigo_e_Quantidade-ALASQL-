@@ -75,9 +75,9 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
           .then(function(chapasIguais) {
             //Encontrou todos com a mesma chapa
 
-            console.log(JSON.stringify(chapasIguais));
+            console.log(JSON.stringify("Antes:" + chapasIguais));
             chapasIguais = FormatarCsv.toString(chapasIguais); // Verificar se existem line breaks antes de ler suas propriedades
-            console.log(JSON.stringify(chapasIguais));
+            console.log(JSON.stringify("Depois:" + chapasIguais));
 
             console.log('Resultados encontrados: ' + chapasIguais.length);
 
@@ -185,21 +185,24 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
 $scope.openModal = function() {
 
-  $ionicLoading.show({ // SPINNER DE LOADING
-      content: 'Loading',
-      animation: 'fade-in',
-      showBackdrop: true,
-      maxWidth: 200,
-      showDelay: 0
-    });
-
    $scope.abrirModal();
 };
 
 
       ////Funcionando
         $scope.abrirModal = function() {
-        $ionicLoading.hide(); // FECHAR SPINNER DE LOADING
+
+        // $ionicLoading.show({ // SPINNER DE LOADING
+        //     content: 'Loading',
+        //     animation: 'fade-in',
+        //     showBackdrop: true,
+        //     maxWidth: 200,
+        //     showDelay: 0
+        //   });
+        //
+        // $ionicLoading.hide(); // FECHAR SPINNER DE LOADING
+
+
 
         // if ($scope.selectlocal !== undefined) { //sempre aparecem undefined? (NÃO PEGA)
         //   $scope.modalCtrl.$setPristine(); //Esse não é uma função
