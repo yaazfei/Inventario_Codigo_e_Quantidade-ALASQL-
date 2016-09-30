@@ -5,6 +5,15 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
   console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
 
+
+  function initFocus()
+  {
+      console.log('Entrou no init ******************************************* * * * ** * * * ');
+      document.getElementById('f_local').focus();
+  }
+
+
+
   var arquivoLocais = Scopes.getArquivoLocais();
   // alasql.promise('SELECT * FROM xlsx(?,{headers:true})', [dir])
   alasql.promise('SELECT * FROM ?', [arquivoLocais])
@@ -24,6 +33,8 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
       /*****************/
       ////// Só começa o controller depois que passa pelo alaSQL (porque ele está async?)
 
+
+
       var bem = Scopes.getBem();
       $scope.bem = bem;
 
@@ -36,6 +47,14 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
         $scope.local = local;
         $scope.localModificado = true;
         $scope.hideModal();
+        // document.activeElement.blur();
+        // document.getElementById('f_local').focus();
+        // setTimeout(function ()
+        // {
+        // document.activeElement.blur();
+        // document.getElementById('f_local').focus();
+        // }, 100);
+
       };
 
 
@@ -228,11 +247,14 @@ $scope.openModal = function() {
 
       $scope.hideModal = function() {
         $scope.modalCtrl.hide();
+        // document.getElementById('f_local').focus();
+
       };
 
       $scope.applyModal = function() {
         console.log('modal', $scope);
         $scope.modalCtrl.remove();
+
       };
 
 

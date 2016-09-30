@@ -199,9 +199,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
-
-
-
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 

@@ -1,23 +1,24 @@
 /* Empty. Add your own CSS if you like */
 .images-fundo{
-  background: url("../img/logo-nimal-leve.png") no-repeat center;
+  background: url("../img/logo-nimal-leve.png") no-repeat center bottom;
+
+  /*padding-bottom: 30cm;*/
+  /*border: 1px solid #f0f;*/
 }
 
-/*.grid {
-  width: 600px;
-  height: 450px;
-}*/
 
+:placeholder { /* Mozilla Firefox 4 to 18 */
+color: #fff;
+text-align: center;
+}
 
-
-
-/* //////////////////       PARA USAR COM A LISTA NO CONSULTARPRODUTO*/
-.bar-subheader{
+ /*//////////////////       PARA USAR COM A LISTA NO CONSULTARPRODUTO*/
+/*.bar-subheader{
   height: 60px !important;
 }
 .has-subheader{
   top: 100px !important;
-}
+}*/
 /* //////////////////*/
 
 

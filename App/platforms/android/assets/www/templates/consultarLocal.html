@@ -1,4 +1,4 @@
-<ion-view view-title="Local">
+<ion-view view-title="Local" align-title="center">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
@@ -10,11 +10,12 @@
   <ion-content class="padding has-header">
 
     <form name="form.BuscaLocal" novalidate id="form.BuscaLocal">
-      <div class="list" id="DivForm" ng-init="setForm(form.BuscaLocal);">
+      <div class="list list-inset" id="DivForm" ng-init="setForm(form.BuscaLocal);">
 
-      </br></br></br>
-        <label class="item item input">
-          <input type="text" ng-keyup="$event.keyCode == 13 && buscaLocal(dados);" id="f_1" name="codLocalDados" autofocus="autofocus" placeholder="Código do local" style="text-transform: uppercase" ng-model="dados.COD_LOCAL" required>
+      </br>
+        <p>Código do Local:</p>
+        <label class="item item-input">
+          <input type="text" ng-keyup="$event.keyCode == 13 && buscaLocal(dados);" id="f_1" name="codLocalDados" autofocus="autofocus" placeholder="Informe o local" style="text-transform: uppercase" ng-model="dados.COD_LOCAL" required>
         </label>
 
       </br>

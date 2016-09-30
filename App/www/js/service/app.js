@@ -176,27 +176,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
-.directive('autoFocus', function($timeout) {
-    return {
-        restrict: 'AC',
-        link: function(_scope, _element) {
-            $timeout(function(){
-                _element[0].focus();
-            }, 0);
-        }
-    };
+// .directive('autoFocus', function($timeout) {
+//     return {
+//         restrict: 'AC',
+//         link: function(_scope, _element) {
+//             $timeout(function(){
+//                 _element[0].focus();
+//             }, 0);
+//         }
+//     };
+// })
+
+
+
+
+
+
+.directive('focusMe', function($timeout) {
+  return {
+    link: function(scope, element, attrs) {
+
+      $timeout(function() {
+        element[0].focus();
+      });
+    }
+  };
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 

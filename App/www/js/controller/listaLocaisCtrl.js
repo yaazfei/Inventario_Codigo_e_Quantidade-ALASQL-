@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////**********************************************************************************************************//
 //////////////       TESTE DE CONSULTAR PRODUTO SEM LISTA
 
-angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $cordovaFile, $stateParams, $q, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
+angular.module('starter').controller('listaLocaisCtrl', function($scope, $state, $ionicPopover, $cordovaFile, $stateParams, $q, $ionicPopup, $timeout, $http, $ionicScrollDelegate, filterFilter, $location, Scopes, PopUps, CriarDiretorio, FormatarCsv, buscaArquivos) {
 
   console.log('Entrou no controller de Consultar Produto TESTE ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
@@ -11,6 +11,60 @@ angular.module('starter').controller('listaLocaisCtrl', function($scope, $state,
     COD_LOCAL: '000053',
     DESC_LOCAL: 'GERENCIAMENTO DE CONTROLER DE HUEHUEBR'
   };
+
+
+
+
+
+/////// TESTES DE POP OVER
+
+
+// $ionicPopover.fromTemplateUrl('templates/popOverAlert.html', function(popover) {
+//   $scope.popover = popover;
+//   popover.show();
+// });
+
+
+$ionicPopover.fromTemplateUrl('templates/popOverAlert.html', {
+  scope: $scope,
+}).then(function(popover) {
+  $scope.popover = popover;
+  popover.show(angular.element(document.querySelector('.ion-more')));
+  $timeout(function() {
+  //  myPopup.close(); //close the popup after 3 seconds for some reason
+  $scope.closePopover();
+}, 1000);
+});
+
+
+$scope.openPopover = function($event) {
+    $scope.popover.show($event);
+  };
+  $scope.closePopover = function() {
+    $scope.popover.hide();
+  };
+
+//
+// $scope.popover.show($event);
+
+
+// $scope.openPopover();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /*/ Escolher um Bem /*/

@@ -1,9 +1,10 @@
-<ion-view view-title="Consultar Bem">
+<ion-view view-title="Consultar Bem" align-title="center">
 
   <ion-nav-buttons side="right">
     <div class="buttons">
       <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
       <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
+      <!-- <a ng-click="popover.show($event)" class="button button-icon ion-more" id="button1"></a> -->
     </div>
   </ion-nav-buttons>
 
@@ -23,17 +24,20 @@
         <p>CÓDIGO: {{dados.COD_LOCAL}}</br>
           {{dados.DESC_LOCAL}}</p>
       </div>
-
     </div>
+
+    <!-- <div class="list" padding ng-show="codigoSalvoMessage == true">
+    <button class="button button-full button-small button-outline button-balanced">{{message}}</button>
+</div> -->
 
 
     <form name="form.BuscaBem" novalidate id="form.BuscaBem">
 
-      <div class="list" id="DivFormBem" ng-init="setForm(form.BuscaBem);">
+      <div class="list list-inset" id="DivFormBem" ng-init="setForm(form.BuscaBem);">
         </br>
-        <label class="item item input">
-          <p>Código do Bem:</p>
-          <input type="text" auto-focus ng-keyup="$event.keyCode == 13 && buscaBem(bem);" id="f_1" name="chapaBem" autofocus="autofocus" placeholder="Informe o Bem" autofocus style="text-transform: uppercase" ng-model="bem.CHAPA" required >
+        <p>Código do Bem:</p>
+        <label class="item item-input">
+          <input type="text" focus-me  ng-keyup="$event.keyCode == 13 && buscaBem(bem);" id="f_1" name="chapaBem" autofocus="autofocus" placeholder="Informe o Bem" style="text-transform: uppercase" ng-model="bem.CHAPA" required >
         </label>
 
         </br>
@@ -46,9 +50,10 @@
     </form>
 
 
-  </br></br>
+  </br>
+  <div>
     <a ng-repeat="bem in bemEncontrado | filter:search track by $index" type="item-text-wrap"
-     class="item" item="bem" ng-click="editarBem(bem, dados)">
+     class="item" item="bem" ng-click="editarBem(bem, dados)" tabindex="0" id="rep_1" ng-keyup="$event.keyCode == 13 && primeiroBem(dados);">
       <h4>{{bem.CHAPA}} <i class="ion-alert item-note"
          style="color:red;" ng-show="bem.COD_LOCAL != dados.COD_LOCAL">
        </i> </h4>
@@ -64,6 +69,7 @@
         </h4>
       </div>
   </a>
+</div>
 
 
   </ion-content>
