@@ -1,8 +1,34 @@
-angular.module('starter').controller('consultarProdutoCtrl', function($scope, $window, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $location, Scopes, PopUps, CriarDiretorio, buscaArquivos, FormatarCsv) {
+angular.module('starter').controller('consultarProdutoCtrl', function($scope, $ionicPopover, $state, $cordovaFile, $stateParams, $ionicPopup, $timeout, $http, $location, Scopes, PopUps, CriarDiretorio, buscaArquivos, FormatarCsv) {
 
   console.log('Entrou no controller de Consultar Produto ---------------------------------------------------------');
   console.log('Códigos de locais válidos: 000053, 000039, 000005');
   console.log('Códigos de Bens válidos: 0000000001C, 000180, 000093, 000080, 00518 (duas entradas), 000898 (sem local)');
+
+
+
+  /////// TESTES DE POP OVER
+  // $ionicPopover.fromTemplateUrl('templates/popOverAlert.html', {
+  //   scope: $scope,
+  // }).then(function(popover) {
+  //   $scope.popover = popover;
+  //   popover.show(angular.element(document.querySelector('.ion-more')));
+  //   $timeout(function() {
+  //   //  myPopup.close(); //close the popup after 3 seconds for some reason
+  //   $scope.popover.hide();
+  // }, 1000);
+  // });
+
+
+  
+// message = false;
+// message = Scopes.getMessage();
+// if (message === true){
+// document.getElementById("f_1").focus();
+// }
+
+
+
+
 
   $scope.dados = Scopes.getLocal();
   console.log($scope.dados);
@@ -178,7 +204,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $w
               //Tirar o focus do campo e passar pro div próximo as respostas
               //document.activeElement.blur();
               document.getElementById("f_1").blur();
-              $window.document.getElementById("rep_1").focus();
+              document.getElementById("rep_1").focus();
 
 
 

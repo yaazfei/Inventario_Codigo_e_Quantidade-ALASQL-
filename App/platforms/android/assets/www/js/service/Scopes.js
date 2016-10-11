@@ -4,10 +4,19 @@ angular.module("starter").service('Scopes', function() {
   var bemSelecionado;
   var arquivoSelecionado;
   var arquivoSelecionadoLocais;
+  var message;
 
 
 
   return {
+
+    getMessage: function() {
+      return message;
+    },
+    setMessage: function(value) {
+      message = value;
+    },
+
     getLocal: function() {
       return localSelecionado;
     },

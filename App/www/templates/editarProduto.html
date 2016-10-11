@@ -15,10 +15,12 @@
  <!-- ************************************************************************************ -->
 
 
-
+      <div focus-me tabindex="-1" ng-keyup="$event.keyCode == 13 && escreverProdutoEditado();">
   <ion-content class="padding has-header">
 
-    <form name="editarProdutoForm" padding >
+
+    <form name="editarProdutoForm" padding>
+
 
       <!-- NÃO APAGAR -->
 <!--
@@ -127,10 +129,11 @@
       <button class="button button-block button-dark" ng-click="escreverProdutoEditado()">Salvar</button>
 
       <!-- BOTÃO DE NOVO LOCAL -->
-      <button class="button button-block button-outline button-stable" ng-click="openModal()"
+      <button class="button button-block button-stable" ng-click="openModal()"
        placeholder="Selecionar novo local" ng-show="editarProdutoForm.novoLocal.value == local.COD_LOCAL">
   SELECIONAR NOVO LOCAL
   </button>
+
 
 
       <!-- BOTÃO DE NOVO LOCAL -->
@@ -150,5 +153,7 @@
 
 
     </form>
+</br></br>
   </ion-content>
+</div>
 </ion-view>

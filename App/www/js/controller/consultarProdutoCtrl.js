@@ -19,7 +19,7 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $i
   // });
 
 
-  
+
 // message = false;
 // message = Scopes.getMessage();
 // if (message === true){
@@ -77,7 +77,6 @@ angular.module('starter').controller('consultarProdutoCtrl', function($scope, $i
     $scope.Bem = undefined;
     Bem = undefined;
 
-    $scope.form.BuscaBem = $scope.form.Master;
     $scope.form.BuscaBem.$setPristine();
 
     setTimeout(function() {

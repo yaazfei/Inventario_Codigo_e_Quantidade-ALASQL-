@@ -2,31 +2,44 @@
 
   <ion-nav-buttons side="right">
     <div class="buttons">
-    <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
+      <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
       <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
     </div>
   </ion-nav-buttons>
+  <!-- <div class="bar bar-subheader"> -->
+  <!-- </div> -->
 
-  <ion-content class="padding has-header">
+  <ion-content class="padding has-header images-fundo">
+
+    <!-- <div class="card">
+      <div class="item item-divider item-icon-center text-center item-text-wrap">
+        <i class="icon ion-gear-b"></i>
+        <h2>Queiroz Galvão</h2>
+        <p>Consulta de Bens</p>
+      </div>
+    </div> -->
+
+
 
     <form name="form.BuscaLocal" novalidate id="form.BuscaLocal">
       <div class="list list-inset" id="DivForm" ng-init="setForm(form.BuscaLocal);">
 
-      </br>
+        <!-- </br> -->
         <p>Código do Local:</p>
         <label class="item item-input">
-          <input type="text" ng-keyup="$event.keyCode == 13 && buscaLocal(dados);" id="f_1" name="codLocalDados" autofocus="autofocus" placeholder="Informe o local" style="text-transform: uppercase" ng-model="dados.COD_LOCAL" required>
+          <input type="text" focus-me autofocus="autofocus" ng-keyup="$event.keyCode == 13 && buscaLocal(dados);" id="f_1" name="codLocalDados" placeholder="Informe o local" style="text-transform: uppercase" ng-model="dados.COD_LOCAL" required>
         </label>
 
-      </br>
-      <div class="button-bar">
-        <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar"/>
-        <input class="button button-positive" type="reset" ng-click="deixarPristine()" value="Limpar"/>
-        <!-- <a class="button button-positive" ng-click="resetForm()">Limpar</a> -->
-        <input class="button button-balanced" ng-click="buscaLocal(dados)" type="reset" value="Buscar"/>
+        </br>
+        <div class="button-bar">
+          <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar" />
+          <input class="button button-positive" type="reset" ng-click="deixarPristine()" value="Limpar" />
+          <!-- <a class="button button-positive" ng-click="resetForm()">Limpar</a> -->
+          <input class="button button-balanced" ng-click="buscaLocal(dados)" type="reset" value="Buscar" />
+        </div>
       </div>
-</div>
-</form>
+    </form>
+    </br>
 
 
   </ion-content>

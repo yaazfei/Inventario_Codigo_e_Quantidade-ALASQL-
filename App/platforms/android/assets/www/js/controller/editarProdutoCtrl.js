@@ -134,9 +134,15 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
                         if (window.cordova) { //Só entra por device
                           CriarDiretorio.processar($cordovaFile, resTotal);
+                        } else {
+
+                          console.log('Se estiver no Browser, não vai escrever no arquivo.');
+                          Scopes.setMessage(true);
+                          $state.go('app.consultarProduto');
+                          // PopUps.produtoSalvo("Bem salvo com sucesso!");
                         }
 
-                        console.log('Se estiver no Browser, não vai escrever no arquivo.');
+
 
                       }).catch(function(err) { // NÃO ENCONTROU O BEM
                         console.log(err);
@@ -149,9 +155,13 @@ angular.module('starter').controller('editarProdutoCtrl', function($scope, $stat
 
                     if (window.cordova) { //Só entra por device
                       CriarDiretorio.processar($cordovaFile, res);
-                    }
+                    } else {
 
-                    console.log('Se estiver no Browser, não vai escrever no arquivo.');
+                      console.log('Se estiver no Browser, não vai escrever no arquivo.');
+                      Scopes.setMessage(true);
+                      $state.go('app.consultarProduto');
+                      // PopUps.produtoSalvo("Bem salvo com sucesso!");
+                    }
                   }
 
                 }).catch(function(err) { // NÃO ENCONTROU O BEM

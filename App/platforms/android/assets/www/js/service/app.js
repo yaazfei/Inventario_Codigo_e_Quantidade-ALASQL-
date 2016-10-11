@@ -169,31 +169,39 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngSanit
 
 
 
+///// PARA DAR AUTOFOCUS CORRETAMENTE
+
+// .directive('autoFocus', function($timeout) {
+//     return {
+//         restrict: 'AC',
+//         link: function(_scope, _element) {
+//             $timeout(function(){
+//                 _element[0].focus();
+//             }, 0);
+//         }
+//     };
+// })
 
 
+.directive('focusMe', function($timeout) {
+  return {
+    link: function(scope, element, attrs) {
 
-
-
-
-
-.directive('autoFocus', function($timeout) {
-    return {
-        restrict: 'AC',
-        link: function(_scope, _element) {
-            $timeout(function(){
-                _element[0].focus();
-            }, 0);
-        }
-    };
+      $timeout(function() {
+        element[0].focus();
+      });
+    }
+  };
 })
 
 
 
 
 
-
-
-
+///// PARA IMPEDIR O SCROLL DE BUGAR APÓS O AUTOFOCUS 
+.config(function($ionicConfigProvider){
+  $ionicConfigProvider.scrolling.jsScrolling(false);
+})
 
 
 

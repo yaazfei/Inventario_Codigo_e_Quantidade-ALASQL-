@@ -1,4 +1,5 @@
-angular.module("starter").service('PopUps', function($ionicPopup) {
+angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
+
 
 
 
@@ -6,8 +7,13 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
   this.produtoSalvo = function(msg) {
     var alertPopup = $ionicPopup.alert({
       title: 'Sucesso',
-      template: msg
+      template: msg,
+
     });
+    $timeout(function() {
+      alertPopup.close(); //close the popup after 3 seconds for some reason
+      document.getElementById("f_1").focus();
+   }, 1000);
   };
 
   this.erroEscrever = function() {
@@ -16,7 +22,6 @@ angular.module("starter").service('PopUps', function($ionicPopup) {
       template: 'Não foi possivel salvar o produto.'
     });
   };
-
 
   this.erroCriarPasta = function() {
     var alertPopup = $ionicPopup.alert({

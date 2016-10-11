@@ -4,6 +4,7 @@
     <div class="buttons">
       <!-- <button class="button" ng-click="app.cadastrarProduto">Cadastrar</button> -->
       <!-- <a href="#/app/cadastrarProduto" class="button button">Cadastrar </a> -->
+      <!-- <a ng-click="popover.show($event)" class="button button-icon ion-more" id="button1"></a> -->
     </div>
   </ion-nav-buttons>
 
@@ -23,8 +24,11 @@
         <p>CÓDIGO: {{dados.COD_LOCAL}}</br>
           {{dados.DESC_LOCAL}}</p>
       </div>
-
     </div>
+
+    <!-- <div class="list" padding ng-show="codigoSalvoMessage == true">
+    <button class="button button-full button-small button-outline button-balanced">{{message}}</button>
+</div> -->
 
 
     <form name="form.BuscaBem" novalidate id="form.BuscaBem">
@@ -33,7 +37,7 @@
         </br>
         <p>Código do Bem:</p>
         <label class="item item-input">
-          <input type="text" auto-focus ng-keyup="$event.keyCode == 13 && buscaBem(bem);" id="f_1" name="chapaBem" autofocus="autofocus" placeholder="Informe o Bem" autofocus style="text-transform: uppercase" ng-model="bem.CHAPA" required >
+          <input type="text" focus-me ng-keyup="$event.keyCode == 13 && buscaBem(bem);" id="f_1" name="chapaBem" autofocus="autofocus" placeholder="Informe o Bem" style="text-transform: uppercase" ng-model="bem.CHAPA" required >
         </label>
 
         </br>
@@ -66,6 +70,7 @@
       </div>
   </a>
 </div>
+</br>
 
 
   </ion-content>
