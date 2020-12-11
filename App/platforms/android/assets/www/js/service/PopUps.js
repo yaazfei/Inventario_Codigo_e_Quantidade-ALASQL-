@@ -1,3 +1,10 @@
+/**
+ * Inventario Base
+ * COM ALASQL
+ * @author Yasmin de Lima Feitosa
+ * @version 1.0
+ */
+
 angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
 
 
@@ -13,27 +20,27 @@ angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
     $timeout(function() {
       alertPopup.close(); //close the popup after 3 seconds for some reason
       document.getElementById("f_1").focus();
-   }, 1000);
+   }, 1500);
   };
 
   this.erroEscrever = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Erro',
-      template: 'Não foi possivel salvar o produto.'
+      template: '<p align="center">Não foi possivel salvar o produto.</p>'
     });
   };
 
   this.erroCriarPasta = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Erro',
-      template: 'Não foi possivel criar pasta interna.'
+      template: '<p align="center">Não foi possivel criar pasta interna.</p>'
     });
   };
 
   this.erroBranco = function() {
     var alertPopup = $ionicPopup.alert({
-      title: 'Código em branco',
-      template: 'Insira o código.'
+      title: 'Erro',
+      template: '<p align="center">Insira os dados corretamente.</p>'
     });
   };
 
@@ -42,7 +49,7 @@ angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
   this.testeJson = function(resultsNOK) {
     var alertPopup = $ionicPopup.alert({
       title: 'Teste Json',
-      template: 'Resultado:\n' + resultsNOK.value + '\n'
+      template: '<p align="center">Resultado:\n' + resultsNOK.value + '\n </p>'
     });
   };
 
@@ -51,7 +58,7 @@ angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
   this.testeSubstituicao = function(nome, valorAntigo) {
     var alertPopup = $ionicPopup.alert({
       title: 'Teste Subs',
-      template: 'Resultado:\n' + nome + valorAntigo
+      template: '<p align="center">Resultado:\n' + nome + valorAntigo + '\n</p>'
     });
   };
 
@@ -60,7 +67,7 @@ angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
   this.showConfirm = function() {
     var confirmPopup = $ionicPopup.confirm({
       title: 'Finalizar',
-      template: 'Tem certeza que deseja finalizar a aplicação?'
+      template: '<p align="center">Tem certeza que deseja finalizar a aplicação?</p>'
     });
     confirmPopup.then(function(res) {
       if (res) {
@@ -75,10 +82,11 @@ angular.module("starter").service('PopUps', function($ionicPopup, $timeout) {
 
   this.erroConsultar = function(msg) {
     var alertPopup = $ionicPopup.alert({
-      title: 'Erro ao consultar',
+      title: 'Erro',
       template: msg
     });
   };
+
 
 
 

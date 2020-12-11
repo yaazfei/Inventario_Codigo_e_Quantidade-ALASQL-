@@ -1,21 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.myaoo100387" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <preference name="loglevel" value="DEBUG" />
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="StatusBar">
-        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
-    </feature>
+<widget id="com.ionicframework.Nimal_Inventario_Simples_Yapp" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="Keyboard">
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
@@ -24,19 +8,16 @@
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
-    <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
-    </feature>
-    <feature name="Contacts">
-        <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
-    </feature>
-    <feature name="FileOpener2">
-        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
-    </feature>
-    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <name>Nimal Inventario Simples</name>
+    <description>
+      Aplicativo desenvolvido por Yasmin Feitosa
+    </description>
+    <author email="feitosa.y@gmail.com" href="starter.pe.hu">
+      Yasmin de Lima Feitosa
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-navigation href="*" />
     <icon density="ldpi" src="resources/android/icon/logo-nimal-160.png" />
     <icon density="mdpi" src="resources/android/icon/logo-nimal-160.png" />
     <icon density="hdpi" src="resources/android/icon/logo-nimal-160.png" />
@@ -55,16 +36,7 @@
     <splash density="port-xhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/logo-nimal.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/logo-nimal.png" />
-    <name>Queiroz Galvao Inventario</name>
-    <description>
-      Aplicativo desenvolvido por Yasmin Feitosa
-    </description>
-    <author email="feitosa.y@gmail.com" href="starter.pe.hu">
-      Yasmin de Lima Feitosa
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <allow-navigation href="*" />
+    <preference name="loglevel" value="DEBUG" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

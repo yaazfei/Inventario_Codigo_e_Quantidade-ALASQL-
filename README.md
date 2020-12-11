@@ -1,26 +1,25 @@
-# **Queiroz Galvão** #
+# **Inventario SIMPLES com ALASQL** #
 
-- Base do Consulta-Produto/L2R
-
-##  **Descrição ATUAL**  ##
-
-* 1 – Carregar em memória os dois arquivos (Lista de Bens.xlsx e Lista de locais.xlsx) (estão dentro da pasta)
-* 2 – Ao iniciar o aplicativo, solicitar ao usuário o local em que ele está (Lista de Locais.xlss). Apresentar na tela o COD_LOCAL e o DESC_LOCAL.
-* 3 – Ao ler o código de barras do bem (CHAPA), apresentar na tela a DESC_BEM e validar o COD_LOCAL do arquivo (Lista de Bens.xlsx) contra o local informado no Passo 1.
-* 4 – Caso o cod do local esteja diferente, dar a opção ao usuário de trocá-lo: O COD_LOCAL informado diverge do cadastro. Deseja atualizar?
+- Base do Inventario QG
 
 
+##  **Descrição**  ##
 
-##  **Descrição antiga**  ##
+* 1 – Carrega em memória o arquivo do dia atual (se houver) que está dentro da pasta ou cria um arquivo do zero se ele já não existir.
+* 2 – Ao iniciar o aplicativo, solicita ao usuário o código e a quantidade do produto.
+* 3 – O produto é armazenado ao salvar (anexando no arquivo existe ou no novo). A data da consulta será informada no nome do arquivo criado (no lugar do 'dd/mm/aaaa'). A cada dia de consulta um novo arquivo será criado dentro do diretório.
+* 4 – Após salvar, a tela mostrará um aviso rápido de sucesso e outro produto poderá ser salvo.
+* 5 – Ao tentar salvar um arquivo com um código já existente, uma alerta será emitido para escolha de incrementar na quantidade do produto ou ignorar e deixar somente os valores antigos salvos.
 
 
-A solução consiste de duas tabelas, uma com o local e outra com os bens para validação do local em que o bem se encontra.
- 
-Passo a passo:
+##  **Detalhes**  ##
 
-* 1 – Ler o código do usuário. Validar na tabela. O Guilherme ficou de verificar se haverá esta etapa.
-* 2 – Ler o código do bem.
-* 3 – Apresentar o local do bem.
-* 4 – Perguntar se está certo ou não. Se estiver certo, não altera a lista em memória e volta para a leitura do próximo bem. Caso esteja errado, permitir a atualização do local e ir para a leitura do próximo bem.
-* 5 – Em qualquer momento, encerrar a aplicação.
-* 6 – O usuário poderá conectar o coletor ao micro e copiar o arquivo que foi atualizado durante o inventário.
+* – O .csv está sendo salvo sem cabeçalho, somente com os valores de CÓDIGO e QUANTIDADE separados por ponto e vírgula (;).
+* – Os códigos estão sendo salvos em maiúsculo.
+* – A aplicação lê somente arquivos .csv.
+* – O arquivo na pasta possuirá o nome: "Inventario_dd-mm-aaaa.csv", que informará o nome do arquivo junto com o dia, mês e ano atual.
+
+
+
+
+--------------------------------------------------------------

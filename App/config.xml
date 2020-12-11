@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.myaoo100387" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Queiroz Galvao Inventario</name>
-  <description>
-      Aplicativo desenvolvido por Yasmin Feitosa
+<widget id="com.ionicframework.Nimal_Inventario_Simples_Yapp" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Nimal Inventario Simples</name>
+  <description>&#xD;
+      Aplicativo desenvolvido por Yasmin Feitosa&#xD;
     </description>
-  <author email="feitosa.y@gmail.com" href="starter.pe.hu">
-      Yasmin de Lima Feitosa
+  <author email="feitosa.y@gmail.com" href="starter.pe.hu">&#xD;
+      Yasmin de Lima Feitosa&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>

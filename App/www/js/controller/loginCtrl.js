@@ -1,3 +1,10 @@
+/**
+ * Inventario Base
+ * COM ALASQL
+ * @author Yasmin de Lima Feitosa
+ * @version 1.0
+ */
+
 // Sobre autentificação= https://devdactic.com/user-auth-angularjs-ionic/
 
 

@@ -1,0 +1,48 @@
+<ion-view view-title="Novo Produto" align-title="center">
+
+  <ion-content class="padding has-header">
+
+    <form name="form.NovoProduto" id="form.NovoProduto" ng-controller="novoProdutoCtrl">
+      <div class="list" tabindex="0" id="DivForm" ng-init="setForm(form.NovoProduto);">
+
+        </br>
+        <p>Informe o Produto:</p>
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Código:</span>
+          <input placeholder="" auto-focus auto-tab-to="f_2" maxlength="6" ng-keyup="$event.keyCode == 13 && jumpForm()" class="form-control text-left" type="text" style="text-transform: uppercase" id="f_1" ng-model="produto.CODIGO" name="codigoProduto" autofocus="autofocus"
+              onkeydown="" ng-required="true"></input>
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label" style="width:130px">Quantidade:</span>
+          <input ng-enter="clearInputAndSubmit(form.NovoProduto, produto);" ng-keyup="$event.keyCode == 13 && clearInputAndSubmit(form.NovoProduto, produto);" placeholder="" type="number" class="form-control text-left" type="text" style="text-transform: uppercase"
+              id="f_2" ng-model="produto.QUANTIDADE" name="quantidadeProduto" onkeydown="" ng-required="true"></input>
+        </label>
+
+        </br>
+        <div class="button-bar">
+          <input class="button button-dark" type="button" ng-click="fecharApp()" value="Fechar" />
+          <input class="button button-positive" type="reset" ng-click="deixarPristine()" value="Limpar" />
+          <input class="button button-balanced" ng-click="escreverNovoProduto(produto)" type="reset" value="Salvar" />
+        </div>
+
+        <span style="display:none">{{ formValid = form.NovoProduto.$valid}}</span>
+        </br>
+
+
+        <div class="list" padding ng-show="codigoSalvoMessage === true">
+          <div class="alert">
+            <p style="text-transform: uppercase">{{message}}</p>
+          </div>
+        </div>
+
+
+
+      </div>
+    </form>
+    </br>
+
+
+    </br>
+  </ion-content>
+</ion-view>
